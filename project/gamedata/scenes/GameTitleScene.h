@@ -2,6 +2,9 @@
 #include "components/manager/Iscene.h"
 #include "CJEngine.h"
 #include "components/input/Input.h"
+#include "components/manager/TextureManager.h"
+#include "components/2d/CreateSprite.h"
+#include "components/audio/Audio.h"
 
 class GameTitleScene :public Iscene{
 public:
@@ -15,9 +18,24 @@ private:
 
 	Input* input_ = nullptr;
 
-	Quaternion rotation = MakeRotateAxisAngleQuaternion(Normalize(Vector3{ 1.0f,0.4f,-0.2f }), 0.45f);
-	Vector3 pointY = { 2.1f,-0.9f,1.3f };
-	Matrix4x4 rotateMatrix = MakeRotateMatrix(rotation);
-	Vector3 rotateByQuaternion = RotateVector(rotation,pointY);
-	Vector3 rotateByMatrix = TransformNormal(pointY, rotateMatrix);
+	TextureManager* textureManager_;
+
+	std::unique_ptr <CreateSprite> sprite_[3];
+	Transform spriteTransform_;
+	Transform SpriteuvTransform_;
+	Vector4 spriteMaterial_;
+
+	float spriteAlpha_ = 256.0f;
+
+	uint32_t title_;
+	uint32_t start_;
+	uint32_t tutorial_;
+
+	bool changeAlpha_ = false;
+
+	int count = 0;
+
+	Audio* audio_;
+	SoundData soundData1_;
+
 };
