@@ -60,32 +60,7 @@ void CreateHoudini::Initialize() {
 	dxCommon_ = DirectXCommon::GetInstance();
 	CJEngine_ = CitrusJunosEngine::GetInstance();
 
-    if (bUseInProcess_){
-        // Creates an in process session
-        HAPI_CreateInProcessSession(&session_);
-    }
-    else{
-        // Start and connect to an out of process session
-        HAPI_ThriftServerOptions serverOptions{ 0 };
-        serverOptions.autoClose = true;
-        serverOptions.timeoutMs = 3000.0f;
-
-        // Start a HARS named-pipe server named "hapi"
-        ENSURE_SUCCESS(HAPI_StartThriftNamedPipeServer(&serverOptions, "hapi", 0, nullptr));
-        // and create a new HAPI session to use that server
-        ENSURE_SUCCESS(HAPI_CreateThriftNamedPipeSession(&session_, "hapi"));
-    }
-
-    cookOptions_ = HAPI_CookOptions_Create();
-    ENSURE_SUCCESS(HAPI_Initialize(&session_,
-        &cookOptions_,
-        true,
-        -1,
-        nullptr,
-        nullptr,
-        nullptr,
-        nullptr,
-        nullptr));
+   
 }
 
 void CreateHoudini::Update() {
