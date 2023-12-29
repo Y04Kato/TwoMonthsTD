@@ -14,10 +14,10 @@ void Player::Initialize() {
 	for (int i = 0; i < 6; i++) {
 		sprite_[i] = std::make_unique<CreateSprite>();
 		sprite_[i]->Initialize(Vector2{48.0f,48.0f}, spriteTexture_[i], true, false);
-		sprite_[i]->SetAnchor(Vector2{ 0.5f,0.5f });
+		sprite_[i]->SetAnchor(Vector2{ 0.5f,1.0f });
 	}
 
-	spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{180.0f,360.0f,0.1f} };
+	spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{180.0f,380.0f,0.1f} };
 	spriteUvTransform_ = { {1.0f,1.0f,1.0f}, {0.0f,0.0f,0.0f}, {0.0f,0.0f,0.0f} };
 	spriteMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 }
