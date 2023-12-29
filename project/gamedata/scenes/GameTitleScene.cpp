@@ -18,7 +18,7 @@ void GameTitleScene::Initialize() {
 
 	//Audio
 	audio_ = Audio::GetInstance();
-	soundData1_ = audio_->SoundLoadWave("project/gamedata/resources/click.wav");
+	soundData1_ = audio_->SoundLoadWave("project/gamedata/resources/page.wav");
 
 	spriteMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 	spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{1280.0f / 2.0f,720.0f / 2.0f,0.0f} };
