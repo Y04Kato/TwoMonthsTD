@@ -17,6 +17,7 @@ void Stage1::Initialize() {
 	spriteTexture_[1] = textureManager_->Load("project/gamedata/resources/panel/panel1.png");
 	spriteTexture_[2] = textureManager_->Load("project/gamedata/resources/panel/panel2.png");
 	spriteTexture_[3] = textureManager_->Load("project/gamedata/resources/panel/panel3.png");
+	spriteTexture_[4] = textureManager_->Load("project/gamedata/resources/goal/goal.png");
 
 	sprite_[0] = std::make_unique<CreateSprite>();
 	sprite_[0]->Initialize(Vector2{100.0f,100.0f},spriteTexture_[2],false,false);
@@ -50,6 +51,10 @@ void Stage1::Initialize() {
 	sprite_[7]->Initialize(Vector2{ 100.0f,100.0f }, spriteTexture_[3], false, false);
 	sprite_[7]->SetTextureInitialSize();
 
+	sprite_[8] = std::make_unique<CreateSprite>();
+	sprite_[8]->Initialize(Vector2{ 100.0f,100.0f }, spriteTexture_[4], false, false);
+	sprite_[8]->SetTextureInitialSize();
+
 	spriteTransform_[0] = {{1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{550.0f,280.0f,0.0f}};
 	spriteTransform_[1] = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{350.0f,280.0f,0.0f} };
 	spriteTransform_[2] = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{150.0f,280.0f,0.0f} };
@@ -58,6 +63,7 @@ void Stage1::Initialize() {
 	spriteTransform_[5] = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{750.0f,280.0f,0.0f} };
 	spriteTransform_[6] = { {1.0f,1.0f,1.0f}, {0.0f,0.0f,0.0f},{550.0f,280.0f,0.1f} };
 	spriteTransform_[7] = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{550.0f,480.0f,0.1f} };
+	spriteTransform_[8] = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{880.0f,360.0f,0.0f} };
 
 	spriteUvTransform_ = { {1.0f,1.0f,1.0f}, {0.0f,0.0f,0.0f}, {0.0f,0.0f,0.0f} };
 	spriteMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
@@ -77,6 +83,8 @@ void Stage1::Draw() {
 			sprite_[i]->Draw(spriteTransform_[i], spriteUvTransform_, spriteMaterial_);
 		}
 	}
+
+	sprite_[8]->Draw(spriteTransform_[8], spriteUvTransform_, spriteMaterial_);
 }
 
 void Stage1::UpsidePanelMove() {
