@@ -22,11 +22,11 @@ private:
 	Input* input_ = nullptr;
 
 	TextureManager* textureManager_;
-	uint32_t spriteTexture_[8];
+	uint32_t spriteTexture_[5];
 
-	std::unique_ptr<CreateSprite> sprite_[8];
+	std::unique_ptr<CreateSprite> sprite_[9];
 
-	Transform spriteTransform_[8];
+	Transform spriteTransform_[9];
 	Transform spriteUvTransform_;
 	Vector4 spriteMaterial_;
 
