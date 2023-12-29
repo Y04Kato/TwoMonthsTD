@@ -65,7 +65,7 @@ void GamePlayScene::Initialize() {
 	sphereMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 
 	isSphereDraw_ = false;
-
+	
 	//objモデル
 	model_.reset(Model::CreateModelFromObj("project/gamedata/resources/fence", "fence.obj"));
 	worldTransformModel_.Initialize();
@@ -103,6 +103,10 @@ void GamePlayScene::Initialize() {
 	// Stage1
 	stage1_ = std::make_unique<Stage1>();
 	stage1_->Initialize();
+
+	// Player
+	player_ = std::make_unique<Player>();
+	player_->Initialize();
 }
 
 void GamePlayScene::Update() {
@@ -118,7 +122,7 @@ void GamePlayScene::Update() {
 	viewProjection_.rotation_ = debugCamera_->GetViewProjection()->rotation_;
 	viewProjection_.UpdateMatrix();
 
-	if (input_->PressKey(DIK_A)) {
+	/*if (input_->PressKey(DIK_A)) {
 		OutputDebugStringA("Press A\n");
 	}
 	if (input_->ReleaseKey(DIK_S)) {
@@ -126,7 +130,7 @@ void GamePlayScene::Update() {
 	}
 	if (input_->TriggerKey(DIK_D)) {
 		OutputDebugStringA("Trigger D\n");
-	}
+	}*/
 
 	for (int i = 0; i < 2; i++) {
 		worldTransformTriangle_[i].UpdateMatrix();
@@ -266,6 +270,7 @@ void GamePlayScene::Update() {
 	}
 
 	stage1_->Update();
+	player_->Update();
 }
 
 void GamePlayScene::Draw() {
@@ -280,6 +285,7 @@ void GamePlayScene::Draw() {
 
 	back_->Draw();
 	stage1_->Draw();
+	player_->Draw();
 #pragma endregion
 
 #pragma region 3Dオブジェクト描画

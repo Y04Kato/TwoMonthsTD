@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Model.h"
 #include "Input.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
@@ -9,29 +8,22 @@
 
 #include <memory>
 
-class Stage1 {
+class Player {
 public:
 	void Initialize();
 	void Update();
 	void Draw();
 
-	void UpsidePanelMove();
-	void DownSidePanelMove();
-
 private:
 	Input* input_ = nullptr;
 
 	TextureManager* textureManager_;
-	uint32_t spriteTexture_[8];
+	uint32_t spriteTexture_;
 
-	std::unique_ptr<CreateSprite> sprite_[8];
+	std::unique_ptr<CreateSprite> sprite_;
 
-	Transform spriteTransform_[8];
+	Transform spriteTransform_;
 	Transform spriteUvTransform_;
 	Vector4 spriteMaterial_;
 
-	bool isSpriteMove_[2];
-	bool isSpriteReturnMove_[2];
-
-	bool isSpriteDraw_[8];
 };
