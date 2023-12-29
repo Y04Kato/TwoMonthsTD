@@ -20,20 +20,25 @@ private:
 
 	TextureManager* textureManager_;
 
-	std::unique_ptr <CreateSprite> sprite_[3];
+	std::unique_ptr <CreateSprite> sprite_[5];
 	Transform spriteTransform_;
+	Transform spriteTransform2_;
 	Transform SpriteuvTransform_;
 	Vector4 spriteMaterial_;
 
 	float spriteAlpha_ = 256.0f;
 
-	uint32_t title_;
+	uint32_t pageL_;
+	uint32_t pageR_;
+	uint32_t pageAll_;
 	uint32_t start_;
-	uint32_t tutorial_;
+	uint32_t title_;
 
 	bool changeAlpha_ = false;
 
 	int count = 0;
+
+	bool pageChange_ = false;
 
 	Audio* audio_;
 	SoundData soundData1_;
