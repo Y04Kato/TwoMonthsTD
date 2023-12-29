@@ -15,6 +15,7 @@
 #include "components/utilities/collisionManager/CollisionConfig.h"
 
 #pragma region ゲームインクルード
+#include "player/player.h"
 #include "panel/back.h"
 #include "panel/stage1.h"
 #pragma endregion
@@ -80,4 +81,5 @@ private:
 
 	std::unique_ptr<Back> back_;
 	std::unique_ptr<Stage1> stage1_;
+	std::unique_ptr<Player> player_;
 };
