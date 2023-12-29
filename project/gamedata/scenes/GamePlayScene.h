@@ -14,6 +14,11 @@
 #include "components/utilities/collisionManager/CollisionManager.h"
 #include "components/utilities/collisionManager/CollisionConfig.h"
 
+#pragma region ゲームインクルード
+#include "panel/back.h"
+#include "panel/stage1.h"
+#pragma endregion
+
 class GamePlayScene :public Iscene {
 public:
 	void Initialize() override;
@@ -72,4 +77,7 @@ private:
 	bool isSpriteDraw_[2];
 	bool isModelDraw_;
 	bool isParticleDraw_;
+
+	std::unique_ptr<Back> back_;
+	std::unique_ptr<Stage1> stage1_;
 };

@@ -35,7 +35,7 @@ void GamePlayScene::Initialize() {
 			{0.0f,0.0f,0.0f},
 		};
 		sprite_[i] = std::make_unique <CreateSprite>();
-		sprite_[i]->Initialize(Vector2{ 100.0f,100.0f }, uvResourceNum_, false, false);
+		sprite_[i]->Initialize(Vector2{ 100.0f,100.0f }, uvResourceNum_, true, true);
 
 		isSpriteDraw_[i] = false;
 	}
@@ -95,6 +95,14 @@ void GamePlayScene::Initialize() {
 	const char* groupName = "GamePlayScene";
 	GlobalVariables::GetInstance()->CreateGroup(groupName);
 	globalVariables->AddItem(groupName, "Test", 90);
+
+	// バック
+	back_ = std::make_unique<Back>();
+	back_->Initialize();
+
+	// Stage1
+	stage1_ = std::make_unique<Stage1>();
+	stage1_->Initialize();
 }
 
 void GamePlayScene::Update() {
@@ -256,6 +264,8 @@ void GamePlayScene::Update() {
 	if (isParticleDraw_) {
 		particle_->Update();
 	}
+
+	stage1_->Update();
 }
 
 void GamePlayScene::Draw() {
@@ -268,6 +278,8 @@ void GamePlayScene::Draw() {
 		}
 	}
 
+	back_->Draw();
+	stage1_->Draw();
 #pragma endregion
 
 #pragma region 3Dオブジェクト描画
