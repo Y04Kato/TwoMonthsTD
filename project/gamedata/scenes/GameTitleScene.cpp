@@ -14,6 +14,7 @@ void GameTitleScene::Initialize() {
 	pageAll_ = textureManager_->Load("project/gamedata/resources/page.png");
 	start_ = textureManager_->Load("project/gamedata/resources/pressSpace.png");
 	title_ = textureManager_->Load("project/gamedata/resources/title.png");
+	tutorial_ = textureManager_->Load("project/gamedata/resources/tutorial.png");
 
 	//Audio
 	audio_ = Audio::GetInstance();
@@ -52,6 +53,11 @@ void GameTitleScene::Initialize() {
 	sprite_[4]->Initialize(Vector2{ 100.0f,100.0f }, title_, false, false);
 	sprite_[4]->SetTextureInitialSize();
 	sprite_[4]->SetAnchor(Vector2{ 0.5f,0.5f });
+
+	sprite_[5] = std::make_unique <CreateSprite>();
+	sprite_[5]->Initialize(Vector2{ 100.0f,100.0f }, tutorial_, false, false);
+	sprite_[5]->SetTextureInitialSize();
+	sprite_[5]->SetAnchor(Vector2{ 0.5f,0.5f });
 
 	count = 0;
 }
@@ -111,7 +117,7 @@ void GameTitleScene::Draw() {
 			sprite_[4]->Draw(spriteTransform_, SpriteuvTransform_, spriteMaterial_);
 		}
 		if (count == 1) {
-		
+			sprite_[5]->Draw(spriteTransform_, SpriteuvTransform_, spriteMaterial_);
 		}
 	}
 

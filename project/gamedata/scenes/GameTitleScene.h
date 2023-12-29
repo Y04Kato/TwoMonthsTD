@@ -20,7 +20,7 @@ private:
 
 	TextureManager* textureManager_;
 
-	std::unique_ptr <CreateSprite> sprite_[5];
+	std::unique_ptr <CreateSprite> sprite_[6];
 	Transform spriteTransform_;
 	Transform spriteTransform2_;
 	Transform SpriteuvTransform_;
@@ -33,6 +33,7 @@ private:
 	uint32_t pageAll_;
 	uint32_t start_;
 	uint32_t title_;
+	uint32_t tutorial_;
 
 	bool changeAlpha_ = false;
 
