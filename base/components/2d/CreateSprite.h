@@ -16,6 +16,9 @@ public:
 
 	//アンカーポイントの設定
 	void SetAnchor(Vector2 anchor);
+	
+	//フリップの設定
+	void SetFlip(bool isFlipX, bool isFlipY);
 
 	//テクスチャ範囲指定
 	void SetTextureLTSize(Vector2 textureLeftTop, Vector2 textureSize);

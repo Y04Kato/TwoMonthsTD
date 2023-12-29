@@ -18,9 +18,11 @@ private:
 	Input* input_ = nullptr;
 
 	TextureManager* textureManager_;
-	uint32_t spriteTexture_;
+	uint32_t spriteTexture_[6];
 
-	std::unique_ptr<CreateSprite> sprite_;
+	std::unique_ptr<CreateSprite> sprite_[6];
+
+	int spriteTimer_ = 0;
 
 	Transform spriteTransform_;
 	Transform spriteUvTransform_;

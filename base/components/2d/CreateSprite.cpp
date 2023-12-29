@@ -5,8 +5,9 @@ void CreateSprite::Initialize(Vector2 size, uint32_t textureIndex, bool isFlipX,
 	CJEngine_ = CitrusJunosEngine::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
 
-	size_ = size;
 	index_ = textureIndex;
+	AdjustTextureSize();
+	size_ = size;
 	isFlipX_ = isFlipX;
 	isFlipY_ = isFlipY;
 
@@ -145,6 +146,11 @@ void CreateSprite::SetSize(Vector2 size) {
 
 void CreateSprite::SetAnchor(Vector2 anchor) {
 	anchor_ = anchor;
+}
+
+void CreateSprite::SetFlip(bool isFlipX, bool isFlipY) {
+	isFlipX_ = isFlipX;
+	isFlipY_ = isFlipY;
 }
 
 void CreateSprite::SetTextureLTSize(Vector2 textureLeftTop, Vector2 textureSize) {
