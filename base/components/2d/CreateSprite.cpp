@@ -80,6 +80,12 @@ void CreateSprite::Draw(const Transform& transform, const Transform& uvTransform
 	dxCommon_->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
 }
 
+CreateSprite* CreateSprite::CreateSpriteFromPng(Vector2 size, uint32_t textureIndex, bool isFlipX, bool isFlipY) {
+	CreateSprite* sprite = new CreateSprite();
+	sprite->Initialize(size,textureIndex,isFlipX,isFlipY);
+	return sprite;
+}
+
 void CreateSprite::Finalize() {
 
 }
