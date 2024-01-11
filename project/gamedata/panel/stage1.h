@@ -55,6 +55,13 @@ public:
 	//選択中のパネルを折る
 	void Fold();
 
+	int GetNowMapState(Vector2 pos);
+
+	int GetNowMapStatePosX();
+	int GetNowMapStatePosY();
+
+	Vector2 GetPanelSize() { return panelSize_; }
+
 private:
 	Input* input_ = nullptr;
 	TextureManager* textureManager_;
@@ -87,4 +94,7 @@ private:
 	std::unique_ptr<CreateSprite> spriteD3_[kMapHeight * kMapWidth];
 	std::unique_ptr<CreateSprite> spriteD4_[kMapHeight * kMapWidth];
 	uint32_t spriteTextureD_[4];
+
+	int playerStatePosX_ = 0;
+	int playerStatePosY_ = 0;
 };

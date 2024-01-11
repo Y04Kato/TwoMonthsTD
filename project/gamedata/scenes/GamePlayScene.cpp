@@ -271,6 +271,9 @@ void GamePlayScene::Update() {
 
 	stage1_->Update();
 	player_->Update();
+	player_->SetNowMapState(stage1_->GetNowMapState(player_->GetPos()));
+	player_->SetNowMapStatePos(stage1_->GetNowMapStatePosX(), stage1_->GetNowMapStatePosY());
+	player_->SetPanelSize(stage1_->GetPanelSize());
 }
 
 void GamePlayScene::Draw() {

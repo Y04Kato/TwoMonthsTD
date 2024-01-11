@@ -32,7 +32,7 @@ void Stage1::Initialize() {
 void Stage1::Update() {
 	Select();
 	Fold();
-	transform_.translate = { selectPoint_.num[0] * panelSize_.num[0],selectPoint_.num[1] * panelSize_.num[1] ,0.0f};
+	transform_.translate = { selectPoint_.num[0] * panelSize_.num[0],selectPoint_.num[1] * panelSize_.num[1] ,0.0f };
 }
 
 void Stage1::Draw() {
@@ -346,4 +346,59 @@ void Stage1::Fold() {
 			}
 		}
 	}
+}
+
+int Stage1::GetNowMapState(Vector2 pos) {
+	int i = 0;
+	int j = 0;
+	int state = 0;
+	while (true) {
+		if (panelSize_.num[0] * i <= pos.num[0] && panelSize_.num[0] * i + panelSize_.num[0] >= pos.num[0]) {
+			if (panelSize_.num[1] * j <= pos.num[1] && panelSize_.num[1] * j + panelSize_.num[1] >= pos.num[1]) {
+				if (map[j][i].mapstate == MapState::None) {
+					state = 0;
+				}
+				else if (map[j][i].mapstate == MapState::Vertical) {
+					state = 1;
+				}
+				else if (map[j][i].mapstate == MapState::Side) {
+					state = 2;
+				}
+				else if (map[j][i].mapstate == MapState::Cross) {
+					state = 3;
+				}
+				else if (map[j][i].mapstate == MapState::TShapedTop) {
+					state = 4;
+				}
+				else if (map[j][i].mapstate == MapState::TShapedDown) {
+					state = 5;
+				}
+				else if (map[j][i].mapstate == MapState::TShapedLeft) {
+					state = 6;
+				}
+				else if (map[j][i].mapstate == MapState::TShapedRight) {
+					state = 7;
+				}
+				break;
+			}
+			else {
+				j++;
+			}
+		}
+		else {
+			i++;
+		}
+	}
+
+	playerStatePosX_ = i;
+	playerStatePosY_ = j;
+	return state;
+}
+
+int Stage1::GetNowMapStatePosX() {
+	return playerStatePosX_;
+}
+
+int Stage1::GetNowMapStatePosY() {
+	return playerStatePosY_;
 }
