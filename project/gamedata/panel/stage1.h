@@ -32,7 +32,9 @@ public:
 	enum class Direction {
 		None,//0
 		Up,//1
-		Left,//2
+		Down,//2
+		Left,//3
+		Right,//4
 	};
 
 	struct Map {
@@ -79,4 +81,10 @@ private:
 	Vector4 spriteMaterial_;
 
 	bool isFoldMove_ = false;
+
+	std::unique_ptr<CreateSprite> spriteD1_[kMapHeight * kMapWidth];
+	std::unique_ptr<CreateSprite> spriteD2_[kMapHeight * kMapWidth];
+	std::unique_ptr<CreateSprite> spriteD3_[kMapHeight * kMapWidth];
+	std::unique_ptr<CreateSprite> spriteD4_[kMapHeight * kMapWidth];
+	uint32_t spriteTextureD_[4];
 };
