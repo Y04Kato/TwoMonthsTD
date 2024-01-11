@@ -143,21 +143,77 @@ void Stage1::LoadDirection() {
 			if (map[i][j].direction == Direction::None) {
 
 			}
+
 			if (map[i][j].direction == Direction::Up) {
 				spriteD1_[i * j].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTextureD_[0], false, false));
 				spriteD1_[i * j]->SetTextureInitialSize();
 			}
+
 			if (map[i][j].direction == Direction::Down) {
 				spriteD2_[i * j].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTextureD_[1], false, false));
 				spriteD2_[i * j]->SetTextureInitialSize();
+				spriteD2_[i * j]->SetAnchor(Vector2{ 0.0f,1.0f });
+				map[i][j].transform.translate.num[1] += panelSize_.num[1];
+				if (map[i][j].mapstate == MapState::None) {
+					sprite_[i * j]->SetAnchor(Vector2{ 0.0f,1.0f });
+				}
+				if (map[i][j].mapstate == MapState::Vertical) {
+					sprite1_[i * j]->SetAnchor(Vector2{ 0.0f,1.0f });
+				}
+				if (map[i][j].mapstate == MapState::Side) {
+					sprite2_[i * j]->SetAnchor(Vector2{ 0.0f,1.0f });
+				}
+				if (map[i][j].mapstate == MapState::Cross) {
+					sprite3_[i * j]->SetAnchor(Vector2{ 0.0f,1.0f });
+				}
+				if (map[i][j].mapstate == MapState::TShapedTop) {
+					sprite4_[i * j]->SetAnchor(Vector2{ 0.0f,1.0f });
+				}
+				if (map[i][j].mapstate == MapState::TShapedDown) {
+					sprite5_[i * j]->SetAnchor(Vector2{ 0.0f,1.0f });
+				}
+				if (map[i][j].mapstate == MapState::TShapedLeft) {
+					sprite6_[i * j]->SetAnchor(Vector2{ 0.0f,1.0f });
+				}
+				if (map[i][j].mapstate == MapState::TShapedRight) {
+					sprite7_[i * j]->SetAnchor(Vector2{ 0.0f,1.0f });
+				}
 			}
+
 			if (map[i][j].direction == Direction::Left) {
 				spriteD3_[i * j].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTextureD_[2], false, false));
 				spriteD3_[i * j]->SetTextureInitialSize();
 			}
+
 			if (map[i][j].direction == Direction::Right) {
 				spriteD4_[i * j].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTextureD_[3], false, false));
 				spriteD4_[i * j]->SetTextureInitialSize();
+				spriteD4_[i * j]->SetAnchor(Vector2{ 1.0f,0.0f });
+				map[i][j].transform.translate.num[0] += panelSize_.num[0];
+				if (map[i][j].mapstate == MapState::None) {
+					sprite_[i * j]->SetAnchor(Vector2{ 1.0f,0.0f });
+				}
+				if (map[i][j].mapstate == MapState::Vertical) {
+					sprite1_[i * j]->SetAnchor(Vector2{ 1.0f,0.0f });
+				}
+				if (map[i][j].mapstate == MapState::Side) {
+					sprite2_[i * j]->SetAnchor(Vector2{ 1.0f,0.0f });
+				}
+				if (map[i][j].mapstate == MapState::Cross) {
+					sprite3_[i * j]->SetAnchor(Vector2{ 1.0f,0.0f });
+				}
+				if (map[i][j].mapstate == MapState::TShapedTop) {
+					sprite4_[i * j]->SetAnchor(Vector2{ 1.0f,0.0f });
+				}
+				if (map[i][j].mapstate == MapState::TShapedDown) {
+					sprite5_[i * j]->SetAnchor(Vector2{ 1.0f,0.0f });
+				}
+				if (map[i][j].mapstate == MapState::TShapedLeft) {
+					sprite6_[i * j]->SetAnchor(Vector2{ 1.0f,0.0f });
+				}
+				if (map[i][j].mapstate == MapState::TShapedRight) {
+					sprite7_[i * j]->SetAnchor(Vector2{ 1.0f,0.0f });
+				}
 			}
 		}
 	}
@@ -225,7 +281,25 @@ void Stage1::Fold() {
 		}
 
 		if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].direction == Direction::Down) {//下に折る
+			if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == false) {
+				map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] += 0.05f;
 
+				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] >= 3.18f) {
+					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] = 3.18f;
+					isFoldMove_ = false;
+					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = true;
+				}
+			}
+
+			if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == true) {//折り返し
+				map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] -= 0.05f;
+
+				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] <= 0.0f) {
+					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] = 0.0f;
+					isFoldMove_ = false;
+					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = false;
+				}
+			}
 		}
 
 		if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].direction == Direction::Left) {//左に折る
@@ -251,7 +325,25 @@ void Stage1::Fold() {
 		}
 
 		if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].direction == Direction::Right) {//右に折る
+			if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == false) {
+				map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] += 0.05f;
 
+				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] >= 3.18f) {
+					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] = 3.18f;
+					isFoldMove_ = false;
+					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = true;
+				}
+			}
+
+			if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == true) {//折り返し
+				map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] -= 0.05f;
+
+				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] <= 0.0f) {
+					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] = 0.0f;
+					isFoldMove_ = false;
+					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = false;
+				}
+			}
 		}
 	}
 }
