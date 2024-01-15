@@ -17,7 +17,10 @@ void Player::Initialize() {
 		sprite_[i]->SetAnchor(Vector2{ 0.5f,1.0f });
 	}
 
-	spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{180.0f,380.0f,0.1f} };
+	startPointX = 1;
+	startPointY = 1;
+
+	spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{panelSize_.num[0] * startPointX + panelSize_.num[0] / 2,panelSize_.num[1] * startPointY + panelSize_.num[1] / 2,0.0f} };
 	spriteUvTransform_ = { {1.0f,1.0f,1.0f}, {0.0f,0.0f,0.0f}, {0.0f,0.0f,0.0f} };
 	spriteMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 }
@@ -27,11 +30,13 @@ void Player::Update() {
 	if (spriteTimer_ >= 60) {
 		spriteTimer_ = 0;
 	}
+
 	Moves();
 
 	ImGui::Begin("Player");
 	ImGui::DragFloat3("Pos", spriteTransform_.translate.num);
 	ImGui::Text("NowMapState %d", nowMapState_);
+	ImGui::Text("PanelDirection %d", panelDirection_);
 	ImGui::End();
 }
 
@@ -80,6 +85,60 @@ void Player::Moves() {
 	}
 	if (nowMapState_ == 7) {//TshapedRight
 		MoveTShapedRight();
+	}
+
+	if (panelSize_.num[1] * stateNumY_ + 74.0f >= spriteTransform_.translate.num[1]) {
+		panelDirection_ = 1;
+	}
+	else if (panelSize_.num[1] * stateNumY_ + panelSize_.num[1] - 74.0f <= spriteTransform_.translate.num[1]) {
+		panelDirection_ = 2;
+	}
+	else if (panelSize_.num[0] * stateNumX_ + 74.0f >= spriteTransform_.translate.num[0]) {
+		panelDirection_ = 3;
+	}
+	else if (panelSize_.num[0] * stateNumX_ + panelSize_.num[0] - 74.0f <= spriteTransform_.translate.num[0]) {
+		panelDirection_ = 4;
+	}
+	else {
+		panelDirection_ = 0;
+	}
+
+	//外に出たときの処理
+	if (nowMapState_ == 0) {//None
+		ResetPlayer();
+	}
+	if (nowMapState_ == 1) {//Vertical
+		if (panelDirection_ == 3 || panelDirection_ == 4) {
+			ResetPlayer();
+		}
+	}
+	if (nowMapState_ == 2) {//Side
+		if (panelDirection_ == 1 || panelDirection_ == 2) {
+			ResetPlayer();
+		}
+	}
+	if (nowMapState_ == 3) {//Cross
+
+	}
+	if (nowMapState_ == 4) {//TshapedTop
+		if (panelDirection_ == 2) {
+			ResetPlayer();
+		}
+	}
+	if (nowMapState_ == 5) {//TshapedDown
+		if (panelDirection_ == 1) {
+			ResetPlayer();
+		}
+	}
+	if (nowMapState_ == 6) {//TshapedLeft
+		if (panelDirection_ == 4) {
+			ResetPlayer();
+		}
+	}
+	if (nowMapState_ == 7) {//TshapedRight
+		if (panelDirection_ == 3) {
+			ResetPlayer();
+		}
 	}
 }
 
@@ -382,4 +441,8 @@ void Player::SetNowMapStatePos(int stateNumX, int stateNumY) {
 
 void Player::SetPanelSize(Vector2 panelSize) {
 	panelSize_ = panelSize;
+}
+
+void Player::ResetPlayer() {
+	spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{panelSize_.num[0] * startPointX + panelSize_.num[0] / 2,panelSize_.num[1] * startPointY + panelSize_.num[1] / 2,0.1f} };
 }

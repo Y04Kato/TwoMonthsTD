@@ -31,6 +31,8 @@ public:
 
 	void SetPanelSize(Vector2 panelSize);
 
+	void ResetPlayer();
+
 private:
 	Input* input_ = nullptr;
 
@@ -52,4 +54,10 @@ private:
 	Vector2 moveSpeed_ = { 3.0f ,3.0f };
 
 	Vector2 panelSize_ = { 200.0f,200.0f };
+
+	int startPointX;
+	int startPointY;
+
+	//上下左右で1234
+	int panelDirection_ = 0;
 };
