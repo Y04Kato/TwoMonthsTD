@@ -112,7 +112,7 @@ void Player::MoveVertical() {
 		spriteTransform_.translate.num[1] += moveSpeed_.num[1];
 	}
 	if (input_->PressKey(DIK_A)) {
-		if (panelSize_.num[0] * stateNumX_ + 74.0f <= spriteTransform_.translate.num[0]) {
+		if (panelSize_.num[0] * stateNumX_ + 78.0f <= spriteTransform_.translate.num[0]) {
 			spriteTransform_.translate.num[0] -= moveSpeed_.num[0];
 			for (int i = 0; i < 6; i++) {
 				sprite_[i]->SetFlip(false, false);
@@ -120,7 +120,7 @@ void Player::MoveVertical() {
 		}
 	}
 	if (input_->PressKey(DIK_D)) {
-		if (panelSize_.num[0] * stateNumX_ + panelSize_.num[0] - 74.0f >= spriteTransform_.translate.num[0]) {
+		if (panelSize_.num[0] * stateNumX_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[0]) {
 			spriteTransform_.translate.num[0] += moveSpeed_.num[0];
 			for (int i = 0; i < 6; i++) {
 				sprite_[i]->SetFlip(true, false);
@@ -130,27 +130,245 @@ void Player::MoveVertical() {
 }
 
 void Player::MoveSide() {
-
+	if (input_->PressKey(DIK_W)) {
+		if (panelSize_.num[1] * stateNumY_ + 78.0f <= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[1] -= moveSpeed_.num[1];
+		}
+	}
+	if (input_->PressKey(DIK_S)) {
+		if (panelSize_.num[1] * stateNumY_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[1] += moveSpeed_.num[1];
+		}
+	}
+	if (input_->PressKey(DIK_A)) {
+		spriteTransform_.translate.num[0] -= moveSpeed_.num[0];
+		for (int i = 0; i < 6; i++) {
+			sprite_[i]->SetFlip(false, false);
+		}
+	}
+	if (input_->PressKey(DIK_D)) {
+		spriteTransform_.translate.num[0] += moveSpeed_.num[0];
+		for (int i = 0; i < 6; i++) {
+			sprite_[i]->SetFlip(true, false);
+		}
+	}
 }
 
 void Player::MoveCross() {
-
+	if (input_->PressKey(DIK_W)) {
+		if (panelSize_.num[1] * stateNumY_ + 78.0f <= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[1] -= moveSpeed_.num[1];
+		}
+		else if (panelSize_.num[0] * stateNumX_ + 78.0f <= spriteTransform_.translate.num[0] && panelSize_.num[0] * stateNumX_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[0]) {
+			spriteTransform_.translate.num[1] -= moveSpeed_.num[1];
+		}
+	}
+	if (input_->PressKey(DIK_S)) {
+		if (panelSize_.num[1] * stateNumY_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[1] += moveSpeed_.num[1];
+		}
+		else if (panelSize_.num[0] * stateNumX_ + 78.0f <= spriteTransform_.translate.num[0] && panelSize_.num[0] * stateNumX_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[0]) {
+			spriteTransform_.translate.num[1] += moveSpeed_.num[1];
+		}
+	}
+	if (input_->PressKey(DIK_A)) {
+		if (panelSize_.num[0] * stateNumX_ + 78.0f <= spriteTransform_.translate.num[0]) {
+			spriteTransform_.translate.num[0] -= moveSpeed_.num[0];
+			for (int i = 0; i < 6; i++) {
+				sprite_[i]->SetFlip(false, false);
+			}
+		}
+		else if (panelSize_.num[1] * stateNumY_ + 78.0f <= spriteTransform_.translate.num[1] && panelSize_.num[1] * stateNumY_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[0] -= moveSpeed_.num[0];
+			for (int i = 0; i < 6; i++) {
+				sprite_[i]->SetFlip(false, false);
+			}
+		}
+	}
+	if (input_->PressKey(DIK_D)) {
+		if (panelSize_.num[0] * stateNumX_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[0]) {
+			spriteTransform_.translate.num[0] += moveSpeed_.num[0];
+			for (int i = 0; i < 6; i++) {
+				sprite_[i]->SetFlip(true, false);
+			}
+		}
+		else if (panelSize_.num[1] * stateNumY_ + 78.0f <= spriteTransform_.translate.num[1] && panelSize_.num[1] * stateNumY_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[0] += moveSpeed_.num[0];
+			for (int i = 0; i < 6; i++) {
+				sprite_[i]->SetFlip(true, false);
+			}
+		}
+	}
 }
 
 void Player::MoveTShapedTop() {
-
+	if (input_->PressKey(DIK_W)) {
+		if (panelSize_.num[1] * stateNumY_ + 78.0f <= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[1] -= moveSpeed_.num[1];
+		}
+		else if (panelSize_.num[0] * stateNumX_ + 78.0f <= spriteTransform_.translate.num[0] && panelSize_.num[0] * stateNumX_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[0]) {
+			spriteTransform_.translate.num[1] -= moveSpeed_.num[1];
+		}
+	}
+	if (input_->PressKey(DIK_S)) {
+		if (panelSize_.num[1] * stateNumY_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[1] += moveSpeed_.num[1];
+		}
+	}
+	if (input_->PressKey(DIK_A)) {
+		if (panelSize_.num[0] * stateNumX_ + 78.0f <= spriteTransform_.translate.num[0]) {
+			spriteTransform_.translate.num[0] -= moveSpeed_.num[0];
+			for (int i = 0; i < 6; i++) {
+				sprite_[i]->SetFlip(false, false);
+			}
+		}
+		else if (panelSize_.num[1] * stateNumY_ + 78.0f <= spriteTransform_.translate.num[1] && panelSize_.num[1] * stateNumY_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[0] -= moveSpeed_.num[0];
+			for (int i = 0; i < 6; i++) {
+				sprite_[i]->SetFlip(false, false);
+			}
+		}
+	}
+	if (input_->PressKey(DIK_D)) {
+		if (panelSize_.num[0] * stateNumX_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[0]) {
+			spriteTransform_.translate.num[0] += moveSpeed_.num[0];
+			for (int i = 0; i < 6; i++) {
+				sprite_[i]->SetFlip(true, false);
+			}
+		}
+		else if (panelSize_.num[1] * stateNumY_ + 78.0f <= spriteTransform_.translate.num[1] && panelSize_.num[1] * stateNumY_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[0] += moveSpeed_.num[0];
+			for (int i = 0; i < 6; i++) {
+				sprite_[i]->SetFlip(true, false);
+			}
+		}
+	}
 }
 
 void Player::MoveTShapedDown() {
-
+	if (input_->PressKey(DIK_W)) {
+		if (panelSize_.num[1] * stateNumY_ + 78.0f <= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[1] -= moveSpeed_.num[1];
+		}
+	}
+	if (input_->PressKey(DIK_S)) {
+		if (panelSize_.num[1] * stateNumY_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[1] += moveSpeed_.num[1];
+		}
+		else if (panelSize_.num[0] * stateNumX_ + 78.0f <= spriteTransform_.translate.num[0] && panelSize_.num[0] * stateNumX_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[0]) {
+			spriteTransform_.translate.num[1] += moveSpeed_.num[1];
+		}
+	}
+	if (input_->PressKey(DIK_A)) {
+		if (panelSize_.num[0] * stateNumX_ + 78.0f <= spriteTransform_.translate.num[0]) {
+			spriteTransform_.translate.num[0] -= moveSpeed_.num[0];
+			for (int i = 0; i < 6; i++) {
+				sprite_[i]->SetFlip(false, false);
+			}
+		}
+		else if (panelSize_.num[1] * stateNumY_ + 78.0f <= spriteTransform_.translate.num[1] && panelSize_.num[1] * stateNumY_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[0] -= moveSpeed_.num[0];
+			for (int i = 0; i < 6; i++) {
+				sprite_[i]->SetFlip(false, false);
+			}
+		}
+	}
+	if (input_->PressKey(DIK_D)) {
+		if (panelSize_.num[0] * stateNumX_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[0]) {
+			spriteTransform_.translate.num[0] += moveSpeed_.num[0];
+			for (int i = 0; i < 6; i++) {
+				sprite_[i]->SetFlip(true, false);
+			}
+		}
+		else if (panelSize_.num[1] * stateNumY_ + 78.0f <= spriteTransform_.translate.num[1] && panelSize_.num[1] * stateNumY_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[0] += moveSpeed_.num[0];
+			for (int i = 0; i < 6; i++) {
+				sprite_[i]->SetFlip(true, false);
+			}
+		}
+	}
 }
 
 void Player::MoveTShapedLeft() {
-
+	if (input_->PressKey(DIK_W)) {
+		if (panelSize_.num[1] * stateNumY_ + 78.0f <= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[1] -= moveSpeed_.num[1];
+		}
+		else if (panelSize_.num[0] * stateNumX_ + 78.0f <= spriteTransform_.translate.num[0] && panelSize_.num[0] * stateNumX_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[0]) {
+			spriteTransform_.translate.num[1] -= moveSpeed_.num[1];
+		}
+	}
+	if (input_->PressKey(DIK_S)) {
+		if (panelSize_.num[1] * stateNumY_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[1] += moveSpeed_.num[1];
+		}
+		else if (panelSize_.num[0] * stateNumX_ + 78.0f <= spriteTransform_.translate.num[0] && panelSize_.num[0] * stateNumX_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[0]) {
+			spriteTransform_.translate.num[1] += moveSpeed_.num[1];
+		}
+	}
+	if (input_->PressKey(DIK_A)) {
+		if (panelSize_.num[0] * stateNumX_ + 78.0f <= spriteTransform_.translate.num[0]) {
+			spriteTransform_.translate.num[0] -= moveSpeed_.num[0];
+			for (int i = 0; i < 6; i++) {
+				sprite_[i]->SetFlip(false, false);
+			}
+		}
+		else if (panelSize_.num[1] * stateNumY_ + 78.0f <= spriteTransform_.translate.num[1] && panelSize_.num[1] * stateNumY_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[0] -= moveSpeed_.num[0];
+			for (int i = 0; i < 6; i++) {
+				sprite_[i]->SetFlip(false, false);
+			}
+		}
+	}
+	if (input_->PressKey(DIK_D)) {
+		if (panelSize_.num[0] * stateNumX_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[0]) {
+			spriteTransform_.translate.num[0] += moveSpeed_.num[0];
+			for (int i = 0; i < 6; i++) {
+				sprite_[i]->SetFlip(true, false);
+			}
+		}
+	}
 }
 
 void Player::MoveTShapedRight() {
-
+	if (input_->PressKey(DIK_W)) {
+		if (panelSize_.num[1] * stateNumY_ + 78.0f <= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[1] -= moveSpeed_.num[1];
+		}
+		else if (panelSize_.num[0] * stateNumX_ + 78.0f <= spriteTransform_.translate.num[0] && panelSize_.num[0] * stateNumX_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[0]) {
+			spriteTransform_.translate.num[1] -= moveSpeed_.num[1];
+		}
+	}
+	if (input_->PressKey(DIK_S)) {
+		if (panelSize_.num[1] * stateNumY_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[1] += moveSpeed_.num[1];
+		}
+		else if (panelSize_.num[0] * stateNumX_ + 78.0f <= spriteTransform_.translate.num[0] && panelSize_.num[0] * stateNumX_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[0]) {
+			spriteTransform_.translate.num[1] += moveSpeed_.num[1];
+		}
+	}
+	if (input_->PressKey(DIK_A)) {
+		if (panelSize_.num[0] * stateNumX_ + 78.0f <= spriteTransform_.translate.num[0]) {
+			spriteTransform_.translate.num[0] -= moveSpeed_.num[0];
+			for (int i = 0; i < 6; i++) {
+				sprite_[i]->SetFlip(false, false);
+			}
+		}
+	}
+	if (input_->PressKey(DIK_D)) {
+		if (panelSize_.num[0] * stateNumX_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[0]) {
+			spriteTransform_.translate.num[0] += moveSpeed_.num[0];
+			for (int i = 0; i < 6; i++) {
+				sprite_[i]->SetFlip(true, false);
+			}
+		}
+		else if (panelSize_.num[1] * stateNumY_ + 78.0f <= spriteTransform_.translate.num[1] && panelSize_.num[1] * stateNumY_ + panelSize_.num[0] - 78.0f >= spriteTransform_.translate.num[1]) {
+			spriteTransform_.translate.num[0] += moveSpeed_.num[0];
+			for (int i = 0; i < 6; i++) {
+				sprite_[i]->SetFlip(true, false);
+			}
+		}
+	}
 }
 
 void Player::SetNowMapState(int nowMapState) {
