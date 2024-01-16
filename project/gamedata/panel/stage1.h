@@ -14,8 +14,8 @@ public:
 	void Update();
 	void Draw();
 
-	static const uint32_t kMapWidth = 8;
-	static const uint32_t kMapHeight = 5;
+	static const uint32_t kMapWidth = 3;
+	static const uint32_t kMapHeight = 2;
 
 	enum class MapState {
 		None,//0
@@ -42,6 +42,7 @@ public:
 		Transform transform;
 		Direction direction;
 		bool isFold_ = false;
+		MapState previousMapstate;
 	};
 
 	//パネル配置のロード
@@ -88,6 +89,7 @@ private:
 	Vector4 spriteMaterial_;
 
 	bool isFoldMove_ = false;
+	bool previousFoldChack = false;
 
 	std::unique_ptr<CreateSprite> spriteD1_[kMapHeight * kMapWidth];
 	std::unique_ptr<CreateSprite> spriteD2_[kMapHeight * kMapWidth];
