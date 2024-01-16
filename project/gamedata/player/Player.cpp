@@ -20,7 +20,7 @@ void Player::Initialize() {
 	startPointX = 1;
 	startPointY = 1;
 
-	spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{panelSize_.num[0] * startPointX + panelSize_.num[0] / 2,panelSize_.num[1] * startPointY + panelSize_.num[1] / 2,0.0f} };
+	spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{1280 / 2, 720 / 2,0.0f} };
 	spriteUvTransform_ = { {1.0f,1.0f,1.0f}, {0.0f,0.0f,0.0f}, {0.0f,0.0f,0.0f} };
 	spriteMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 }
@@ -41,23 +41,24 @@ void Player::Update() {
 }
 
 void Player::Draw() {
+	Vector3 test{ 1280 / 2, 720 /2,1.0f };
 	if (spriteTimer_ >= 0 && spriteTimer_ < 10) {
-		sprite_[0]->Draw(spriteTransform_, spriteUvTransform_, spriteMaterial_);
+		sprite_[0]->Draw(Transform{ spriteTransform_.scale ,spriteTransform_.rotate ,test }, spriteUvTransform_, spriteMaterial_);
 	}
 	if (spriteTimer_ >= 10 && spriteTimer_ < 20) {
-		sprite_[1]->Draw(spriteTransform_, spriteUvTransform_, spriteMaterial_);
+		sprite_[1]->Draw(Transform{ spriteTransform_.scale ,spriteTransform_.rotate ,test }, spriteUvTransform_, spriteMaterial_);
 	}
 	if (spriteTimer_ >= 20 && spriteTimer_ < 30) {
-		sprite_[2]->Draw(spriteTransform_, spriteUvTransform_, spriteMaterial_);
+		sprite_[2]->Draw(Transform{ spriteTransform_.scale ,spriteTransform_.rotate ,test }, spriteUvTransform_, spriteMaterial_);
 	}
 	if (spriteTimer_ >= 30 && spriteTimer_ < 40) {
-		sprite_[3]->Draw(spriteTransform_, spriteUvTransform_, spriteMaterial_);
+		sprite_[3]->Draw(Transform{ spriteTransform_.scale ,spriteTransform_.rotate ,test }, spriteUvTransform_, spriteMaterial_);
 	}
 	if (spriteTimer_ >= 40 && spriteTimer_ < 50) {
-		sprite_[4]->Draw(spriteTransform_, spriteUvTransform_, spriteMaterial_);
+		sprite_[4]->Draw(Transform{ spriteTransform_.scale ,spriteTransform_.rotate ,test }, spriteUvTransform_, spriteMaterial_);
 	}
 	if (spriteTimer_ >= 50 && spriteTimer_ < 60) {
-		sprite_[5]->Draw(spriteTransform_, spriteUvTransform_, spriteMaterial_);
+		sprite_[5]->Draw(Transform{ spriteTransform_.scale ,spriteTransform_.rotate ,test }, spriteUvTransform_, spriteMaterial_);
 	}
 }
 

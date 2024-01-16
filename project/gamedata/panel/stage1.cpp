@@ -42,45 +42,45 @@ void Stage1::Draw() {
 				sprite_[i * j]->Draw(map[i][j].transform, spriteUvTransform_, spriteMaterial_);
 			}
 			if (map[i][j].mapstate == MapState::Vertical) {
-				sprite1_[i * j]->Draw(map[i][j].transform, spriteUvTransform_, spriteMaterial_);
+				sprite1_[i * j]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]}}, spriteUvTransform_, spriteMaterial_);
 			}
 			if (map[i][j].mapstate == MapState::Side) {
-				sprite2_[i * j]->Draw(map[i][j].transform, spriteUvTransform_, spriteMaterial_);
+				sprite2_[i * j]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
 			}
 			if (map[i][j].mapstate == MapState::Cross) {
-				sprite3_[i * j]->Draw(map[i][j].transform, spriteUvTransform_, spriteMaterial_);
+				sprite3_[i * j]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
 			}
 			if (map[i][j].mapstate == MapState::TShapedTop) {
-				sprite4_[i * j]->Draw(map[i][j].transform, spriteUvTransform_, spriteMaterial_);
+				sprite4_[i * j]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
 			}
 			if (map[i][j].mapstate == MapState::TShapedDown) {
-				sprite5_[i * j]->Draw(map[i][j].transform, spriteUvTransform_, spriteMaterial_);
+				sprite5_[i * j]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
 			}
 			if (map[i][j].mapstate == MapState::TShapedLeft) {
-				sprite6_[i * j]->Draw(map[i][j].transform, spriteUvTransform_, spriteMaterial_);
+				sprite6_[i * j]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
 			}
 			if (map[i][j].mapstate == MapState::TShapedRight) {
-				sprite7_[i * j]->Draw(map[i][j].transform, spriteUvTransform_, spriteMaterial_);
+				sprite7_[i * j]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
 			}
 
 			if (map[i][j].direction == Direction::None) {
 
 			}
 			if (map[i][j].direction == Direction::Up) {
-				spriteD1_[i * j]->Draw(map[i][j].transform, spriteUvTransform_, spriteMaterial_);
+				spriteD1_[i * j]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
 			}
 			if (map[i][j].direction == Direction::Down) {
-				spriteD2_[i * j]->Draw(map[i][j].transform, spriteUvTransform_, spriteMaterial_);
+				spriteD2_[i * j]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
 			}
 			if (map[i][j].direction == Direction::Left) {
-				spriteD3_[i * j]->Draw(map[i][j].transform, spriteUvTransform_, spriteMaterial_);
+				spriteD3_[i * j]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
 			}
 			if (map[i][j].direction == Direction::Right) {
-				spriteD4_[i * j]->Draw(map[i][j].transform, spriteUvTransform_, spriteMaterial_);
+				spriteD4_[i * j]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
 			}
 		}
 	}
-	selectSprite_->Draw(transform_, spriteUvTransform_, spriteMaterial_);
+	selectSprite_->Draw(Transform{ transform_.scale,transform_.rotate,{transform_.translate.num[0] + playerPos_.num[0],transform_.translate.num[1] + playerPos_.num[1] ,transform_.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
 }
 
 void Stage1::LoadMap() {
@@ -352,6 +352,11 @@ int Stage1::GetNowMapState(Vector2 pos) {
 	int i = 0;
 	int j = 0;
 	int state = 0;
+	playerPos_.num[0] = pos.num[0] - 1280/2;
+	playerPos_.num[1] = pos.num[1] - 720/2;
+	playerPos_.num[0] = -playerPos_.num[0];
+	playerPos_.num[1] = -playerPos_.num[1];
+
 	while (true) {
 		if (panelSize_.num[0] * i <= pos.num[0] && panelSize_.num[0] * i + panelSize_.num[0] >= pos.num[0]) {
 			if (panelSize_.num[1] * j <= pos.num[1] && panelSize_.num[1] * j + panelSize_.num[1] >= pos.num[1]) {

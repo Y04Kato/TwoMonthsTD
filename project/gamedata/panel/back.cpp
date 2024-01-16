@@ -4,7 +4,7 @@ void Back::Initialize() {
 	textureManager_ = TextureManager::GetInstance();
 
 	//backModel_.reset(Model::CreateModelFromObj("project/gamedata/resources/back", "back.obj"));
-	backTexture_ = textureManager_->Load("project/gamedata/resources/page.png");
+	backTexture_ = textureManager_->Load("project/gamedata/resources/paper.png");
 
 	sprite_ = std::make_unique <CreateSprite>();
 	sprite_->Initialize(Vector2{ 100.0f,100.0f }, backTexture_, false, false);

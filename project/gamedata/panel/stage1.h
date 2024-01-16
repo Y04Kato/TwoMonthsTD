@@ -97,4 +97,6 @@ private:
 
 	int playerStatePosX_ = 0;
 	int playerStatePosY_ = 0;
+
+	Vector3 playerPos_;
 };
