@@ -14,8 +14,8 @@ public:
 	void Update();
 	void Draw();
 
-	static const uint32_t kMapWidth = 3;
-	static const uint32_t kMapHeight = 2;
+	static const uint32_t kMapWidth = 5;
+	static const uint32_t kMapHeight = 4;
 
 	enum class MapState {
 		None,//0

@@ -13,6 +13,32 @@ void Stage1::Initialize() {
 	spriteTexture_[6] = textureManager_->Load("project/gamedata/resources/panel/panel5.png");
 	spriteTexture_[7] = textureManager_->Load("project/gamedata/resources/panel/panel6.png");
 
+	for (int i = 0; i < kMapHeight * kMapWidth; i++) {
+		sprite_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[0], false, false));
+		sprite_[i]->SetTextureInitialSize();
+
+		sprite1_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[1], false, false));
+		sprite1_[i]->SetTextureInitialSize();
+
+		sprite2_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[2], false, false));
+		sprite2_[i]->SetTextureInitialSize();
+
+		sprite3_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[3], false, false));
+		sprite3_[i]->SetTextureInitialSize();
+
+		sprite4_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[4], false, false));
+		sprite4_[i]->SetTextureInitialSize();
+
+		sprite5_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[5], false, false));
+		sprite5_[i]->SetTextureInitialSize();
+
+		sprite6_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[6], false, false));
+		sprite6_[i]->SetTextureInitialSize();
+
+		sprite7_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[7], false, false));
+		sprite7_[i]->SetTextureInitialSize();
+	}
+
 	texture_ = textureManager_->Load("project/gamedata/resources/panel/select.png");
 	selectSprite_.reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, texture_, false, false));
 	selectSprite_->SetTextureInitialSize();
@@ -39,9 +65,6 @@ void Stage1::Draw() {
 	int test = 0;
 	for (int i = 0; i < kMapHeight; i++) {
 		for (int j = 0; j < kMapWidth; j++) {
-			if (map[i][j].mapstate == MapState::None) {
-				sprite_[test]->Draw(map[i][j].transform, spriteUvTransform_, spriteMaterial_);
-			}
 			if (map[i][j].mapstate == MapState::Vertical) {
 				sprite1_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
 			}
@@ -99,32 +122,6 @@ void Stage1::LoadMap() {
 	}
 
 	fclose(fp);
-
-	for (int i = 0; i < kMapHeight * kMapWidth; i++) {
-		sprite_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[0], false, false));
-		sprite_[i]->SetTextureInitialSize();
-
-		sprite1_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[1], false, false));
-		sprite1_[i]->SetTextureInitialSize();
-
-		sprite2_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[2], false, false));
-		sprite2_[i]->SetTextureInitialSize();
-
-		sprite3_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[3], false, false));
-		sprite3_[i]->SetTextureInitialSize();
-
-		sprite4_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[4], false, false));
-		sprite4_[i]->SetTextureInitialSize();
-
-		sprite5_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[5], false, false));
-		sprite5_[i]->SetTextureInitialSize();
-
-		sprite6_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[6], false, false));
-		sprite6_[i]->SetTextureInitialSize();
-
-		sprite7_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[7], false, false));
-		sprite7_[i]->SetTextureInitialSize();
-	}
 
 	LoadDirection();
 }
@@ -273,12 +270,6 @@ void Stage1::Fold() {
 					}
 					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Cross) {
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Cross;
-					}
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedTop) {
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedTop;
-					}
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedDown) {
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedDown;
 					}
 					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedLeft) {
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedRight;
