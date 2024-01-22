@@ -126,6 +126,7 @@
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="project\gamedata\panel\back.cpp" />
     <ClCompile Include="project\gamedata\panel\stage1.cpp" />
+    <ClCompile Include="project\gamedata\panel\stage2.cpp" />
     <ClCompile Include="project\gamedata\player\Player.cpp" />
     <ClCompile Include="project\gamedata\scenes\GameClearScene.cpp" />
     <ClCompile Include="project\gamedata\scenes\GamePlayScene.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="base\WinApp.h" />
     <ClInclude Include="project\gamedata\panel\back.h" />
     <ClInclude Include="project\gamedata\panel\stage1.h" />
+    <ClInclude Include="project\gamedata\panel\stage2.h" />
     <ClInclude Include="project\gamedata\player\Player.h" />
     <ClInclude Include="project\gamedata\scenes\GameClearScene.h" />
     <ClInclude Include="project\gamedata\scenes\GamePlayScene.h" />
