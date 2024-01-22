@@ -39,6 +39,11 @@ void Stage1::Initialize() {
 		sprite7_[i]->SetTextureInitialSize();
 	}
 
+	for (int i = 0; i < 7; i++) {
+		spriteTest_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[i + 1], false, false));
+		spriteTest_[i]->SetTextureInitialSize();
+	}
+
 	texture_ = textureManager_->Load("project/gamedata/resources/panel/select.png");
 	selectSprite_.reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, texture_, false, false));
 	selectSprite_->SetTextureInitialSize();
@@ -71,8 +76,8 @@ void Stage1::Draw() {
 	for (int i = 0; i < kMapHeight; i++) {
 		for (int j = 0; j < kMapWidth; j++) {
 			//パネル描画
-			if (map[i][j].mapstate == MapState::None) {
-				if (map[i][j].previousMapstate == MapState::Vertical) {
+			if (map[i][j].mapstate == MapState::None && map[i][j].isFold_ == true) {
+				/*if (map[i][j].previousMapstate == MapState::Vertical) {
 					sprite2_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
 				}
 				if (map[i][j].previousMapstate == MapState::Side) {
@@ -82,17 +87,17 @@ void Stage1::Draw() {
 					sprite3_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
 				}
 				if (map[i][j].previousMapstate == MapState::TShapedTop) {
-					sprite5_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
-				}
-				if (map[i][j].previousMapstate == MapState::TShapedDown) {
 					sprite4_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
 				}
-				if (map[i][j].previousMapstate == MapState::TShapedLeft) {
-					sprite7_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
+				if (map[i][j].previousMapstate == MapState::TShapedDown) {
+					sprite5_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
 				}
-				if (map[i][j].previousMapstate == MapState::TShapedRight) {
+				if (map[i][j].previousMapstate == MapState::TShapedLeft) {
 					sprite6_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
 				}
+				if (map[i][j].previousMapstate == MapState::TShapedRight) {
+					sprite7_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
+				}*/
 			}
 			if (map[i][j].mapstate == MapState::Vertical) {
 				sprite1_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
@@ -115,7 +120,42 @@ void Stage1::Draw() {
 			if (map[i][j].mapstate == MapState::TShapedRight) {
 				sprite7_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
 			}
+			test++;
+		}
+	}
 
+
+	//折る演出用
+	if (drawTest_ == true) {
+		if (mapstate_ == MapState::None) {
+
+		}
+		if (mapstate_ == MapState::Vertical) {
+			spriteTest_[0]->Draw(Transform{ transformTest_.scale,transformTest_.rotate,{transformTest_.translate.num[0] + playerPos_.num[0],transformTest_.translate.num[1] + playerPos_.num[1] ,transformTest_.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
+		}
+		if (mapstate_ == MapState::Side) {
+			spriteTest_[1]->Draw(Transform{ transformTest_.scale,transformTest_.rotate,{transformTest_.translate.num[0] + playerPos_.num[0],transformTest_.translate.num[1] + playerPos_.num[1] ,transformTest_.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
+		}
+		if (mapstate_ == MapState::Cross) {
+			spriteTest_[2]->Draw(Transform{ transformTest_.scale,transformTest_.rotate,{transformTest_.translate.num[0] + playerPos_.num[0],transformTest_.translate.num[1] + playerPos_.num[1] ,transformTest_.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
+		}
+		if (mapstate_ == MapState::TShapedTop) {
+			spriteTest_[3]->Draw(Transform{ transformTest_.scale,transformTest_.rotate,{transformTest_.translate.num[0] + playerPos_.num[0],transformTest_.translate.num[1] + playerPos_.num[1] ,transformTest_.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
+		}
+		if (mapstate_ == MapState::TShapedDown) {
+			spriteTest_[4]->Draw(Transform{ transformTest_.scale,transformTest_.rotate,{transformTest_.translate.num[0] + playerPos_.num[0],transformTest_.translate.num[1] + playerPos_.num[1] ,transformTest_.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
+		}
+		if (mapstate_ == MapState::TShapedLeft) {
+			spriteTest_[5]->Draw(Transform{ transformTest_.scale,transformTest_.rotate,{transformTest_.translate.num[0] + playerPos_.num[0],transformTest_.translate.num[1] + playerPos_.num[1] ,transformTest_.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
+		}
+		if (mapstate_ == MapState::TShapedRight) {
+			spriteTest_[6]->Draw(Transform{ transformTest_.scale,transformTest_.rotate,{transformTest_.translate.num[0] + playerPos_.num[0],transformTest_.translate.num[1] + playerPos_.num[1] ,transformTest_.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
+		}
+	}
+
+	test = 0;
+	for (int i = 0; i < kMapHeight; i++) {
+		for (int j = 0; j < kMapWidth; j++) {
 			//折り矢印描画
 			if (map[i][j].direction == Direction::None) {
 
@@ -136,6 +176,7 @@ void Stage1::Draw() {
 			test++;
 		}
 	}
+
 	//パネル選択カーソル描画
 	selectSprite_->Draw(Transform{ transform_.scale,transform_.rotate,{transform_.translate.num[0] + playerPos_.num[0],transform_.translate.num[1] + playerPos_.num[1] ,transform_.translate.num[2]} }, spriteUvTransform_, spriteMaterial_);
 }
@@ -270,99 +311,52 @@ void Stage1::Fold() {
 			}
 			else {//自機が折るパネルの先に居なければ
 				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == false) {//折り
-					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] += 0.05f;
-					map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].spriteMaterial.num[3] -= 0.016f;
-
-					if (map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].spriteMaterial.num[3] <= 0.0f) {
-						map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].spriteMaterial.num[3] = 0.0f;
-					}
+					FoldDirecting(1, false);//折る演出
 
 					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack == false) {//今のパネルを記憶する
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
-						map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].previousMapstate = map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate;
+						map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].previousMapstateUp = map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = true;
+						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::None;
 					}
 
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] >= 3.18f / 2) {//半分折ったら
+					if (drawTest_ == false) {
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Vertical) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Side;
+							map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = MapState::Side;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Side) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Vertical;
+							map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = MapState::Vertical;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Cross) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Cross;
+							map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = MapState::Cross;
 						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedLeft) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedRight;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedRight) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedLeft;
-						}
-					}
-
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] >= 3.18f) {//折り終わり
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedTop) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedDown;
+							map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = MapState::TShapedDown;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedDown) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedTop;
+							map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = MapState::TShapedTop;
 						}
-
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] = 3.18f;
-						isFoldMove_ = false;
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = true;
-
-						map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::None;
+						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedLeft) {
+							map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = MapState::TShapedRight;
+						}
+						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedRight) {
+							map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = MapState::TShapedLeft;
+						}
 					}
 				}
 
-				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == true) {//折り返し
-					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] -= 0.05f;
-					map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].spriteMaterial.num[3] += 0.016f;
-
-					if (map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].spriteMaterial.num[3] >= 1.0f) {
-						map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].spriteMaterial.num[3] = 1.0f;
-					}
-
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] < 3.0f) {//折り始め
-						map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].previousMapstate;
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Vertical) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Side;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Side) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Vertical;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Cross) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Cross;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedLeft) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedRight;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedRight) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedLeft;
-						}
-					}
-
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] <= 3.18f / 2) {//半分折ったら
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedTop) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedDown;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedDown) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedTop;
-						}
+				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == true && isFoldMove_ == true) {//折り返し
+					FoldDirecting(1, true);//折る演出
+					map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].previousMapstateUp;
+					if (drawTest_ == false) {
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate;
-					}
 
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] <= 0.0f) {//折り終わり
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] = 0.0f;
 						isFoldMove_ = false;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = false;
 
 						//記憶したパネル情報の初期化
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate = MapState::None;
-						map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].previousMapstate = MapState::None;
+						map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].previousMapstateUp = MapState::None;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = false;
 					}
 				}
@@ -375,99 +369,52 @@ void Stage1::Fold() {
 			}
 			else {//自機が折るパネルの先に居なければ
 				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == false) {//折り
-					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] += 0.05f;
-					map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].spriteMaterial.num[3] -= 0.016f;
-
-					if (map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].spriteMaterial.num[3] <= 0.0f) {
-						map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].spriteMaterial.num[3] = 0.0f;
-					}
+					FoldDirecting(2, false);//折る演出
 
 					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack == false) {//今のパネルを記憶する
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
-						map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].previousMapstate = map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate;
+						map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].previousMapstateDown = map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = true;
+						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::None;
 					}
 
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] >= 3.18f / 2) {//半分折ったら
+					if (drawTest_ == false) {
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Vertical) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Side;
+							map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = MapState::Side;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Side) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Vertical;
+							map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = MapState::Vertical;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Cross) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Cross;
+							map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = MapState::Cross;
 						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedLeft) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedRight;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedRight) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedLeft;
-						}
-					}
-
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] >= 3.18f) {//折り終わり
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedTop) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedDown;
+							map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = MapState::TShapedDown;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedDown) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedTop;
+							map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = MapState::TShapedTop;
 						}
-
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] = 3.18f;
-						isFoldMove_ = false;
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = true;
-
-						map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::None;
+						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedLeft) {
+							map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = MapState::TShapedRight;
+						}
+						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedRight) {
+							map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = MapState::TShapedLeft;
+						}
 					}
 				}
 
-				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == true) {//折り返し
-					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] -= 0.05f;
-					map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].spriteMaterial.num[3] += 0.016f;
-
-					if (map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].spriteMaterial.num[3] >= 1.0f) {
-						map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].spriteMaterial.num[3] = 1.0f;
-					}
-
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] < 3.0f) {//折り始め
-						map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].previousMapstate;
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Vertical) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Side;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Side) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Vertical;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Cross) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Cross;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedLeft) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedRight;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedRight) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedLeft;
-						}
-					}
-
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] <= 3.18f / 2) {//半分折ったら
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedTop) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedDown;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedDown) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedTop;
-						}
+				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == true && isFoldMove_ == true) {//折り返し
+					FoldDirecting(2, true);//折る演出
+					map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].previousMapstateDown;
+					if (drawTest_ == false) {
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate;
-					}
 
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] <= 0.0f) {//折り終わり
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[0] = 0.0f;
 						isFoldMove_ = false;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = false;
 
 						//記憶したパネル情報の初期化
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate = MapState::None;
-						map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].previousMapstate = MapState::None;
+						map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].previousMapstateDown = MapState::None;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = false;
 					}
 				}
@@ -480,98 +427,51 @@ void Stage1::Fold() {
 			}
 			else {//自機が折るパネルの先に居なければ
 				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == false) {//折り
-					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] += 0.05f;
-					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].spriteMaterial.num[3] -= 0.016f;
-
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].spriteMaterial.num[3] <= 0.0f) {
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].spriteMaterial.num[3] = 0.0f;
-					}
-
+					FoldDirecting(3, false);//折る演出
 					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack == false) {//今のパネルを記憶する
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].previousMapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate;
+						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].previousMapstateLeft = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = true;
+						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::None;
 					}
 
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] >= 3.18f / 2) {//半分折ったら
+					if (drawTest_ == false) {
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Vertical) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Side;
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = MapState::Side;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Side) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Vertical;
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = MapState::Vertical;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Cross) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Cross;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedLeft) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedRight;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedRight) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedLeft;
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = MapState::Cross;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedTop) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedDown;
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = MapState::TShapedDown;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedDown) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedTop;
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = MapState::TShapedTop;
 						}
-					}
-
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] >= 3.18f) {//折り終わり
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] = 3.18f;
-						isFoldMove_ = false;
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = true;
-
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::None;
+						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedLeft) {
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = MapState::TShapedRight;
+						}
+						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedRight) {
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = MapState::TShapedLeft;
+						}
 					}
 				}
 
-				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == true) {//折り返し
-					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] -= 0.05f;
-					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].spriteMaterial.num[3] += 0.016f;
-
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].spriteMaterial.num[3] >= 1.0f) {
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].spriteMaterial.num[3] = 1.0f;
-					}
-
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] < 3.0f) {//折り始め
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].previousMapstate;
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Vertical) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Side;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Side) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Vertical;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Cross) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Cross;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedLeft) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedRight;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedRight) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedLeft;
-						}
-					}
-
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] <= 3.18f / 2) {//半分折ったら
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedTop) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedDown;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedDown) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedTop;
-						}
+				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == true && isFoldMove_ == true) {//折り返し
+					FoldDirecting(3, true);//折る演出
+					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].previousMapstateLeft;
+					if (drawTest_ == false) {
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate;
-					}
 
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] <= 0.0f) {//折り終わり
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] = 0.0f;
 						isFoldMove_ = false;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = false;
 
 						//記憶したパネル情報の初期化
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate = MapState::None;
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].previousMapstate = MapState::None;
+						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].previousMapstateDown = MapState::None;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = false;
 					}
 				}
@@ -584,101 +484,448 @@ void Stage1::Fold() {
 			}
 			else {//自機が折るパネルの先に居なければ
 				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == false) {//折り
-					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] += 0.05f;
-					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].spriteMaterial.num[3] -= 0.016f;
-
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].spriteMaterial.num[3] <= 0.0f) {
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].spriteMaterial.num[3] = 0.0f;
-					}
-
+					FoldDirecting(4, false);//折る演出
 					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack == false) {//今のパネルを記憶する
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].previousMapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate;
+						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].previousMapstateRight = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = true;
+						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::None;
 					}
 
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] >= 3.18f / 2) {//半分折ったら
+					if (drawTest_ == false) {
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Vertical) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Side;
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = MapState::Side;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Side) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Vertical;
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = MapState::Vertical;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Cross) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Cross;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedLeft) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedRight;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedRight) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedLeft;
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = MapState::Cross;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedTop) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedDown;
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = MapState::TShapedDown;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedDown) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedTop;
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = MapState::TShapedTop;
 						}
-					}
-
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] >= 3.18f) {//折り終わり
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] = 3.18f;
-						isFoldMove_ = false;
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = true;
-
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::None;
+						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedLeft) {
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = MapState::TShapedRight;
+						}
+						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedRight) {
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = MapState::TShapedLeft;
+						}
 					}
 				}
 
-				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == true) {//折り返し
-					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] -= 0.05f;
-					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].spriteMaterial.num[3] += 0.016f;
-
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].spriteMaterial.num[3] >= 1.0f) {
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].spriteMaterial.num[3] = 1.0f;
-					}
-
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] < 3.0f) {//折り始め
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].previousMapstate;
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Vertical) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Side;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Side) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Vertical;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Cross) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::Cross;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedLeft) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedRight;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedRight) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedLeft;
-						}
-					}
-
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] <= 3.18f / 2) {//半分折ったら
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedTop) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedDown;
-						}
-						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedDown) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::TShapedTop;
-						}
+				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == true && isFoldMove_ == true) {//折り返し
+					FoldDirecting(4, true);//折る演出
+					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].previousMapstateRight;
+					if (drawTest_ == false) {
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate;
-					}
 
-					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] <= 0.0f) {//折り終わり
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform.rotate.num[1] = 0.0f;
 						isFoldMove_ = false;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = false;
 
 						//記憶したパネル情報の初期化
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate = MapState::None;
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].previousMapstate = MapState::None;
+						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].previousMapstateDown = MapState::None;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = false;
 					}
 				}
+			}
+		}
+	}
+}
+
+void Stage1::FoldDirecting(int direction, bool isLapel) {
+	drawTest_ = true;
+	if (isLapel == false) {//折る時
+		if (direction == 1) {//上に折る
+			//アンカーを設定
+			if (setTest_ == false) {
+				for (int i = 0; i < 7; i++) {
+					spriteTest_[i]->SetAnchor(Vector2{ 0.0f,0.0f });
+				}
+				transformTest_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform;
+				mapstate_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
+				mapstate2_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
+				setTest_ = true;
+			}
+			transformTest_.rotate.num[0] += 0.05f;
+
+			if (transformTest_.rotate.num[0] >= 3.18f / 2) {//半分折ったら
+				if (mapstate2_ == MapState::Vertical) {
+					mapstate_ = MapState::Side;
+				}
+				if (mapstate2_ == MapState::Side) {
+					mapstate_ = MapState::Vertical;
+				}
+				if (mapstate2_ == MapState::Cross) {
+					mapstate_ = MapState::Cross;
+				}
+				if (mapstate2_ == MapState::TShapedLeft) {
+					mapstate_ = MapState::TShapedRight;
+				}
+				if (mapstate2_ == MapState::TShapedRight) {
+					mapstate_ = MapState::TShapedLeft;
+				}
+			}
+
+			if (transformTest_.rotate.num[0] >= 3.18f) {//折り終わり
+				if (mapstate2_ == MapState::TShapedTop) {
+					mapstate_ = MapState::TShapedDown;
+				}
+				if (mapstate2_ == MapState::TShapedDown) {
+					mapstate_ = MapState::TShapedTop;
+				}
+
+				transformTest_.rotate.num[0] = 3.18f;
+
+				drawTest_ = false;
+				isFoldMove_ = false;
+				setTest_ = false;
+				map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = true;
+			}
+		}
+
+		if (direction == 2) {//下に折る
+			//アンカーを設定
+			if (setTest_ == false) {
+				for (int i = 0; i < 7; i++) {
+					spriteTest_[i]->SetAnchor(Vector2{ 0.0f,1.0f });
+				}
+				transformTest_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform;
+				mapstate_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
+				mapstate2_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
+				setTest_ = true;
+			}
+			transformTest_.rotate.num[0] += 0.05f;
+
+			if (transformTest_.rotate.num[0] >= 3.18f / 2) {//半分折ったら
+				if (mapstate2_ == MapState::Vertical) {
+					mapstate_ = MapState::Side;
+				}
+				if (mapstate2_ == MapState::Side) {
+					mapstate_ = MapState::Vertical;
+				}
+				if (mapstate2_ == MapState::Cross) {
+					mapstate_ = MapState::Cross;
+				}
+				if (mapstate2_ == MapState::TShapedLeft) {
+					mapstate_ = MapState::TShapedRight;
+				}
+				if (mapstate2_ == MapState::TShapedRight) {
+					mapstate_ = MapState::TShapedLeft;
+				}
+			}
+
+			if (transformTest_.rotate.num[0] >= 3.18f) {//折り終わり
+				if (mapstate2_ == MapState::TShapedTop) {
+					mapstate_ = MapState::TShapedDown;
+				}
+				if (mapstate2_ == MapState::TShapedDown) {
+					mapstate_ = MapState::TShapedTop;
+				}
+
+				transformTest_.rotate.num[0] = 3.18f;
+
+				drawTest_ = false;
+				isFoldMove_ = false;
+				setTest_ = false;
+				map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = true;
+			}
+		}
+
+		if (direction == 3) {//左に折る
+			//アンカーを設定
+			if (setTest_ == false) {
+				for (int i = 0; i < 7; i++) {
+					spriteTest_[i]->SetAnchor(Vector2{ 0.0f,0.0f });
+				}
+				transformTest_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform;
+				mapstate_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
+				mapstate2_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
+				setTest_ = true;
+			}
+			transformTest_.rotate.num[1] += 0.05f;
+
+			if (transformTest_.rotate.num[1] >= 3.18f / 2) {//半分折ったら
+				if (mapstate2_ == MapState::Vertical) {
+					mapstate_ = MapState::Side;
+				}
+				if (mapstate2_ == MapState::Side) {
+					mapstate_ = MapState::Vertical;
+				}
+				if (mapstate2_ == MapState::Cross) {
+					mapstate_ = MapState::Cross;
+				}
+				if (mapstate2_ == MapState::TShapedTop) {
+					mapstate_ = MapState::TShapedDown;
+				}
+				if (mapstate2_ == MapState::TShapedDown) {
+					mapstate_ = MapState::TShapedTop;
+				}
+			}
+
+			if (transformTest_.rotate.num[1] >= 3.18f) {//折り終わり
+				if (mapstate2_ == MapState::TShapedLeft) {
+					mapstate_ = MapState::TShapedRight;
+				}
+				if (mapstate2_ == MapState::TShapedRight) {
+					mapstate_ = MapState::TShapedLeft;
+				}
+
+				transformTest_.rotate.num[1] = 3.18f;
+
+				drawTest_ = false;
+				isFoldMove_ = false;
+				setTest_ = false;
+				map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = true;
+			}
+		}
+		if (direction == 4) {//右に折る
+			//アンカーを設定
+			if (setTest_ == false) {
+				for (int i = 0; i < 7; i++) {
+					spriteTest_[i]->SetAnchor(Vector2{ 1.0f,0.0f });
+				}
+				transformTest_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform;
+				mapstate_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
+				mapstate2_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
+				setTest_ = true;
+			}
+			transformTest_.rotate.num[1] += 0.05f;
+
+			if (transformTest_.rotate.num[1] >= 3.18f / 2) {//半分折ったら
+				if (mapstate2_ == MapState::Vertical) {
+					mapstate_ = MapState::Side;
+				}
+				if (mapstate2_ == MapState::Side) {
+					mapstate_ = MapState::Vertical;
+				}
+				if (mapstate2_ == MapState::Cross) {
+					mapstate_ = MapState::Cross;
+				}
+				if (mapstate2_ == MapState::TShapedTop) {
+					mapstate_ = MapState::TShapedDown;
+				}
+				if (mapstate2_ == MapState::TShapedDown) {
+					mapstate_ = MapState::TShapedTop;
+				}
+			}
+
+			if (transformTest_.rotate.num[1] >= 3.18f) {//折り終わり
+				if (mapstate2_ == MapState::TShapedLeft) {
+					mapstate_ = MapState::TShapedRight;
+				}
+				if (mapstate2_ == MapState::TShapedRight) {
+					mapstate_ = MapState::TShapedLeft;
+				}
+
+				transformTest_.rotate.num[1] = 3.18f;
+
+				drawTest_ = false;
+				isFoldMove_ = false;
+				setTest_ = false;
+				map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = true;
+			}
+		}
+	}
+	else {//折り返し
+		if (direction == 1) {//上
+			//アンカーを設定
+			if (setTest_ == false) {
+				for (int i = 0; i < 7; i++) {
+					spriteTest_[i]->SetAnchor(Vector2{ 0.0f,0.0f });
+				}
+				transformTest_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform;
+				mapstate_ = map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate;
+				mapstate2_ = map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate;
+				setTest_ = true;
+				transformTest_.rotate.num[0] = 3.18f;
+			}
+			transformTest_.rotate.num[0] -= 0.05f;
+
+			if (transformTest_.rotate.num[0] <= 3.18f / 2) {//半分折ったら
+				if (mapstate2_ == MapState::Vertical) {
+					mapstate_ = MapState::Side;
+				}
+				if (mapstate2_ == MapState::Side) {
+					mapstate_ = MapState::Vertical;
+				}
+				if (mapstate2_ == MapState::Cross) {
+					mapstate_ = MapState::Cross;
+				}
+				if (mapstate2_ == MapState::TShapedLeft) {
+					mapstate_ = MapState::TShapedRight;
+				}
+				if (mapstate2_ == MapState::TShapedRight) {
+					mapstate_ = MapState::TShapedLeft;
+				}
+			}
+
+			if (transformTest_.rotate.num[0] <= 0.0f) {//折り終わり
+				if (mapstate2_ == MapState::TShapedTop) {
+					mapstate_ = MapState::TShapedDown;
+				}
+				if (mapstate2_ == MapState::TShapedDown) {
+					mapstate_ = MapState::TShapedTop;
+				}
+
+				transformTest_.rotate.num[0] = 0.0f;
+
+				drawTest_ = false;
+				isFoldMove_ = false;
+				setTest_ = false;
+				map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = true;
+			}
+		}
+
+		if (direction == 2) {//下
+			//アンカーを設定
+			if (setTest_ == false) {
+				for (int i = 0; i < 7; i++) {
+					spriteTest_[i]->SetAnchor(Vector2{ 0.0f,1.0f });
+				}
+				transformTest_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform;
+				mapstate_ = map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate;
+				mapstate2_ = map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate;
+				setTest_ = true;
+				transformTest_.rotate.num[0] = 3.18f;
+			}
+			transformTest_.rotate.num[0] -= 0.05f;
+
+			if (transformTest_.rotate.num[0] <= 3.18f / 2) {//半分折ったら
+				if (mapstate2_ == MapState::Vertical) {
+					mapstate_ = MapState::Side;
+				}
+				if (mapstate2_ == MapState::Side) {
+					mapstate_ = MapState::Vertical;
+				}
+				if (mapstate2_ == MapState::Cross) {
+					mapstate_ = MapState::Cross;
+				}
+				if (mapstate2_ == MapState::TShapedLeft) {
+					mapstate_ = MapState::TShapedRight;
+				}
+				if (mapstate2_ == MapState::TShapedRight) {
+					mapstate_ = MapState::TShapedLeft;
+				}
+			}
+
+			if (transformTest_.rotate.num[0] <= 0.0f) {//折り終わり
+				if (mapstate2_ == MapState::TShapedTop) {
+					mapstate_ = MapState::TShapedDown;
+				}
+				if (mapstate2_ == MapState::TShapedDown) {
+					mapstate_ = MapState::TShapedTop;
+				}
+
+				transformTest_.rotate.num[0] = 0.0f;
+
+				drawTest_ = false;
+				isFoldMove_ = false;
+				setTest_ = false;
+				map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = true;
+			}
+		}
+
+		if (direction == 3) {//左
+			//アンカーを設定
+			if (setTest_ == false) {
+				for (int i = 0; i < 7; i++) {
+					spriteTest_[i]->SetAnchor(Vector2{ 0.0f,0.0f });
+				}
+				transformTest_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform;
+				mapstate_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate;
+				mapstate2_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate;
+				setTest_ = true;
+				transformTest_.rotate.num[1] = 3.18f;
+			}
+			transformTest_.rotate.num[1] -= 0.05f;
+
+			if (mapstate2_ == MapState::TShapedLeft) {
+				mapstate_ = MapState::TShapedRight;
+			}
+			if (mapstate2_ == MapState::TShapedRight) {
+				mapstate_ = MapState::TShapedLeft;
+			}
+
+			if (transformTest_.rotate.num[1] <= 3.18f / 2) {//半分折ったら
+				if (mapstate2_ == MapState::Vertical) {
+					mapstate_ = MapState::Side;
+				}
+				if (mapstate2_ == MapState::Side) {
+					mapstate_ = MapState::Vertical;
+				}
+				if (mapstate2_ == MapState::Cross) {
+					mapstate_ = MapState::Cross;
+				}
+				if (mapstate2_ == MapState::TShapedTop) {
+					mapstate_ = MapState::TShapedDown;
+				}
+				if (mapstate2_ == MapState::TShapedDown) {
+					mapstate_ = MapState::TShapedTop;
+				}
+			}
+
+			if (transformTest_.rotate.num[1] <= 0.0f) {//折り終わり
+
+				transformTest_.rotate.num[1] = 0.0f;
+
+				drawTest_ = false;
+				isFoldMove_ = false;
+				setTest_ = false;
+				map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = true;
+			}
+		}
+		if (direction == 4) {//右
+			//アンカーを設定
+			if (setTest_ == false) {
+				for (int i = 0; i < 7; i++) {
+					spriteTest_[i]->SetAnchor(Vector2{ 1.0f,0.0f });
+				}
+				transformTest_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].transform;
+				mapstate_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate;
+				mapstate2_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate;
+				setTest_ = true;
+				transformTest_.rotate.num[1] = 3.18f;
+			}
+			transformTest_.rotate.num[1] -= 0.05f;
+
+			if (mapstate2_ == MapState::TShapedLeft) {
+				mapstate_ = MapState::TShapedRight;
+			}
+			if (mapstate2_ == MapState::TShapedRight) {
+				mapstate_ = MapState::TShapedLeft;
+			}
+
+			if (transformTest_.rotate.num[1] <= 3.18f / 2) {//半分折ったら
+				if (mapstate2_ == MapState::Vertical) {
+					mapstate_ = MapState::Side;
+				}
+				if (mapstate2_ == MapState::Side) {
+					mapstate_ = MapState::Vertical;
+				}
+				if (mapstate2_ == MapState::Cross) {
+					mapstate_ = MapState::Cross;
+				}
+				if (mapstate2_ == MapState::TShapedTop) {
+					mapstate_ = MapState::TShapedDown;
+				}
+				if (mapstate2_ == MapState::TShapedDown) {
+					mapstate_ = MapState::TShapedTop;
+				}
+			}
+
+			if (transformTest_.rotate.num[1] <= 0.0f) {//折り終わり
+
+				transformTest_.rotate.num[1] = 0.0f;
+
+				drawTest_ = false;
+				isFoldMove_ = false;
+				setTest_ = false;
+				map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ = true;
 			}
 		}
 	}

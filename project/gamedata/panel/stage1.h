@@ -45,6 +45,10 @@ public:
 		Direction direction;//折る向き
 		bool isFold_ = false;//現在折っているか
 		MapState previousMapstate;//折る前のmapstateデータ
+		MapState previousMapstateUp;//折る前のmapstateデータ上
+		MapState previousMapstateDown;//折る前のmapstateデータ下
+		MapState previousMapstateLeft;//折る前のmapstateデータ左
+		MapState previousMapstateRight;//折る前のmapstateデータ右
 		Vector4 spriteMaterial;//スプライトのmaterialcolor
 		bool previousFoldChack = false;//折る前のmapstateデータの取得フラグ
 	};
@@ -59,6 +63,8 @@ public:
 
 	//選択中のパネルを折る
 	void Fold();
+	//折る演出、directionはDirection参照
+	void FoldDirecting(int direction,bool isLapel);
 
 	//プレイヤー座標から現在居るMapStateを返す
 	int GetNowMapState(Vector2 pos);
@@ -108,4 +114,11 @@ private:
 	int setPlayerStatePosY_ = 0;//Playerが折る際に居たパネルの場所Y
 
 	Vector3 playerPos_;//プレイヤーの座標
+
+	std::unique_ptr<CreateSprite> spriteTest_[7];//TShapedRight
+	Transform transformTest_;
+	MapState mapstate_;
+	MapState mapstate2_;
+	bool drawTest_ = false;
+	bool setTest_ = false;
 };
