@@ -109,6 +109,15 @@ void GamePlayScene::Initialize() {
 	player_->Initialize();
 
 	player_->SetStartPoint(stage1_->GetStartPosX(), stage1_->GetStartPosY());
+
+	numbers_.reset(new Numbers);
+	numbers_->Initialize();
+	numbers_->SetNum(stage1_->GetFoldCount());
+	numbers_->SetInitialNum(stage1_->GetFoldCount());
+	transformNumbers_.translate = { 950.0f,0.0f,0.0f };
+	transformNumbers_.rotate = { 0.0f,0.0f,0.0f };
+	transformNumbers_.scale = { 1.2f,0.12f,1.2f };
+	numbers_->SetTransform(transformNumbers_);
 }
 
 void GamePlayScene::Update() {
@@ -285,6 +294,8 @@ void GamePlayScene::Update() {
 	if (stage1_->GetClearFlag() == true) {
 		sceneNo = CLEAR_SCENE;
 	}
+
+	numbers_->SetNum(stage1_->GetFoldCount());
 }
 
 void GamePlayScene::Draw() {
@@ -332,6 +343,8 @@ void GamePlayScene::Draw() {
 
 #pragma region 前景スプライト描画
 	CJEngine_->PreDraw2D();
+
+	numbers_->Draw();
 
 #pragma endregion
 }

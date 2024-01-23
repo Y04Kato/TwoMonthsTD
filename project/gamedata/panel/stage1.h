@@ -92,6 +92,8 @@ public:
 
 	bool GetClearFlag() { return isGameClear_; }
 
+	int GetFoldCount() { return foldCount_; }
+
 private:
 	Input* input_ = nullptr;
 	TextureManager* textureManager_;
@@ -153,6 +155,6 @@ private:
 
 	bool isGameClear_ = false;
 
-	int foldCount_ = 0;//折った回数
+	int foldCount_ = 0;//折る残り回数
 	int foldCountMax_ = 5;//折る回数上限
 };

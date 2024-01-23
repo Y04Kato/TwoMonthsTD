@@ -122,6 +122,7 @@
     <ClCompile Include="base\components\math\MathCalculation.cpp" />
     <ClCompile Include="base\CJEngine.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="project\gamedata\numbers\numbers.cpp" />
     <ClCompile Include="project\gamedata\panel\back.cpp" />
     <ClCompile Include="project\gamedata\panel\stage1.cpp" />
     <ClCompile Include="project\gamedata\player\Player.cpp" />
@@ -206,6 +207,7 @@
       <DeploymentContent>false</DeploymentContent>
     </ClInclude>
     <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="project\gamedata\numbers\numbers.h" />
     <ClInclude Include="project\gamedata\panel\back.h" />
     <ClInclude Include="project\gamedata\panel\stage1.h" />
     <ClInclude Include="project\gamedata\player\Player.h" />

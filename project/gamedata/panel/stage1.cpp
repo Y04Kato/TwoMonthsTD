@@ -76,6 +76,8 @@ void Stage1::Initialize() {
 	}
 
 	LoadMap();
+
+	foldCount_ = foldCountMax_;
 }
 
 void Stage1::Update() {
@@ -213,6 +215,13 @@ void Stage1::LoadMap() {
 		for (int j = 0; j < kMapWidth; j++) {
 			fscanf_s(fp, "%d,", &map[i][j].mapstate);//パネル情報読み込み
 			map[i][j].transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{j * panelSize_.num[0],i * panelSize_.num[1],0.0f} };
+			map[i][j].isFold_ = false;
+			map[i][j].previousFoldChack = false;
+			map[i][j].previousMapstate = MapState::None;
+			map[i][j].previousMapstateUp = MapState::None;
+			map[i][j].previousMapstateDown = MapState::None;
+			map[i][j].previousMapstateLeft = MapState::None;
+			map[i][j].previousMapstateRight = MapState::None;
 		}
 	}
 
@@ -346,9 +355,9 @@ void Stage1::Select() {
 
 		}
 		else {//自機が折るパネルの上に居なければ
-			if (foldCount_ <= foldCountMax_) {//折った回数が上限に満たなければ
+			if (0 < foldCount_ && isFoldMove_ == false) {//折った回数が上限に満たなければ
 				isFoldMove_ = true;
-				foldCount_++;
+				foldCount_--;
 				setPlayerStatePosX_ = playerStatePosX_;
 				setPlayerStatePosY_ = playerStatePosY_;
 			}
@@ -1061,4 +1070,5 @@ int Stage1::GetStartPosY() {
 void Stage1::Reset() {
 	LoadMap();
 	CheckGoalCount_ = 0;
+	foldCount_ = foldCountMax_;
 }
