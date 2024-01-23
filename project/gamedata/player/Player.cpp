@@ -446,4 +446,14 @@ void Player::SetPanelSize(Vector2 panelSize) {
 
 void Player::ResetPlayer() {
 	spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{panelSize_.num[0] * startPointX + panelSize_.num[0] / 2,panelSize_.num[1] * startPointY + panelSize_.num[1] / 2,0.1f} };
+	isReset_ = true;
+}
+
+void Player::SetStartPoint(int panelX, int panelY) {
+	startPointX = panelX;
+	startPointY = panelY;
+}
+
+void Player::SetIsReset(bool isReset) {
+	isReset_ = isReset;
 }

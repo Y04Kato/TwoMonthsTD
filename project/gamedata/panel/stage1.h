@@ -38,11 +38,20 @@ public:
 		Right,//4
 	};
 
+	//スタート、ゴール地点などの追加データ
+	enum class Event {
+		None,//0
+		Start,//1
+		Goal,//2
+		CheckGoal,//3　通過済みのゴール
+	};
+
 	//MapData
 	struct Map {
 		MapState mapstate;//パネルの種類
 		Transform transform;//座標
 		Direction direction;//折る向き
+		Event event;//イベントパネルのデータ
 		bool isFold_ = false;//現在折っているか
 		MapState previousMapstate;//折る前のmapstateデータ
 		MapState previousMapstateUp;//折る前のmapstateデータ上
@@ -57,6 +66,8 @@ public:
 	void LoadMap();
 	//各パネルの折れる方向のロード
 	void LoadDirection();
+	//各パネルにイベントがあるかロード
+	void LoadEvent();
 
 	//各パネル選択
 	void Select();
@@ -72,7 +83,14 @@ public:
 	int GetNowMapStatePosX();//プレイヤー座標を元に現在の配列座標を返すX
 	int GetNowMapStatePosY();//プレイヤー座標を元に現在の配列座標を返すY
 
+	int GetStartPosX();//プレイヤーの開始地点を渡すX
+	int GetStartPosY();//プレイヤーの開始地点を渡すY
+
 	Vector2 GetPanelSize() { return panelSize_; }
+
+	void Reset();
+
+	bool GetClearFlag() { return isGameClear_; }
 
 private:
 	Input* input_ = nullptr;
@@ -107,6 +125,11 @@ private:
 	std::unique_ptr<CreateSprite> spriteD4_[kMapHeight * kMapWidth];//DirectionRight
 	uint32_t spriteTextureD_[4];
 
+	std::unique_ptr<CreateSprite> spriteStart_[kMapHeight * kMapWidth];//
+	std::unique_ptr<CreateSprite> spriteGoal_[kMapHeight * kMapWidth];//
+	std::unique_ptr<CreateSprite> spriteCheckGoal_[kMapHeight * kMapWidth];//
+	uint32_t spriteTextureE_[3];
+
 	int playerStatePosX_ = 0;//Playerの現在居るパネルの場所X
 	int playerStatePosY_ = 0;//Playerの現在居るパネルの場所Y
 
@@ -121,4 +144,12 @@ private:
 	MapState mapstate2_;
 	bool drawTest_ = false;
 	bool setTest_ = false;
+
+	int startPointX_;
+	int startPointY_;
+
+	int goalCount_;
+	int CheckGoalCount_;
+
+	bool isGameClear_ = false;
 };

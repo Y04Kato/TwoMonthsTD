@@ -33,6 +33,12 @@ public:
 
 	void ResetPlayer();
 
+	void SetStartPoint(int panelX, int panelY);
+
+	bool GetIsReset() { return isReset_; }
+
+	void SetIsReset(bool isReset);
+
 private:
 	Input* input_ = nullptr;
 
@@ -60,4 +66,6 @@ private:
 
 	//上下左右で1234
 	int panelDirection_ = 0;
+
+	bool isReset_ = false;
 };

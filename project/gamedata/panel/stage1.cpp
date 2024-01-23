@@ -13,6 +13,10 @@ void Stage1::Initialize() {
 	spriteTexture_[6] = textureManager_->Load("project/gamedata/resources/panel/panel5.png");
 	spriteTexture_[7] = textureManager_->Load("project/gamedata/resources/panel/panel6.png");
 
+	spriteTextureE_[0] = textureManager_->Load("project/gamedata/resources/panel/startPoint.png");
+	spriteTextureE_[1] = textureManager_->Load("project/gamedata/resources/panel/goalPoint.png");
+	spriteTextureE_[2] = textureManager_->Load("project/gamedata/resources/panel/passedGoalPoint.png");
+
 	for (int i = 0; i < kMapHeight * kMapWidth; i++) {
 		sprite_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[0], false, false));
 		sprite_[i]->SetTextureInitialSize();
@@ -37,6 +41,15 @@ void Stage1::Initialize() {
 
 		sprite7_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[7], false, false));
 		sprite7_[i]->SetTextureInitialSize();
+
+		spriteStart_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTextureE_[0], false, false));
+		spriteStart_[i]->SetTextureInitialSize();
+
+		spriteGoal_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTextureE_[1], false, false));
+		spriteGoal_[i]->SetTextureInitialSize();
+
+		spriteCheckGoal_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTextureE_[2], false, false));
+		spriteCheckGoal_[i]->SetTextureInitialSize();
 	}
 
 	for (int i = 0; i < 7; i++) {
@@ -49,6 +62,11 @@ void Stage1::Initialize() {
 	selectSprite_->SetTextureInitialSize();
 	transform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
+	spriteTextureD_[0] = textureManager_->Load("project/gamedata/resources/panel/directionUp.png");
+	spriteTextureD_[1] = textureManager_->Load("project/gamedata/resources/panel/directionDown.png");
+	spriteTextureD_[2] = textureManager_->Load("project/gamedata/resources/panel/directionLeft.png");
+	spriteTextureD_[3] = textureManager_->Load("project/gamedata/resources/panel/directionRight.png");
+
 	spriteUvTransform_ = { {1.0f,1.0f,1.0f}, {0.0f,0.0f,0.0f}, {0.0f,0.0f,0.0f} };
 	spriteMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
 	for (int i = 0; i < kMapHeight; i++) {
@@ -57,17 +75,22 @@ void Stage1::Initialize() {
 		}
 	}
 
-	spriteTextureD_[0] = textureManager_->Load("project/gamedata/resources/panel/directionUp.png");
-	spriteTextureD_[1] = textureManager_->Load("project/gamedata/resources/panel/directionDown.png");
-	spriteTextureD_[2] = textureManager_->Load("project/gamedata/resources/panel/directionLeft.png");
-	spriteTextureD_[3] = textureManager_->Load("project/gamedata/resources/panel/directionRight.png");
-
 	LoadMap();
 }
 
 void Stage1::Update() {
 	Select();
 	Fold();
+
+	if (map[playerStatePosY_][playerStatePosX_].event == Event::Goal) {
+		map[playerStatePosY_][playerStatePosX_].event = Event::CheckGoal;
+		CheckGoalCount_++;
+	}
+
+	if (goalCount_ == CheckGoalCount_) {
+		isGameClear_ = true;
+	}
+
 	transform_.translate = { selectPoint_.num[0] * panelSize_.num[0],selectPoint_.num[1] * panelSize_.num[1] ,0.0f };
 }
 
@@ -77,27 +100,7 @@ void Stage1::Draw() {
 		for (int j = 0; j < kMapWidth; j++) {
 			//パネル描画
 			if (map[i][j].mapstate == MapState::None && map[i][j].isFold_ == true) {
-				/*if (map[i][j].previousMapstate == MapState::Vertical) {
-					sprite2_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
-				}
-				if (map[i][j].previousMapstate == MapState::Side) {
-					sprite1_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
-				}
-				if (map[i][j].previousMapstate == MapState::Cross) {
-					sprite3_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
-				}
-				if (map[i][j].previousMapstate == MapState::TShapedTop) {
-					sprite4_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
-				}
-				if (map[i][j].previousMapstate == MapState::TShapedDown) {
-					sprite5_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
-				}
-				if (map[i][j].previousMapstate == MapState::TShapedLeft) {
-					sprite6_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
-				}
-				if (map[i][j].previousMapstate == MapState::TShapedRight) {
-					sprite7_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
-				}*/
+				
 			}
 			if (map[i][j].mapstate == MapState::Vertical) {
 				sprite1_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
@@ -120,10 +123,30 @@ void Stage1::Draw() {
 			if (map[i][j].mapstate == MapState::TShapedRight) {
 				sprite7_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
 			}
+
 			test++;
 		}
 	}
 
+	test = 0;
+	for (int i = 0; i < kMapHeight; i++) {
+		for (int j = 0; j < kMapWidth; j++) {
+			if (map[i][j].event == Event::None) {
+
+			}
+			if (map[i][j].event == Event::Start) {
+				spriteStart_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
+			}
+			if (map[i][j].event == Event::Goal) {
+				spriteGoal_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
+			}
+			if (map[i][j].event == Event::CheckGoal) {
+				spriteCheckGoal_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
+			}
+
+			test++;
+		}
+	}
 
 	//折る演出用
 	if (drawTest_ == true) {
@@ -231,6 +254,10 @@ void Stage1::LoadDirection() {
 				sprite5_[test]->SetAnchor(Vector2{ 0.0f,1.0f });
 				sprite6_[test]->SetAnchor(Vector2{ 0.0f,1.0f });
 				sprite7_[test]->SetAnchor(Vector2{ 0.0f,1.0f });
+
+				spriteStart_[test]->SetAnchor(Vector2{ 0.0f,1.0f });
+				spriteGoal_[test]->SetAnchor(Vector2{ 0.0f,1.0f });
+				spriteCheckGoal_[test]->SetAnchor(Vector2{ 0.0f,1.0f });
 			}
 
 			if (map[i][j].direction == Direction::Left) {
@@ -252,9 +279,36 @@ void Stage1::LoadDirection() {
 				sprite5_[test]->SetAnchor(Vector2{ 1.0f,0.0f });
 				sprite6_[test]->SetAnchor(Vector2{ 1.0f,0.0f });
 				sprite7_[test]->SetAnchor(Vector2{ 1.0f,0.0f });
+
+				spriteStart_[test]->SetAnchor(Vector2{ 1.0f,0.0f });
+				spriteGoal_[test]->SetAnchor(Vector2{ 1.0f,0.0f });
+				spriteCheckGoal_[test]->SetAnchor(Vector2{ 1.0f,0.0f });
 			}
 
 			test++;
+		}
+	}
+
+	fclose(fp);
+
+	LoadEvent();
+}
+
+void Stage1::LoadEvent() {
+	FILE* fp = nullptr;
+	char fname[] = "project/gamedata/resources/csv/Map1Event.csv";
+	errno_t err;
+	err = fopen_s(&fp, fname, "r");
+	for (int i = 0; i < kMapHeight; i++) {
+		for (int j = 0; j < kMapWidth; j++) {
+			fscanf_s(fp, "%d,", &map[i][j].event);
+			if (map[i][j].event == Event::Start) {
+				startPointX_ = j;
+				startPointY_ = i;
+			}
+			if (map[i][j].event == Event::Goal) {
+				goalCount_++;
+			}
 		}
 	}
 
@@ -991,4 +1045,23 @@ int Stage1::GetNowMapStatePosX() {
 
 int Stage1::GetNowMapStatePosY() {
 	return playerStatePosY_;
+}
+
+int Stage1::GetStartPosX() {
+	return startPointX_;
+}
+
+int Stage1::GetStartPosY() {
+	return startPointY_;
+}
+
+void Stage1::Reset() {
+	CheckGoalCount_ = 0;
+	for (int i = 0; i < kMapHeight; i++) {
+		for (int j = 0; j < kMapWidth; j++) {
+			if (map[i][j].event == Event::CheckGoal) {
+				map[i][j].event = Event::Goal;
+			}
+		}
+	}
 }

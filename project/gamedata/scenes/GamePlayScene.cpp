@@ -107,6 +107,8 @@ void GamePlayScene::Initialize() {
 	// Player
 	player_ = std::make_unique<Player>();
 	player_->Initialize();
+
+	player_->SetStartPoint(stage1_->GetStartPosX(), stage1_->GetStartPosY());
 }
 
 void GamePlayScene::Update() {
@@ -274,6 +276,15 @@ void GamePlayScene::Update() {
 	player_->SetNowMapState(stage1_->GetNowMapState(player_->GetPos()));
 	player_->SetNowMapStatePos(stage1_->GetNowMapStatePosX(), stage1_->GetNowMapStatePosY());
 	player_->SetPanelSize(stage1_->GetPanelSize());
+
+	if (player_->GetIsReset() == true) {
+		stage1_->Reset();
+		player_->SetIsReset(false);
+	}
+
+	if (stage1_->GetClearFlag() == true) {
+		sceneNo = CLEAR_SCENE;
+	}
 }
 
 void GamePlayScene::Draw() {
