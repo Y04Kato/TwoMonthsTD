@@ -152,4 +152,7 @@ private:
 	int CheckGoalCount_;
 
 	bool isGameClear_ = false;
+
+	int foldCount_ = 0;//折った回数
+	int foldCountMax_ = 5;//折る回数上限
 };

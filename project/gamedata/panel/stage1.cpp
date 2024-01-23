@@ -346,9 +346,12 @@ void Stage1::Select() {
 
 		}
 		else {//自機が折るパネルの上に居なければ
-			isFoldMove_ = true;
-			setPlayerStatePosX_ = playerStatePosX_;
-			setPlayerStatePosY_ = playerStatePosY_;
+			if (foldCount_ <= foldCountMax_) {//折った回数が上限に満たなければ
+				isFoldMove_ = true;
+				foldCount_++;
+				setPlayerStatePosX_ = playerStatePosX_;
+				setPlayerStatePosY_ = playerStatePosY_;
+			}
 		}
 	}
 }
