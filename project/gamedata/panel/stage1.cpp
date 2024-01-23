@@ -93,6 +93,10 @@ void Stage1::Update() {
 		isGameClear_ = true;
 	}
 
+	ImGui::Begin("stage");
+	ImGui::Text("GoalCount : %d / %d", CheckGoalCount_,goalCount_);
+	ImGui::End();
+
 	transform_.translate = { selectPoint_.num[0] * panelSize_.num[0],selectPoint_.num[1] * panelSize_.num[1] ,0.0f };
 }
 
@@ -1068,6 +1072,7 @@ int Stage1::GetStartPosY() {
 }
 
 void Stage1::Reset() {
+	goalCount_ = 0;
 	LoadMap();
 	CheckGoalCount_ = 0;
 	foldCount_ = foldCountMax_;
