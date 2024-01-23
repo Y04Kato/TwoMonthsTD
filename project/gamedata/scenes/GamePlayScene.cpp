@@ -138,7 +138,6 @@ void GamePlayScene::Update() {
 	viewProjection_.rotation_ = debugCamera_->GetViewProjection()->rotation_;
 	viewProjection_.UpdateMatrix();
 
-
 	for (int i = 0; i < 2; i++) {
 		worldTransformTriangle_[i].UpdateMatrix();
 	}
@@ -150,11 +149,11 @@ void GamePlayScene::Update() {
 	}
 
 	// ステージ更新処理
-	stage2_->Update();
+	stage5_->Update();
 	player_->Update();
-	player_->SetNowMapState(stage2_->GetNowMapState(player_->GetPos()));
-	player_->SetNowMapStatePos(stage2_->GetNowMapStatePosX(), stage2_->GetNowMapStatePosY());
-	player_->SetPanelSize(stage2_->GetPanelSize());
+	player_->SetNowMapState(stage5_->GetNowMapState(player_->GetPos()));
+	player_->SetNowMapStatePos(stage5_->GetNowMapStatePosX(), stage5_->GetNowMapStatePosY());
+	player_->SetPanelSize(stage5_->GetPanelSize());
 }
 
 void GamePlayScene::Draw() {
@@ -171,7 +170,7 @@ void GamePlayScene::Draw() {
 	back_->Draw();
 
 	// ステージ描画
-	stage2_->Draw();
+	stage5_->Draw();
 
 	// プレイヤー描画
 	player_->Draw();
