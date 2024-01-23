@@ -59,7 +59,7 @@ private:
 	WorldTransform worldTransformModel_;
 	Vector4 modelMaterial_;
 
-	uint32_t uvResourceNum_;
+	uint32_t uiResourceNum_;
 	uint32_t monsterBallResourceNum_;
 	uint32_t particleResourceNum_;
 

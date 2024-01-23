@@ -8,7 +8,7 @@ void GamePlayScene::Initialize() {
 
 	//テクスチャ
 	texture_ = 0;
-	uvResourceNum_ = textureManager_->Load("project/gamedata/resources/uvChecker.png");
+	uiResourceNum_ = textureManager_->Load("project/gamedata/resources/ui.png");
 
 	monsterBallResourceNum_ = textureManager_->Load("project/gamedata/resources/monsterBall.png");
 
@@ -35,12 +35,11 @@ void GamePlayScene::Initialize() {
 			{0.0f,0.0f,0.0f},
 		};
 		sprite_[i] = std::make_unique <CreateSprite>();
-		sprite_[i]->Initialize(Vector2{ 100.0f,100.0f }, uvResourceNum_, true, true);
+		sprite_[i]->Initialize(Vector2{ 100.0f,100.0f }, uiResourceNum_, false, false);
 
 		isSpriteDraw_[i] = false;
 	}
-	sprite_[0]->SetTextureLTSize(Vector2{ 0.0f,0.0f }, Vector2{ 50.0f,50.0f });
-	sprite_[0]->SetAnchor(Vector2{ 0.5f,0.5f });
+	sprite_[0]->SetTextureInitialSize();
 	sprite_[1]->SetTextureInitialSize();
 
 	//パーティクル
@@ -317,10 +316,10 @@ void GamePlayScene::Draw() {
 	CJEngine_->PreDraw3D();
 
 	if (isTriangleDraw_[0]) {//Triangle描画
-		triangle_[0]->Draw(worldTransformTriangle_[0], viewProjection_, triangleMaterial_[0], uvResourceNum_);
+		triangle_[0]->Draw(worldTransformTriangle_[0], viewProjection_, triangleMaterial_[0], uiResourceNum_);
 	}
 	if (isTriangleDraw_[1]) {//Triangle描画
-		triangle_[1]->Draw(worldTransformTriangle_[1], viewProjection_, triangleMaterial_[1], uvResourceNum_);
+		triangle_[1]->Draw(worldTransformTriangle_[1], viewProjection_, triangleMaterial_[1], uiResourceNum_);
 	}
 
 	if (isSphereDraw_) {
@@ -345,6 +344,7 @@ void GamePlayScene::Draw() {
 	CJEngine_->PreDraw2D();
 
 	numbers_->Draw();
+	sprite_[0]->Draw(spriteTransform_[0], SpriteuvTransform_[0], spriteMaterial_[0]);
 
 #pragma endregion
 }
