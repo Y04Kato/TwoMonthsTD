@@ -18,6 +18,10 @@
 #include "player/player.h"
 #include "panel/back.h"
 #include "panel/stage1.h"
+#include "panel/stage2.h"
+#include "panel/stage3.h"
+#include "panel/stage4.h"
+#include "panel/stage5.h"
 #pragma endregion
 
 class GamePlayScene :public Iscene {
@@ -79,7 +83,16 @@ private:
 	bool isModelDraw_;
 	bool isParticleDraw_;
 
+	// 背景
 	std::unique_ptr<Back> back_;
-	std::unique_ptr<Stage1> stage1_;
+
+	// プレイヤー
 	std::unique_ptr<Player> player_;
+
+	// ステージ宣言
+	std::unique_ptr<Stage1> stage1_;
+	std::unique_ptr<Stage2> stage2_;
+	std::unique_ptr<Stage3> stage3_;
+	std::unique_ptr<Stage4> stage4_;
+	std::unique_ptr<Stage5> stage5_;
 };

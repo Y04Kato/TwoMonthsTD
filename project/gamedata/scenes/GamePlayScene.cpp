@@ -100,13 +100,29 @@ void GamePlayScene::Initialize() {
 	back_ = std::make_unique<Back>();
 	back_->Initialize();
 
+	// Player
+	player_ = std::make_unique<Player>();
+	player_->Initialize();
+
 	// Stage1
 	stage1_ = std::make_unique<Stage1>();
 	stage1_->Initialize();
 
-	// Player
-	player_ = std::make_unique<Player>();
-	player_->Initialize();
+	// Stage2
+	stage2_ = std::make_unique<Stage2>();
+	stage2_->Initialize();
+
+	// Stage3
+	stage3_ = std::make_unique<Stage3>();
+	stage3_->Initialize();
+
+	// Stage4
+	stage4_ = std::make_unique<Stage4>();
+	stage4_->Initialize();
+
+	// Stage5
+	stage5_ = std::make_unique<Stage5>();
+	stage5_->Initialize();
 }
 
 void GamePlayScene::Update() {
@@ -122,15 +138,6 @@ void GamePlayScene::Update() {
 	viewProjection_.rotation_ = debugCamera_->GetViewProjection()->rotation_;
 	viewProjection_.UpdateMatrix();
 
-	/*if (input_->PressKey(DIK_A)) {
-		OutputDebugStringA("Press A\n");
-	}
-	if (input_->ReleaseKey(DIK_S)) {
-		OutputDebugStringA("Release S\n");
-	}
-	if (input_->TriggerKey(DIK_D)) {
-		OutputDebugStringA("Trigger D\n");
-	}*/
 
 	for (int i = 0; i < 2; i++) {
 		worldTransformTriangle_[i].UpdateMatrix();
@@ -138,137 +145,11 @@ void GamePlayScene::Update() {
 	worldTransformSphere_.UpdateMatrix();
 	worldTransformModel_.UpdateMatrix();
 
-	ImGui::Begin("debug");
-	ImGui::Text("GamePlayScene");
-	if (ImGui::TreeNode("Triangle")) {//三角形
-		if (ImGui::Button("DrawTriangle1")) {
-			if (isTriangleDraw_[0] == false) {
-				isTriangleDraw_[0] = true;
-			}
-			else {
-				isTriangleDraw_[0] = false;
-			}
-		}
-		if (ImGui::Button("DrawTriangle2")) {
-			if (isTriangleDraw_[1] == false) {
-				isTriangleDraw_[1] = true;
-			}
-			else {
-				isTriangleDraw_[1] = false;
-			}
-		}
-		if (isTriangleDraw_[0] == true) {
-			if (ImGui::TreeNode("Triangle1")) {
-				ImGui::DragFloat3("Translate", worldTransformTriangle_[0].translation_.num, 0.05f);
-				ImGui::DragFloat3("Rotate", worldTransformTriangle_[0].rotation_.num, 0.05f);
-				ImGui::DragFloat2("Scale", worldTransformTriangle_[0].scale_.num, 0.05f);
-				ImGui::ColorEdit4("", triangleMaterial_[0].num, 0);
-				ImGui::TreePop();
-			}
-		}
-		if (isTriangleDraw_[1] == true) {
-			if (ImGui::TreeNode("Triangle2")) {
-				ImGui::DragFloat3("Translate", worldTransformTriangle_[1].translation_.num, 0.05f);
-				ImGui::DragFloat3("Rotate", worldTransformTriangle_[1].rotation_.num, 0.05f);
-				ImGui::DragFloat2("Scale", worldTransformTriangle_[1].scale_.num, 0.05f);
-				ImGui::ColorEdit4("", triangleMaterial_[1].num, 0);
-				ImGui::TreePop();
-			}
-		}
-		ImGui::TreePop();
-	}
-	if (ImGui::TreeNode("Sphere")) {//球体
-		if (ImGui::Button("DrawSphere")) {
-			if (isSphereDraw_ == false) {
-				isSphereDraw_ = true;
-			}
-			else {
-				isSphereDraw_ = false;
-			}
-		}
-		ImGui::DragFloat3("Translate", worldTransformSphere_.translation_.num, 0.05f);
-		ImGui::DragFloat3("Rotate", worldTransformSphere_.rotation_.num, 0.05f);
-		ImGui::DragFloat3("Scale", worldTransformSphere_.scale_.num, 0.05f);
-		ImGui::ColorEdit4("", sphereMaterial_.num, 0);
-		ImGui::SliderInt("ChangeTexture", &texture_, 0, 1);
-		ImGui::TreePop();
-	}
-	if (ImGui::TreeNode("Sprite")) {//スプライト
-		if (ImGui::Button("DrawSprite1")) {
-			if (isSpriteDraw_[0] == false) {
-				isSpriteDraw_[0] = true;
-			}
-			else {
-				isSpriteDraw_[0] = false;
-			}
-		}
-		if (ImGui::Button("DrawSprite2")) {
-			if (isSpriteDraw_[1] == false) {
-				isSpriteDraw_[1] = true;
-			}
-			else {
-				isSpriteDraw_[1] = false;
-			}
-		}
-		if (isSpriteDraw_[0] == true) {
-			if (ImGui::TreeNode("Sprite1")) {
-				ImGui::DragFloat2("Translate", spriteTransform_[0].translate.num, 0.05f);
-				ImGui::DragFloat3("Rotate", spriteTransform_[0].rotate.num, 0.05f);
-				ImGui::DragFloat2("Scale", spriteTransform_[0].scale.num, 0.05f);
-				ImGui::ColorEdit4("", spriteMaterial_[0].num, 0);
-				ImGui::DragFloat2("uvScale", SpriteuvTransform_[0].scale.num, 0.1f);
-				ImGui::DragFloat3("uvTranslate", SpriteuvTransform_[0].translate.num, 0.1f);
-				ImGui::DragFloat("uvRotate", &SpriteuvTransform_[0].rotate.num[2], 0.1f);
-				ImGui::TreePop();
-			}
-		}
-		if (isSpriteDraw_[1] == true) {
-			if (ImGui::TreeNode("Sprite2")) {
-				ImGui::DragFloat2("Translate", spriteTransform_[1].translate.num, 0.05f);
-				ImGui::DragFloat3("Rotate", spriteTransform_[1].rotate.num, 0.05f);
-				ImGui::DragFloat2("Scale", spriteTransform_[1].scale.num, 0.05f);
-				ImGui::ColorEdit4("", spriteMaterial_[1].num, 0);
-				ImGui::DragFloat2("uvScale", SpriteuvTransform_[1].scale.num, 0.1f);
-				ImGui::DragFloat3("uvTranslate", SpriteuvTransform_[1].translate.num, 0.1f);
-				ImGui::DragFloat("uvRotate", &SpriteuvTransform_[1].rotate.num[2], 0.1f);
-				ImGui::TreePop();
-			}
-		}
-		ImGui::TreePop();
-	}
-	if (ImGui::TreeNode("Model")) {//objモデル
-		if (ImGui::Button("DrawModel")) {
-			if (isModelDraw_ == false) {
-				isModelDraw_ = true;
-			}
-			else {
-				isModelDraw_ = false;
-			}
-		}
-		ImGui::DragFloat3("Translate", worldTransformModel_.translation_.num, 0.05f);
-		ImGui::DragFloat3("Rotate", worldTransformModel_.rotation_.num, 0.05f);
-		ImGui::DragFloat3("Scale", worldTransformModel_.scale_.num, 0.05f);
-		ImGui::TreePop();
-	}
-	if (ImGui::TreeNode("Particle")) {//パーティクル
-		if (ImGui::Button("DrawParticle")) {
-			if (isParticleDraw_ == false) {
-				isParticleDraw_ = true;
-			}
-			else {
-				isParticleDraw_ = false;
-			}
-		}
-		ImGui::TreePop();
-	}
-
-	ImGui::Text("%f", ImGui::GetIO().Framerate);
-
-	ImGui::End();
 	if (isParticleDraw_) {
 		particle_->Update();
 	}
 
+	// ステージ更新処理
 	stage1_->Update();
 	player_->Update();
 	player_->SetNowMapState(stage1_->GetNowMapState(player_->GetPos()));
@@ -286,9 +167,15 @@ void GamePlayScene::Draw() {
 		}
 	}
 
+	// 背景描画
 	back_->Draw();
+
+	// ステージ描画
 	stage1_->Draw();
+
+	// プレイヤー描画
 	player_->Draw();
+
 #pragma endregion
 
 #pragma region 3Dオブジェクト描画
