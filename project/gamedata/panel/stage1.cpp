@@ -1059,12 +1059,6 @@ int Stage1::GetStartPosY() {
 }
 
 void Stage1::Reset() {
+	LoadMap();
 	CheckGoalCount_ = 0;
-	for (int i = 0; i < kMapHeight; i++) {
-		for (int j = 0; j < kMapWidth; j++) {
-			if (map[i][j].event == Event::CheckGoal) {
-				map[i][j].event = Event::Goal;
-			}
-		}
-	}
 }
