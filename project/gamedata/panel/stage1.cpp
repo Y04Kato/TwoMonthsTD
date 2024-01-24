@@ -1076,4 +1076,5 @@ void Stage1::Reset() {
 	LoadMap();
 	CheckGoalCount_ = 0;
 	foldCount_ = foldCountMax_;
+	isGameClear_ = false;
 }

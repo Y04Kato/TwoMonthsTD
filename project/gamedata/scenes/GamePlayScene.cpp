@@ -285,12 +285,20 @@ void GamePlayScene::Update() {
 	player_->SetNowMapStatePos(stage1_->GetNowMapStatePosX(), stage1_->GetNowMapStatePosY());
 	player_->SetPanelSize(stage1_->GetPanelSize());
 
+	if (isGameStart == true) {
+		stage1_->Reset();
+		isGameStart = false;
+	}
+
 	if (player_->GetIsReset() == true) {
 		stage1_->Reset();
 		player_->SetIsReset(false);
 	}
 
 	if (stage1_->GetClearFlag() == true) {
+		player_->ResetPlayer();
+		player_->SetIsReset(false);
+		isGameStart = true;
 		sceneNo = CLEAR_SCENE;
 	}
 
