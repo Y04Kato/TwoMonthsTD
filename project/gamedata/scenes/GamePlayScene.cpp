@@ -287,6 +287,8 @@ void GamePlayScene::Update() {
 
 	if (isGameStart == true) {
 		stage1_->Reset();
+		player_->ResetPlayer();
+		player_->SetIsReset(false);
 		isGameStart = false;
 	}
 
@@ -296,9 +298,9 @@ void GamePlayScene::Update() {
 	}
 
 	if (stage1_->GetClearFlag() == true) {
+		isGameStart = true;
 		player_->ResetPlayer();
 		player_->SetIsReset(false);
-		isGameStart = true;
 		sceneNo = CLEAR_SCENE;
 	}
 
