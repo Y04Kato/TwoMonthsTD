@@ -11,6 +11,11 @@
 //sceneInclude
 #include "GameTitleScene.h"
 #include "GamePlayScene.h"
+#include "Stage1Scene.h"
+#include "Stage2Scene.h"
+#include "Stage3Scene.h"
+#include "Stage4Scene.h"
+#include "Stage5Scene.h"
 #include "GameClearScene.h"
 
 class SceneManager {

@@ -125,6 +125,10 @@
     <ClCompile Include="project\gamedata\numbers\numbers.cpp" />
     <ClCompile Include="project\gamedata\panel\back.cpp" />
     <ClCompile Include="project\gamedata\panel\stage1.cpp" />
+    <ClCompile Include="project\gamedata\panel\stage2.cpp" />
+    <ClCompile Include="project\gamedata\panel\stage3.cpp" />
+    <ClCompile Include="project\gamedata\panel\stage4.cpp" />
+    <ClCompile Include="project\gamedata\panel\stage5.cpp" />
     <ClCompile Include="project\gamedata\player\Player.cpp" />
     <ClCompile Include="project\gamedata\scenes\GameClearScene.cpp" />
     <ClCompile Include="project\gamedata\scenes\GamePlayScene.cpp" />
@@ -132,6 +136,11 @@
     <ClCompile Include="base\components\manager\SceneManager.cpp" />
     <ClCompile Include="base\components\utilities\collisionManager\CollisionManager.cpp" />
     <ClCompile Include="base\components\utilities\globalVariables\GlobalVariables.cpp" />
+    <ClCompile Include="project\gamedata\scenes\Stage1Scene.cpp" />
+    <ClCompile Include="project\gamedata\scenes\Stage2Scene.cpp" />
+    <ClCompile Include="project\gamedata\scenes\Stage3Scene.cpp" />
+    <ClCompile Include="project\gamedata\scenes\Stage4Scene.cpp" />
+    <ClCompile Include="project\gamedata\scenes\Stage5Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="project\gamedata\resources\shaders\Object2d.PS.hlsl">
@@ -210,6 +219,10 @@
     <ClInclude Include="project\gamedata\numbers\numbers.h" />
     <ClInclude Include="project\gamedata\panel\back.h" />
     <ClInclude Include="project\gamedata\panel\stage1.h" />
+    <ClInclude Include="project\gamedata\panel\stage2.h" />
+    <ClInclude Include="project\gamedata\panel\stage3.h" />
+    <ClInclude Include="project\gamedata\panel\stage4.h" />
+    <ClInclude Include="project\gamedata\panel\stage5.h" />
     <ClInclude Include="project\gamedata\player\Player.h" />
     <ClInclude Include="project\gamedata\scenes\GameClearScene.h" />
     <ClInclude Include="project\gamedata\scenes\GamePlayScene.h" />
@@ -221,6 +234,11 @@
     <ClInclude Include="base\components\utilities\collisionManager\CollisionManager.h" />
     <ClInclude Include="base\components\utilities\globalVariables\GlobalVariables.h" />
     <ClInclude Include="project\gamedata\resources\resource.h" />
+    <ClInclude Include="project\gamedata\scenes\Stage1Scene.h" />
+    <ClInclude Include="project\gamedata\scenes\Stage2Scene.h" />
+    <ClInclude Include="project\gamedata\scenes\Stage3Scene.h" />
+    <ClInclude Include="project\gamedata\scenes\Stage4Scene.h" />
+    <ClInclude Include="project\gamedata\scenes\Stage5Scene.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />

@@ -8,13 +8,13 @@
 
 #include <memory>
 
-class Stage1 {
+class Stage4 {
 public:
 	void Initialize();
 	void Update();
 	void Draw();
 
-	static const uint32_t kMapWidth = 4;
+	static const uint32_t kMapWidth = 5;
 	static const uint32_t kMapHeight = 4;
 
 	//パネルの種類
@@ -75,7 +75,7 @@ public:
 	//選択中のパネルを折る
 	void Fold();
 	//折る演出、directionはDirection参照
-	void FoldDirecting(int direction,bool isLapel);
+	void FoldDirecting(int direction, bool isLapel);
 
 	//プレイヤー座標から現在居るMapStateを返す
 	int GetNowMapState(Vector2 pos);

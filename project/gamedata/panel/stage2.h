@@ -8,7 +8,7 @@
 
 #include <memory>
 
-class Stage1 {
+class Stage2 {
 public:
 	void Initialize();
 	void Update();
@@ -75,7 +75,7 @@ public:
 	//選択中のパネルを折る
 	void Fold();
 	//折る演出、directionはDirection参照
-	void FoldDirecting(int direction,bool isLapel);
+	void FoldDirecting(int direction, bool isLapel);
 
 	//プレイヤー座標から現在居るMapStateを返す
 	int GetNowMapState(Vector2 pos);
