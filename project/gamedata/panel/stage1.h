@@ -14,7 +14,7 @@ public:
 	void Update();
 	void Draw();
 
-	static const uint32_t kMapWidth = 5;
+	static const uint32_t kMapWidth = 4;
 	static const uint32_t kMapHeight = 4;
 
 	//パネルの種類
