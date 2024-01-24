@@ -149,11 +149,11 @@ void GamePlayScene::Update() {
 	}
 
 	// ステージ更新処理
-	stage5_->Update();
+	stage1_->Update();
 	player_->Update();
-	player_->SetNowMapState(stage5_->GetNowMapState(player_->GetPos()));
-	player_->SetNowMapStatePos(stage5_->GetNowMapStatePosX(), stage5_->GetNowMapStatePosY());
-	player_->SetPanelSize(stage5_->GetPanelSize());
+	player_->SetNowMapState(stage1_->GetNowMapState(player_->GetPos()));
+	player_->SetNowMapStatePos(stage1_->GetNowMapStatePosX(), stage1_->GetNowMapStatePosY());
+	player_->SetPanelSize(stage1_->GetPanelSize());
 }
 
 void GamePlayScene::Draw() {
@@ -170,7 +170,7 @@ void GamePlayScene::Draw() {
 	back_->Draw();
 
 	// ステージ描画
-	stage5_->Draw();
+	stage1_->Draw();
 
 	// プレイヤー描画
 	player_->Draw();
