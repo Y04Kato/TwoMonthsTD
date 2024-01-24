@@ -83,6 +83,10 @@ void Stage5Scene::Update() {
 	viewProjection_.rotation_ = debugCamera_->GetViewProjection()->rotation_;
 	viewProjection_.UpdateMatrix();
 
+	if (isParticleDraw_) {
+		particle_->Update();
+	}
+
 	stage5_->Update();
 	player_->Update();
 	player_->SetNowMapState(stage5_->GetNowMapState(player_->GetPos()));
@@ -121,6 +125,7 @@ void Stage5Scene::Draw() {
 #pragma endregion
 
 #pragma region 3Dオブジェクト描画
+	CJEngine_->PreDraw3D();
 
 #pragma endregion
 

@@ -89,6 +89,10 @@ void Stage2Scene::Update() {
 	player_->SetNowMapStatePos(stage2_->GetNowMapStatePosX(), stage2_->GetNowMapStatePosY());
 	player_->SetPanelSize(stage2_->GetPanelSize());
 
+	if (isParticleDraw_) {
+		particle_->Update();
+	}
+
 	if (isGameStart == true) {
 		stage2_->Reset();
 		player_->ResetPlayer();
@@ -121,6 +125,7 @@ void Stage2Scene::Draw() {
 #pragma endregion
 
 #pragma region 3Dオブジェクト描画
+	CJEngine_->PreDraw3D();
 
 #pragma endregion
 
