@@ -13,6 +13,7 @@ void GameTitleScene::Initialize() {
 	pageR_ = textureManager_->Load("project/gamedata/resources/pageRight.png");
 	pageAll_ = textureManager_->Load("project/gamedata/resources/page.png");
 	start_ = textureManager_->Load("project/gamedata/resources/pressSpace.png");
+	start2_ = textureManager_->Load("project/gamedata/resources/pressSpace2.png");
 	title_ = textureManager_->Load("project/gamedata/resources/title.png");
 	tutorial_ = textureManager_->Load("project/gamedata/resources/tutorial.png");
 
@@ -59,6 +60,11 @@ void GameTitleScene::Initialize() {
 	sprite_[5]->SetTextureInitialSize();
 	sprite_[5]->SetAnchor(Vector2{ 0.5f,0.5f });
 
+	sprite_[6] = std::make_unique <CreateSprite>();
+	sprite_[6]->Initialize(Vector2{ 100.0f,100.0f }, start2_, false, false);
+	sprite_[6]->SetTextureInitialSize();
+	sprite_[6]->SetAnchor(Vector2{ 0.5f,0.5f });
+
 	count = 0;
 }
 
@@ -98,6 +104,18 @@ void GameTitleScene::Update() {
 		}
 	}
 	if (count == 1) {
+		if (changeAlpha_ == false) {
+			spriteAlpha_ -= 8;
+			if (spriteAlpha_ <= 0) {
+				changeAlpha_ = true;
+			}
+		}
+		if (changeAlpha_ == true) {
+			spriteAlpha_ += 8;
+			if (spriteAlpha_ >= 256) {
+				changeAlpha_ = false;
+			}
+		}
 	}
 	if (count == 2) {
 		count = 0;
@@ -117,6 +135,7 @@ void GameTitleScene::Draw() {
 			sprite_[4]->Draw(spriteTransform_, SpriteuvTransform_, spriteMaterial_);
 		}
 		if (count == 1) {
+			sprite_[6]->Draw(spriteTransform_, SpriteuvTransform_, Vector4{ 1.0f,1.0f,1.0f,spriteAlpha_ / 256.0f });
 			sprite_[5]->Draw(spriteTransform_, SpriteuvTransform_, spriteMaterial_);
 		}
 	}

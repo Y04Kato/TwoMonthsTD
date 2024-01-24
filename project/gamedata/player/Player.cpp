@@ -141,6 +141,10 @@ void Player::Moves() {
 			ResetPlayer();
 		}
 	}
+
+	if (input_->TriggerKey(DIK_R)) {
+		ResetPlayer();
+	}
 }
 
 void Player::MoveNone() {
