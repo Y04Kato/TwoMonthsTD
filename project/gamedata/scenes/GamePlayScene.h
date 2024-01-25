@@ -88,5 +88,5 @@ private:
 	std::unique_ptr<Numbers> numbers_;
 	Transform transformNumbers_;
 
-	bool isGameStart = false;
+	bool isGameStart = true;
 };

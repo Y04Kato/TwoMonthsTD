@@ -128,6 +128,7 @@
     <ClCompile Include="project\gamedata\player\Player.cpp" />
     <ClCompile Include="project\gamedata\scenes\GameClearScene.cpp" />
     <ClCompile Include="project\gamedata\scenes\GamePlayScene.cpp" />
+    <ClCompile Include="project\gamedata\scenes\GameSelectScene.cpp" />
     <ClCompile Include="project\gamedata\scenes\GameTitleScene.cpp" />
     <ClCompile Include="base\components\manager\SceneManager.cpp" />
     <ClCompile Include="base\components\utilities\collisionManager\CollisionManager.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="project\gamedata\player\Player.h" />
     <ClInclude Include="project\gamedata\scenes\GameClearScene.h" />
     <ClInclude Include="project\gamedata\scenes\GamePlayScene.h" />
+    <ClInclude Include="project\gamedata\scenes\GameSelectScene.h" />
     <ClInclude Include="project\gamedata\scenes\GameTitleScene.h" />
     <ClInclude Include="base\components\manager\Iscene.h" />
     <ClInclude Include="base\components\manager\SceneManager.h" />

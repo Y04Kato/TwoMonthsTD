@@ -93,7 +93,7 @@ void GameClearScene::Update() {
 	}
 	if (count == 1) {
 		count = 0;
-		sceneNo = TITLE_SCENE;
+		sceneNo = SELECT_SCENE;
 	}
 }
 

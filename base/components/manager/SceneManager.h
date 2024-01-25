@@ -10,6 +10,7 @@
 
 //sceneInclude
 #include "GameTitleScene.h"
+#include "GameSelectScene.h"
 #include "GamePlayScene.h"
 #include "GameClearScene.h"
 

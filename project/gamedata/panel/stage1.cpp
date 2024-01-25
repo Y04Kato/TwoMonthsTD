@@ -74,10 +74,6 @@ void Stage1::Initialize() {
 			map[i][j].spriteMaterial = { 1.0f,1.0f,1.0f,1.0f };
 		}
 	}
-
-	LoadMap();
-
-	foldCount_ = foldCountMax_;
 }
 
 void Stage1::Update() {
@@ -212,9 +208,18 @@ void Stage1::Draw() {
 
 void Stage1::LoadMap() {
 	FILE* fp = nullptr;
-	char fname[] = "project/gamedata/resources/csv/Map1Panel.csv";
+	
+	std::string fullPath = "project/gamedata/resources/csv/Map" + std::string(stageNum_) + "Panel.csv";
+	auto&& stringPath = ConvertString(fullPath);
+	size_t len = stringPath.length() + 1;
+	char* testPath = new char[len];
+	std::size_t convertedChars = 0;
+	wcstombs_s(&convertedChars, testPath, len, stringPath.c_str(), _TRUNCATE);
+	const std::string& testResult = testPath;
+	const char* fname[] = {testResult.c_str()};
+
 	errno_t err;
-	err = fopen_s(&fp, fname, "r");
+	err = fopen_s(&fp, *fname, "r");
 	for (int i = 0; i < kMapHeight; i++) {
 		for (int j = 0; j < kMapWidth; j++) {
 			fscanf_s(fp, "%d,", &map[i][j].mapstate);//パネル情報読み込み
@@ -231,26 +236,58 @@ void Stage1::LoadMap() {
 
 	fclose(fp);
 
+	delete[] testPath;
+
 	LoadDirection();
 }
 
 void Stage1::LoadDirection() {
 	int test = 0;
-
 	FILE* fp = nullptr;
-	char fname[] = "project/gamedata/resources/csv/Map1Direction.csv";
+
+	std::string fullPath = "project/gamedata/resources/csv/Map" + std::string(stageNum_) + "Direction.csv";
+	auto&& stringPath = ConvertString(fullPath);
+	size_t len = stringPath.length() + 1;
+	char* testPath = new char[len];
+	std::size_t convertedChars = 0;
+	wcstombs_s(&convertedChars, testPath, len, stringPath.c_str(), _TRUNCATE);
+	const std::string& testResult = testPath;
+	const char* fname[] = { testResult.c_str() };
+
 	errno_t err;
-	err = fopen_s(&fp, fname, "r");
+	err = fopen_s(&fp, *fname, "r");
 	for (int i = 0; i < kMapHeight; i++) {
 		for (int j = 0; j < kMapWidth; j++) {
 			fscanf_s(fp, "%d,", &map[i][j].direction);
 			if (map[i][j].direction == Direction::None) {
+				sprite1_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite2_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite3_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite4_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite5_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite6_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite7_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
 
+				spriteStart_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				spriteGoal_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				spriteCheckGoal_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
 			}
 
 			if (map[i][j].direction == Direction::Up) {
 				spriteD1_[test].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTextureD_[0], false, false));
 				spriteD1_[test]->SetTextureInitialSize();
+				sprite_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite1_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite2_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite3_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite4_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite5_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite6_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite7_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+
+				spriteStart_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				spriteGoal_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				spriteCheckGoal_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
 			}
 
 			if (map[i][j].direction == Direction::Down) {
@@ -276,6 +313,18 @@ void Stage1::LoadDirection() {
 			if (map[i][j].direction == Direction::Left) {
 				spriteD3_[test].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTextureD_[2], false, false));
 				spriteD3_[test]->SetTextureInitialSize();
+				sprite_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite1_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite2_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite3_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite4_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite5_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite6_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				sprite7_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+
+				spriteStart_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				spriteGoal_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				spriteCheckGoal_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
 			}
 
 			if (map[i][j].direction == Direction::Right) {
@@ -304,14 +353,25 @@ void Stage1::LoadDirection() {
 
 	fclose(fp);
 
+	delete[] testPath;
+
 	LoadEvent();
 }
 
 void Stage1::LoadEvent() {
 	FILE* fp = nullptr;
-	char fname[] = "project/gamedata/resources/csv/Map1Event.csv";
+	
+	std::string fullPath = "project/gamedata/resources/csv/Map" + std::string(stageNum_) + "Event.csv";
+	auto&& stringPath = ConvertString(fullPath);
+	size_t len = stringPath.length() + 1;
+	char* testPath = new char[len];
+	std::size_t convertedChars = 0;
+	wcstombs_s(&convertedChars, testPath, len, stringPath.c_str(), _TRUNCATE);
+	const std::string& testResult = testPath;
+	const char* fname[] = { testResult.c_str() };
+
 	errno_t err;
-	err = fopen_s(&fp, fname, "r");
+	err = fopen_s(&fp, *fname, "r");
 	for (int i = 0; i < kMapHeight; i++) {
 		for (int j = 0; j < kMapWidth; j++) {
 			fscanf_s(fp, "%d,", &map[i][j].event);
@@ -325,31 +385,33 @@ void Stage1::LoadEvent() {
 		}
 	}
 
+	delete[] testPath;
+
 	fclose(fp);
 }
 
 void Stage1::Select() {
 	if (input_->TriggerKey(DIK_RIGHT) && isFoldMove_ == false) {
 		selectPoint_.num[0] += 1;
-		if (selectPoint_.num[0] >= kMapWidth) {
+		if (selectPoint_.num[0] >= MapSelectSizeX_) {
 			selectPoint_.num[0] = 0;
 		}
 	}
 	if (input_->TriggerKey(DIK_LEFT) && isFoldMove_ == false) {
 		selectPoint_.num[0] -= 1;
 		if (selectPoint_.num[0] < 0) {
-			selectPoint_.num[0] = kMapWidth - 1;
+			selectPoint_.num[0] = MapSelectSizeX_ - 1;
 		}
 	}
 	if (input_->TriggerKey(DIK_UP) && isFoldMove_ == false) {
 		selectPoint_.num[1] -= 1;
 		if (selectPoint_.num[1] < 0) {
-			selectPoint_.num[1] = kMapHeight - 1;
+			selectPoint_.num[1] = MapSelectSizeY_ - 1;
 		}
 	}
 	if (input_->TriggerKey(DIK_DOWN) && isFoldMove_ == false) {
 		selectPoint_.num[1] += 1;
-		if (selectPoint_.num[1] >= kMapHeight) {
+		if (selectPoint_.num[1] >= MapSelectSizeY_) {
 			selectPoint_.num[1] = 0;
 		}
 	}
@@ -361,7 +423,6 @@ void Stage1::Select() {
 		else {//自機が折るパネルの上に居なければ
 			if (0 < foldCount_ && isFoldMove_ == false) {//折った回数が上限に満たなければ
 				isFoldMove_ = true;
-				foldCount_--;
 				setPlayerStatePosX_ = playerStatePosX_;
 				setPlayerStatePosY_ = playerStatePosY_;
 			}
@@ -388,14 +449,15 @@ void Stage1::Fold() {
 						map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].previousMapstateUp = map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = true;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::None;
+						foldCount_--;
 					}
 
 					if (drawTest_ == false) {
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Vertical) {
-							map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = MapState::Side;
+							map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = MapState::Vertical;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Side) {
-							map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = MapState::Vertical;
+							map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = MapState::Side;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Cross) {
 							map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = MapState::Cross;
@@ -407,10 +469,10 @@ void Stage1::Fold() {
 							map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = MapState::TShapedTop;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedLeft) {
-							map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = MapState::TShapedRight;
+							map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = MapState::TShapedLeft;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedRight) {
-							map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = MapState::TShapedLeft;
+							map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = MapState::TShapedRight;
 						}
 					}
 				}
@@ -418,6 +480,12 @@ void Stage1::Fold() {
 				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == true && isFoldMove_ == true) {//折り返し
 					FoldDirecting(1, true);//折る演出
 					map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].mapstate = map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].previousMapstateUp;
+
+					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack == true) {
+						foldCount_--;
+						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = false;
+					}
+
 					if (drawTest_ == false) {
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate;
 
@@ -427,7 +495,6 @@ void Stage1::Fold() {
 						//記憶したパネル情報の初期化
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate = MapState::None;
 						map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].previousMapstateUp = MapState::None;
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = false;
 					}
 				}
 			}
@@ -446,14 +513,15 @@ void Stage1::Fold() {
 						map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].previousMapstateDown = map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = true;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::None;
+						foldCount_--;
 					}
 
 					if (drawTest_ == false) {
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Vertical) {
-							map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = MapState::Side;
+							map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = MapState::Vertical;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Side) {
-							map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = MapState::Vertical;
+							map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = MapState::Side;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Cross) {
 							map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = MapState::Cross;
@@ -465,10 +533,10 @@ void Stage1::Fold() {
 							map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = MapState::TShapedTop;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedLeft) {
-							map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = MapState::TShapedRight;
+							map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = MapState::TShapedLeft;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedRight) {
-							map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = MapState::TShapedLeft;
+							map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = MapState::TShapedRight;
 						}
 					}
 				}
@@ -476,6 +544,12 @@ void Stage1::Fold() {
 				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == true && isFoldMove_ == true) {//折り返し
 					FoldDirecting(2, true);//折る演出
 					map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].mapstate = map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].previousMapstateDown;
+
+					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack == true) {
+						foldCount_--;
+						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = false;
+					}
+
 					if (drawTest_ == false) {
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate;
 
@@ -485,7 +559,6 @@ void Stage1::Fold() {
 						//記憶したパネル情報の初期化
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate = MapState::None;
 						map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].previousMapstateDown = MapState::None;
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = false;
 					}
 				}
 			}
@@ -503,23 +576,24 @@ void Stage1::Fold() {
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].previousMapstateLeft = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = true;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::None;
+						foldCount_--;
 					}
 
 					if (drawTest_ == false) {
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Vertical) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = MapState::Side;
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = MapState::Vertical;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Side) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = MapState::Vertical;
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = MapState::Side;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Cross) {
 							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = MapState::Cross;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedTop) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = MapState::TShapedDown;
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = MapState::TShapedTop;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedDown) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = MapState::TShapedTop;
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = MapState::TShapedDown	;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedLeft) {
 							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = MapState::TShapedRight;
@@ -533,6 +607,12 @@ void Stage1::Fold() {
 				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == true && isFoldMove_ == true) {//折り返し
 					FoldDirecting(3, true);//折る演出
 					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].mapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].previousMapstateLeft;
+
+					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack == true) {
+						foldCount_--;
+						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = false;
+					}
+
 					if (drawTest_ == false) {
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate;
 
@@ -542,7 +622,6 @@ void Stage1::Fold() {
 						//記憶したパネル情報の初期化
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate = MapState::None;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].previousMapstateDown = MapState::None;
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = false;
 					}
 				}
 			}
@@ -560,23 +639,24 @@ void Stage1::Fold() {
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].previousMapstateRight = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = true;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = MapState::None;
+						foldCount_--;
 					}
 
 					if (drawTest_ == false) {
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Vertical) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = MapState::Side;
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = MapState::Vertical;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Side) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = MapState::Vertical;
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = MapState::Side;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::Cross) {
 							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = MapState::Cross;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedTop) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = MapState::TShapedDown;
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = MapState::TShapedTop;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedDown) {
-							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = MapState::TShapedTop;
+							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = MapState::TShapedDown;
 						}
 						if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate == MapState::TShapedLeft) {
 							map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = MapState::TShapedRight;
@@ -590,6 +670,12 @@ void Stage1::Fold() {
 				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isFold_ == true && isFoldMove_ == true) {//折り返し
 					FoldDirecting(4, true);//折る演出
 					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].mapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].previousMapstateRight;
+					
+					if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack == true) {
+						foldCount_--;
+						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = false;
+					}
+
 					if (drawTest_ == false) {
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate;
 
@@ -599,7 +685,6 @@ void Stage1::Fold() {
 						//記憶したパネル情報の初期化
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousMapstate = MapState::None;
 						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].previousMapstateDown = MapState::None;
-						map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].previousFoldChack = false;
 					}
 				}
 			}
@@ -625,19 +710,19 @@ void Stage1::FoldDirecting(int direction, bool isLapel) {
 
 			if (transformTest_.rotate.num[0] >= 3.18f / 2) {//半分折ったら
 				if (mapstate2_ == MapState::Vertical) {
-					mapstate_ = MapState::Side;
+					mapstate_ = MapState::Vertical;
 				}
 				if (mapstate2_ == MapState::Side) {
-					mapstate_ = MapState::Vertical;
+					mapstate_ = MapState::Side;
 				}
 				if (mapstate2_ == MapState::Cross) {
 					mapstate_ = MapState::Cross;
 				}
 				if (mapstate2_ == MapState::TShapedLeft) {
-					mapstate_ = MapState::TShapedRight;
+					mapstate_ = MapState::TShapedLeft;
 				}
 				if (mapstate2_ == MapState::TShapedRight) {
-					mapstate_ = MapState::TShapedLeft;
+					mapstate_ = MapState::TShapedRight;
 				}
 			}
 
@@ -673,19 +758,19 @@ void Stage1::FoldDirecting(int direction, bool isLapel) {
 
 			if (transformTest_.rotate.num[0] >= 3.18f / 2) {//半分折ったら
 				if (mapstate2_ == MapState::Vertical) {
-					mapstate_ = MapState::Side;
+					mapstate_ = MapState::Vertical;
 				}
 				if (mapstate2_ == MapState::Side) {
-					mapstate_ = MapState::Vertical;
+					mapstate_ = MapState::Side;
 				}
 				if (mapstate2_ == MapState::Cross) {
 					mapstate_ = MapState::Cross;
 				}
 				if (mapstate2_ == MapState::TShapedLeft) {
-					mapstate_ = MapState::TShapedRight;
+					mapstate_ = MapState::TShapedLeft;
 				}
 				if (mapstate2_ == MapState::TShapedRight) {
-					mapstate_ = MapState::TShapedLeft;
+					mapstate_ = MapState::TShapedRight;
 				}
 			}
 
@@ -721,28 +806,28 @@ void Stage1::FoldDirecting(int direction, bool isLapel) {
 
 			if (transformTest_.rotate.num[1] >= 3.18f / 2) {//半分折ったら
 				if (mapstate2_ == MapState::Vertical) {
-					mapstate_ = MapState::Side;
+					mapstate_ = MapState::Vertical;
 				}
 				if (mapstate2_ == MapState::Side) {
-					mapstate_ = MapState::Vertical;
+					mapstate_ = MapState::Side;
 				}
 				if (mapstate2_ == MapState::Cross) {
 					mapstate_ = MapState::Cross;
 				}
 				if (mapstate2_ == MapState::TShapedTop) {
-					mapstate_ = MapState::TShapedDown;
+					mapstate_ = MapState::TShapedTop;
 				}
 				if (mapstate2_ == MapState::TShapedDown) {
-					mapstate_ = MapState::TShapedTop;
+					mapstate_ = MapState::TShapedDown;
 				}
 			}
 
 			if (transformTest_.rotate.num[1] >= 3.18f) {//折り終わり
 				if (mapstate2_ == MapState::TShapedLeft) {
-					mapstate_ = MapState::TShapedRight;
+					mapstate_ = MapState::TShapedLeft;
 				}
 				if (mapstate2_ == MapState::TShapedRight) {
-					mapstate_ = MapState::TShapedLeft;
+					mapstate_ = MapState::TShapedRight;
 				}
 
 				transformTest_.rotate.num[1] = 3.18f;
@@ -768,28 +853,28 @@ void Stage1::FoldDirecting(int direction, bool isLapel) {
 
 			if (transformTest_.rotate.num[1] >= 3.18f / 2) {//半分折ったら
 				if (mapstate2_ == MapState::Vertical) {
-					mapstate_ = MapState::Side;
+					mapstate_ = MapState::Vertical;
 				}
 				if (mapstate2_ == MapState::Side) {
-					mapstate_ = MapState::Vertical;
+					mapstate_ = MapState::Side;
 				}
 				if (mapstate2_ == MapState::Cross) {
 					mapstate_ = MapState::Cross;
 				}
 				if (mapstate2_ == MapState::TShapedTop) {
-					mapstate_ = MapState::TShapedDown;
+					mapstate_ = MapState::TShapedTop;
 				}
 				if (mapstate2_ == MapState::TShapedDown) {
-					mapstate_ = MapState::TShapedTop;
+					mapstate_ = MapState::TShapedDown;
 				}
 			}
 
 			if (transformTest_.rotate.num[1] >= 3.18f) {//折り終わり
 				if (mapstate2_ == MapState::TShapedLeft) {
-					mapstate_ = MapState::TShapedRight;
+					mapstate_ = MapState::TShapedLeft;
 				}
 				if (mapstate2_ == MapState::TShapedRight) {
-					mapstate_ = MapState::TShapedLeft;
+					mapstate_ = MapState::TShapedRight;
 				}
 
 				transformTest_.rotate.num[1] = 3.18f;
@@ -818,19 +903,19 @@ void Stage1::FoldDirecting(int direction, bool isLapel) {
 
 			if (transformTest_.rotate.num[0] <= 3.18f / 2) {//半分折ったら
 				if (mapstate2_ == MapState::Vertical) {
-					mapstate_ = MapState::Side;
+					mapstate_ = MapState::Vertical;
 				}
 				if (mapstate2_ == MapState::Side) {
-					mapstate_ = MapState::Vertical;
+					mapstate_ = MapState::Side;
 				}
 				if (mapstate2_ == MapState::Cross) {
 					mapstate_ = MapState::Cross;
 				}
 				if (mapstate2_ == MapState::TShapedLeft) {
-					mapstate_ = MapState::TShapedRight;
+					mapstate_ = MapState::TShapedLeft;
 				}
 				if (mapstate2_ == MapState::TShapedRight) {
-					mapstate_ = MapState::TShapedLeft;
+					mapstate_ = MapState::TShapedRight;
 				}
 			}
 
@@ -867,19 +952,19 @@ void Stage1::FoldDirecting(int direction, bool isLapel) {
 
 			if (transformTest_.rotate.num[0] <= 3.18f / 2) {//半分折ったら
 				if (mapstate2_ == MapState::Vertical) {
-					mapstate_ = MapState::Side;
+					mapstate_ = MapState::Vertical;
 				}
 				if (mapstate2_ == MapState::Side) {
-					mapstate_ = MapState::Vertical;
+					mapstate_ = MapState::Side;
 				}
 				if (mapstate2_ == MapState::Cross) {
 					mapstate_ = MapState::Cross;
 				}
 				if (mapstate2_ == MapState::TShapedLeft) {
-					mapstate_ = MapState::TShapedRight;
+					mapstate_ = MapState::TShapedLeft;
 				}
 				if (mapstate2_ == MapState::TShapedRight) {
-					mapstate_ = MapState::TShapedLeft;
+					mapstate_ = MapState::TShapedRight;
 				}
 			}
 
@@ -923,19 +1008,19 @@ void Stage1::FoldDirecting(int direction, bool isLapel) {
 
 			if (transformTest_.rotate.num[1] <= 3.18f / 2) {//半分折ったら
 				if (mapstate2_ == MapState::Vertical) {
-					mapstate_ = MapState::Side;
+					mapstate_ = MapState::Vertical;
 				}
 				if (mapstate2_ == MapState::Side) {
-					mapstate_ = MapState::Vertical;
+					mapstate_ = MapState::Side;
 				}
 				if (mapstate2_ == MapState::Cross) {
 					mapstate_ = MapState::Cross;
 				}
 				if (mapstate2_ == MapState::TShapedTop) {
-					mapstate_ = MapState::TShapedDown;
+					mapstate_ = MapState::TShapedTop;
 				}
 				if (mapstate2_ == MapState::TShapedDown) {
-					mapstate_ = MapState::TShapedTop;
+					mapstate_ = MapState::TShapedDown;
 				}
 			}
 
@@ -972,19 +1057,19 @@ void Stage1::FoldDirecting(int direction, bool isLapel) {
 
 			if (transformTest_.rotate.num[1] <= 3.18f / 2) {//半分折ったら
 				if (mapstate2_ == MapState::Vertical) {
-					mapstate_ = MapState::Side;
+					mapstate_ = MapState::Vertical;
 				}
 				if (mapstate2_ == MapState::Side) {
-					mapstate_ = MapState::Vertical;
+					mapstate_ = MapState::Side;
 				}
 				if (mapstate2_ == MapState::Cross) {
 					mapstate_ = MapState::Cross;
 				}
 				if (mapstate2_ == MapState::TShapedTop) {
-					mapstate_ = MapState::TShapedDown;
+					mapstate_ = MapState::TShapedTop;
 				}
 				if (mapstate2_ == MapState::TShapedDown) {
-					mapstate_ = MapState::TShapedTop;
+					mapstate_ = MapState::TShapedDown;
 				}
 			}
 
@@ -1077,4 +1162,16 @@ void Stage1::Reset() {
 	CheckGoalCount_ = 0;
 	foldCount_ = foldCountMax_;
 	isGameClear_ = false;
+}
+
+void Stage1::SetAllSetting(const char* stageNum, int foldCountMax, float MapSelectWidth, float MapSelectHeight) {
+	stageNum_ = stageNum;
+
+	foldCountMax_ = foldCountMax;
+	foldCount_ = foldCountMax_;
+
+	MapSelectSizeX_ = MapSelectWidth + 2;
+	MapSelectSizeY_ = MapSelectHeight + 2;
+
+	LoadMap();
 }

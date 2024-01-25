@@ -3,6 +3,7 @@
 //シーン一覧、シーン追加時はここに追加する
 enum SCENE {
 	TITLE_SCENE,
+	SELECT_SCENE,
 	GAME_SCENE,
 	CLEAR_SCENE,
 	SCENE_MAX
@@ -19,6 +20,8 @@ public:
 	virtual void Finalize() = 0;
 
 	static int sceneNo;
+
+	static int stageNo;
 
 	virtual ~Iscene() {};
 };

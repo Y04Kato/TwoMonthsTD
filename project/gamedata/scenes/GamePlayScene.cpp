@@ -102,6 +102,7 @@ void GamePlayScene::Initialize() {
 	// Stage1
 	stage1_ = std::make_unique<Stage1>();
 	stage1_->Initialize();
+	stage1_->SetAllSetting("1", 3, 2, 2);//いったん初期化
 
 	// Player
 	player_ = std::make_unique<Player>();
@@ -117,10 +118,11 @@ void GamePlayScene::Initialize() {
 	transformNumbers_.rotate = { 0.0f,0.0f,0.0f };
 	transformNumbers_.scale = { 1.2f,0.12f,1.2f };
 	numbers_->SetTransform(transformNumbers_);
+
+	isGameStart = true;
 }
 
 void GamePlayScene::Update() {
-
 	ApplyGlobalVariables();
 
 	collisionManager_->ClearColliders();
@@ -286,6 +288,21 @@ void GamePlayScene::Update() {
 	player_->SetPanelSize(stage1_->GetPanelSize());
 
 	if (isGameStart == true) {
+		if (stageNo == 1) {
+			stage1_->SetAllSetting("1", 5, 3, 2);
+		}
+		if (stageNo == 2) {
+			stage1_->SetAllSetting("2", 5, 2, 2);
+		}
+		if (stageNo == 3) {
+			stage1_->SetAllSetting("3", 3, 2, 2);
+		}
+		if (stageNo == 4) {
+			stage1_->SetAllSetting("4", 8, 3, 2);
+		}
+		if (stageNo == 5) {
+			stage1_->SetAllSetting("5", 10, 3, 3);
+		}
 		stage1_->Reset();
 		player_->ResetPlayer();
 		player_->SetIsReset(false);

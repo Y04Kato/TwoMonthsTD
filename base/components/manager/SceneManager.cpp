@@ -41,6 +41,7 @@ void SceneManager::Initialize() {
 
 	//Scene
 	scene_[TITLE_SCENE] = std::make_unique<GameTitleScene>();
+	scene_[SELECT_SCENE] = std::make_unique<GameSelectScene>();
 	scene_[GAME_SCENE] = std::make_unique<GamePlayScene>();
 	scene_[CLEAR_SCENE] = std::make_unique<GameClearScene>();
 	for (int i = 0; i < SCENE_MAX; i++) {

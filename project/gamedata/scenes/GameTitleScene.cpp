@@ -119,7 +119,7 @@ void GameTitleScene::Update() {
 	}
 	if (count == 2) {
 		count = 0;
-		sceneNo = GAME_SCENE;
+		sceneNo = SELECT_SCENE;
 	}
 }
 

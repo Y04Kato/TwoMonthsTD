@@ -1,6 +1,7 @@
 #include "components/manager/SceneManager.h"
 
 int Iscene::sceneNo;
+int Iscene::stageNo;
 
 //Windowsアプリでのエントリーポイント
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {

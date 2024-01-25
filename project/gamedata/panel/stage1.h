@@ -15,7 +15,7 @@ public:
 	void Draw();
 
 	static const uint32_t kMapWidth = 5;
-	static const uint32_t kMapHeight = 4;
+	static const uint32_t kMapHeight = 5;
 
 	//パネルの種類
 	enum class MapState {
@@ -94,6 +94,9 @@ public:
 
 	int GetFoldCount() { return foldCount_; }
 
+	//マップの設定、ステージ番号、折れる回数、マップサイズX、マップサイズYを設定 2x2ならXYは2にすること
+	void SetAllSetting(const char* stageNum , int foldCountMax , float MapSelectWidth, float MapSelectHeight);
+
 private:
 	Input* input_ = nullptr;
 	TextureManager* textureManager_;
@@ -157,4 +160,8 @@ private:
 
 	int foldCount_ = 0;//折る残り回数
 	int foldCountMax_ = 5;//折る回数上限
+
+	const char* stageNum_;
+	float MapSelectSizeX_;
+	float MapSelectSizeY_;
 };

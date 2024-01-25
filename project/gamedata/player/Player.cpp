@@ -88,16 +88,16 @@ void Player::Moves() {
 		MoveTShapedRight();
 	}
 
-	if (panelSize_.num[1] * stateNumY_ + 74.0f >= spriteTransform_.translate.num[1]) {
+	if (panelSize_.num[1] * stateNumY_ + 70.0f >= spriteTransform_.translate.num[1]) {
 		panelDirection_ = 1;
 	}
-	else if (panelSize_.num[1] * stateNumY_ + panelSize_.num[1] - 74.0f <= spriteTransform_.translate.num[1]) {
+	else if (panelSize_.num[1] * stateNumY_ + panelSize_.num[1] - 70.0f <= spriteTransform_.translate.num[1]) {
 		panelDirection_ = 2;
 	}
-	else if (panelSize_.num[0] * stateNumX_ + 74.0f >= spriteTransform_.translate.num[0]) {
+	else if (panelSize_.num[0] * stateNumX_ + 70.0f >= spriteTransform_.translate.num[0]) {
 		panelDirection_ = 3;
 	}
-	else if (panelSize_.num[0] * stateNumX_ + panelSize_.num[0] - 74.0f <= spriteTransform_.translate.num[0]) {
+	else if (panelSize_.num[0] * stateNumX_ + panelSize_.num[0] - 70.0f <= spriteTransform_.translate.num[0]) {
 		panelDirection_ = 4;
 	}
 	else {
