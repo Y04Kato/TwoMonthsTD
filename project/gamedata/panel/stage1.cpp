@@ -216,7 +216,7 @@ void Stage1::LoadMap() {
 	testPath.resize(len);
 
 	std::size_t convertedChars = 0;
-	wcstombs_s(&convertedChars, testPath, len, stringPath.c_str(), _TRUNCATE);
+	wcstombs_s(&convertedChars, testPath.data(), len, stringPath.c_str(), _TRUNCATE);
 	const std::string& testResult = testPath.data();
 	const char* fname[] = {testResult.c_str()};
 
@@ -252,7 +252,7 @@ void Stage1::LoadDirection() {
 	testPath.resize(len);
 
 	std::size_t convertedChars = 0;
-	wcstombs_s(&convertedChars, testPath, len, stringPath.c_str(), _TRUNCATE);
+	wcstombs_s(&convertedChars, testPath.data(), len, stringPath.c_str(), _TRUNCATE);
 	const std::string& testResult = testPath.data();
 	const char* fname[] = { testResult.c_str() };
 
@@ -368,7 +368,7 @@ void Stage1::LoadEvent() {
 	testPath.resize(len);
 
 	std::size_t convertedChars = 0;
-	wcstombs_s(&convertedChars, testPath, len, stringPath.c_str(), _TRUNCATE);
+	wcstombs_s(&convertedChars, testPath.data(), len, stringPath.c_str(), _TRUNCATE);
 	const std::string& testResult = testPath.data();
 	const char* fname[] = { testResult.c_str() };
 
@@ -387,7 +387,7 @@ void Stage1::LoadEvent() {
 		}
 	}
 
-	delete[] testPath;
+	//delete[] testPath;
 
 	fclose(fp);
 }
