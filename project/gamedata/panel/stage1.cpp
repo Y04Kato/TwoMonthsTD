@@ -212,10 +212,12 @@ void Stage1::LoadMap() {
 	std::string fullPath = "project/gamedata/resources/csv/Map" + std::string(stageNum_) + "Panel.csv";
 	auto&& stringPath = ConvertString(fullPath);
 	size_t len = stringPath.length() + 1;
-	char* testPath = new char[len];
+	std::vector<char> testPath;
+	testPath.resize(len);
+
 	std::size_t convertedChars = 0;
 	wcstombs_s(&convertedChars, testPath, len, stringPath.c_str(), _TRUNCATE);
-	const std::string& testResult = testPath;
+	const std::string& testResult = testPath.data();
 	const char* fname[] = {testResult.c_str()};
 
 	errno_t err;
@@ -236,8 +238,6 @@ void Stage1::LoadMap() {
 
 	fclose(fp);
 
-	delete[] testPath;
-
 	LoadDirection();
 }
 
@@ -248,10 +248,12 @@ void Stage1::LoadDirection() {
 	std::string fullPath = "project/gamedata/resources/csv/Map" + std::string(stageNum_) + "Direction.csv";
 	auto&& stringPath = ConvertString(fullPath);
 	size_t len = stringPath.length() + 1;
-	char* testPath = new char[len];
+	std::vector<char> testPath;
+	testPath.resize(len);
+
 	std::size_t convertedChars = 0;
 	wcstombs_s(&convertedChars, testPath, len, stringPath.c_str(), _TRUNCATE);
-	const std::string& testResult = testPath;
+	const std::string& testResult = testPath.data();
 	const char* fname[] = { testResult.c_str() };
 
 	errno_t err;
@@ -353,8 +355,6 @@ void Stage1::LoadDirection() {
 
 	fclose(fp);
 
-	delete[] testPath;
-
 	LoadEvent();
 }
 
@@ -364,10 +364,12 @@ void Stage1::LoadEvent() {
 	std::string fullPath = "project/gamedata/resources/csv/Map" + std::string(stageNum_) + "Event.csv";
 	auto&& stringPath = ConvertString(fullPath);
 	size_t len = stringPath.length() + 1;
-	char* testPath = new char[len];
+	std::vector<char> testPath;
+	testPath.resize(len);
+
 	std::size_t convertedChars = 0;
 	wcstombs_s(&convertedChars, testPath, len, stringPath.c_str(), _TRUNCATE);
-	const std::string& testResult = testPath;
+	const std::string& testResult = testPath.data();
 	const char* fname[] = { testResult.c_str() };
 
 	errno_t err;

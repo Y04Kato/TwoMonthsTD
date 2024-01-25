@@ -288,6 +288,7 @@ void GamePlayScene::Update() {
 	player_->SetPanelSize(stage1_->GetPanelSize());
 
 	if (isGameStart == true) {
+		//マップの設定、ステージ番号、折れる回数、マップサイズX、マップサイズYを設定 2x2ならXYは2にすること
 		if (stageNo == 1) {
 			stage1_->SetAllSetting("1", 5, 3, 2);
 		}
