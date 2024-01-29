@@ -156,5 +156,5 @@ private:
 	bool isGameClear_ = false;
 
 	int foldCount_ = 0;//折る残り回数
-	int foldCountMax_ = 5;//折る回数上限
+	int foldCountMax_ = 8;//折る回数上限
 };

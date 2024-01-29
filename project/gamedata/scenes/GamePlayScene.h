@@ -18,6 +18,10 @@
 #include "player/player.h"
 #include "panel/back.h"
 #include "panel/stage1.h"
+#include "panel/stage2.h"
+#include "panel/stage3.h"
+#include "panel/stage4.h"
+#include "panel/stage5.h"
 #include "numbers/numbers.h"
 #pragma endregion
 
@@ -82,6 +86,10 @@ private:
 
 	std::unique_ptr<Back> back_;
 	std::unique_ptr<Stage1> stage1_;
+	std::unique_ptr<Stage2> stage2_;
+	std::unique_ptr<Stage3> stage3_;
+	std::unique_ptr<Stage4> stage4_;
+	std::unique_ptr<Stage5> stage5_;
 	std::unique_ptr<Player> player_;
 
 	//数字
@@ -89,4 +97,6 @@ private:
 	Transform transformNumbers_;
 
 	bool isGameStart = false;
+
+	int isStageNow_ = 1;
 };

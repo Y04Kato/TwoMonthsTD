@@ -42,11 +42,11 @@ void SceneManager::Initialize() {
 	//Scene
 	scene_[TITLE_SCENE] = std::make_unique<GameTitleScene>();
 	scene_[GAME_SCENE] = std::make_unique<GamePlayScene>();
-	/*scene_[STAGE1_SCENE] = std::make_unique<Stage1Scene>();
-	scene_[STAGE2_SCENE] = std::make_unique<Stage2Scene>();
-	scene_[STAGE3_SCENE] = std::make_unique<Stage3Scene>();
-	scene_[STAGE4_SCENE] = std::make_unique<Stage4Scene>();
-	scene_[STAGE5_SCENE] = std::make_unique<Stage5Scene>();*/
+	//scene_[STAGE1_SCENE] = std::make_unique<Stage1Scene>();
+	//scene_[STAGE2_SCENE] = std::make_unique<Stage2Scene>();
+	//scene_[STAGE3_SCENE] = std::make_unique<Stage3Scene>();
+	//scene_[STAGE4_SCENE] = std::make_unique<Stage4Scene>();
+	//scene_[STAGE5_SCENE] = std::make_unique<Stage5Scene>();
 	scene_[CLEAR_SCENE] = std::make_unique<GameClearScene>();
 	for (int i = 0; i < SCENE_MAX; i++) {
 		scene_[i]->Initialize();

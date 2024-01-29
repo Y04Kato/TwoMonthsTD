@@ -103,6 +103,22 @@ void GamePlayScene::Initialize() {
 	stage1_ = std::make_unique<Stage1>();
 	stage1_->Initialize();
 
+	// Stage2
+	stage2_ = std::make_unique<Stage2>();
+	stage2_->Initialize();
+
+	// Stage3
+	stage3_ = std::make_unique<Stage3>();
+	stage3_->Initialize();
+
+	// Stage4
+	stage4_ = std::make_unique<Stage4>();
+	stage4_->Initialize();
+
+	// Stage5
+	stage5_ = std::make_unique<Stage5>();
+	stage5_->Initialize();
+
 	// Player
 	player_ = std::make_unique<Player>();
 	player_->Initialize();
@@ -279,32 +295,155 @@ void GamePlayScene::Update() {
 		particle_->Update();
 	}
 
-	stage1_->Update();
-	player_->Update();
-	player_->SetNowMapState(stage1_->GetNowMapState(player_->GetPos()));
-	player_->SetNowMapStatePos(stage1_->GetNowMapStatePosX(), stage1_->GetNowMapStatePosY());
-	player_->SetPanelSize(stage1_->GetPanelSize());
+	// Stage1 Update
+	if (isStageNow_ == 1) {
+		stage1_->Update();
+		player_->Update();
+		player_->SetNowMapState(stage1_->GetNowMapState(player_->GetPos()));
+		player_->SetNowMapStatePos(stage1_->GetNowMapStatePosX(), stage1_->GetNowMapStatePosY());
+		player_->SetPanelSize(stage1_->GetPanelSize());
 
-	if (isGameStart == true) {
-		stage1_->Reset();
-		player_->ResetPlayer();
-		player_->SetIsReset(false);
-		isGameStart = false;
+		if (isGameStart == true) {
+			stage1_->Reset();
+			player_->ResetPlayer();
+			player_->SetIsReset(false);
+			isGameStart = false;
+		}
+
+		if (player_->GetIsReset() == true) {
+			stage1_->Reset();
+			player_->SetIsReset(false);
+		}
+
+		if (stage1_->GetClearFlag() == true) {
+			isGameStart = true;
+			player_->ResetPlayer();
+			player_->SetIsReset(false);
+			isStageNow_ = 2;
+		}
+
+		numbers_->SetNum(stage1_->GetFoldCount());
 	}
 
-	if (player_->GetIsReset() == true) {
-		stage1_->Reset();
-		player_->SetIsReset(false);
+	// Stage2 Update
+	if (isStageNow_ == 2) {
+		stage2_->Update();
+		player_->Update();
+		player_->SetNowMapState(stage2_->GetNowMapState(player_->GetPos()));
+		player_->SetNowMapStatePos(stage2_->GetNowMapStatePosX(), stage2_->GetNowMapStatePosY());
+		player_->SetPanelSize(stage2_->GetPanelSize());
+
+		if (isGameStart == true) {
+			stage2_->Reset();
+			player_->ResetPlayer();
+			player_->SetIsReset(false);
+			isGameStart = false;
+		}
+
+		if (player_->GetIsReset() == true) {
+			stage2_->Reset();
+			player_->SetIsReset(false);
+		}
+
+		if (stage2_->GetClearFlag() == true) {
+			isGameStart = true;
+			player_->ResetPlayer();
+			player_->SetIsReset(false);
+			isStageNow_ = 3;
+		}
+
+		numbers_->SetNum(stage2_->GetFoldCount());
 	}
 
-	if (stage1_->GetClearFlag() == true) {
-		isGameStart = true;
-		player_->ResetPlayer();
-		player_->SetIsReset(false);
-		sceneNo = CLEAR_SCENE;
+	// Stage3 Update
+	if (isStageNow_ == 3) {
+		stage3_->Update();
+		player_->Update();
+		player_->SetNowMapState(stage3_->GetNowMapState(player_->GetPos()));
+		player_->SetNowMapStatePos(stage3_->GetNowMapStatePosX(), stage3_->GetNowMapStatePosY());
+		player_->SetPanelSize(stage3_->GetPanelSize());
+
+		if (isGameStart == true) {
+			stage3_->Reset();
+			player_->ResetPlayer();
+			player_->SetIsReset(false);
+			isGameStart = false;
+		}
+
+		if (player_->GetIsReset() == true) {
+			stage3_->Reset();
+			player_->SetIsReset(false);
+		}
+
+		if (stage3_->GetClearFlag() == true) {
+			isGameStart = true;
+			player_->ResetPlayer();
+			player_->SetIsReset(false);
+			isStageNow_ = 4;
+		}
+
+		numbers_->SetNum(stage3_->GetFoldCount());
 	}
 
-	numbers_->SetNum(stage1_->GetFoldCount());
+	// Stage4 Update
+	if (isStageNow_ == 4) {
+		stage4_->Update();
+		player_->Update();
+		player_->SetNowMapState(stage4_->GetNowMapState(player_->GetPos()));
+		player_->SetNowMapStatePos(stage4_->GetNowMapStatePosX(), stage4_->GetNowMapStatePosY());
+		player_->SetPanelSize(stage4_->GetPanelSize());
+
+		if (isGameStart == true) {
+			stage4_->Reset();
+			player_->ResetPlayer();
+			player_->SetIsReset(false);
+			isGameStart = false;
+		}
+
+		if (player_->GetIsReset() == true) {
+			stage4_->Reset();
+			player_->SetIsReset(false);
+		}
+
+		if (stage4_->GetClearFlag() == true) {
+			isGameStart = true;
+			player_->ResetPlayer();
+			player_->SetIsReset(false);
+			isStageNow_ = 5;
+		}
+
+		numbers_->SetNum(stage4_->GetFoldCount());
+	}
+
+	// Stage5 Update
+	if (isStageNow_ == 5) {
+		stage5_->Update();
+		player_->Update();
+		player_->SetNowMapState(stage5_->GetNowMapState(player_->GetPos()));
+		player_->SetNowMapStatePos(stage5_->GetNowMapStatePosX(), stage5_->GetNowMapStatePosY());
+		player_->SetPanelSize(stage5_->GetPanelSize());
+
+		if (isGameStart == true) {
+			stage5_->Reset();
+			player_->ResetPlayer();
+			player_->SetIsReset(false);
+			isGameStart = false;
+		}
+
+		if (player_->GetIsReset() == true) {
+			stage5_->Reset();
+			player_->SetIsReset(false);
+		}
+
+		if (stage5_->GetClearFlag() == true) {
+			isGameStart = true;
+			player_->ResetPlayer();
+			player_->SetIsReset(false);
+			sceneNo = CLEAR_SCENE;
+		}
+
+		numbers_->SetNum(stage5_->GetFoldCount());
+	}
 }
 
 void GamePlayScene::Draw() {
@@ -318,7 +457,23 @@ void GamePlayScene::Draw() {
 	}
 
 	back_->Draw();
-	stage1_->Draw();
+	
+	if (isStageNow_ == 1) {
+		stage1_->Draw();
+	}
+	if (isStageNow_ == 2) {
+		stage2_->Draw();
+	}
+	if (isStageNow_ == 3) {
+		stage3_->Draw();
+	}
+	if (isStageNow_ == 4) {
+		stage4_->Draw();
+	}
+	if (isStageNow_ == 5) {
+		stage5_->Draw();
+	}
+
 	player_->Draw();
 #pragma endregion
 

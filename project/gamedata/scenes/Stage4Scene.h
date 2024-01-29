@@ -38,6 +38,15 @@ private:
 
 	int blendCount_;
 
+	std::unique_ptr <CreateTriangle> triangle_[2];
+	WorldTransform worldTransformTriangle_[2];
+	Vector4 triangleMaterial_[2];
+
+	std::unique_ptr <CreateSprite> sprite_[2];
+	Transform spriteTransform_[2];
+	Transform SpriteuvTransform_[2];
+	Vector4 spriteMaterial_[2];
+
 	std::unique_ptr<CreateParticle> particle_;
 	Emitter testEmitter_{};
 	AccelerationField accelerationField;

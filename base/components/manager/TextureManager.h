@@ -9,7 +9,7 @@ class TextureManager {
 public:
 	void Initialize();
 	static TextureManager* GetInstance();
-	static const int maxtex = 256;
+	static const int maxtex = 1024;
 	const D3D12_GPU_DESCRIPTOR_HANDLE GetGPUHandle(uint32_t textureHandle);
 
 	uint32_t Load(const std::string& filePath); 
