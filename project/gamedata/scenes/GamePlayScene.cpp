@@ -290,13 +290,13 @@ void GamePlayScene::Update() {
 	if (isGameStart == true) {
 		//マップの設定、ステージ番号、折れる回数、マップサイズX、マップサイズYを設定 2x2ならXYは2にすること
 		if (stageNo == 1) {
-			stage1_->SetAllSetting("1", 5, 3, 2);
+			stage1_->SetAllSetting("1", 3, 2, 2);
 		}
 		if (stageNo == 2) {
 			stage1_->SetAllSetting("2", 5, 2, 2);
 		}
 		if (stageNo == 3) {
-			stage1_->SetAllSetting("3", 3, 2, 2);
+			stage1_->SetAllSetting("3", 5, 2, 2);
 		}
 		if (stageNo == 4) {
 			stage1_->SetAllSetting("4", 8, 3, 2);
