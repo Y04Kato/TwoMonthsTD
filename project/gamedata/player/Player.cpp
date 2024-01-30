@@ -141,6 +141,9 @@ void Player::Moves() {
 			ResetPlayer();
 		}
 	}
+	if (isReseal_ == true) {//封印パネル
+		ResetPlayer();
+	}
 
 	if (input_->TriggerKey(DIK_R)) {
 		ResetPlayer();
@@ -460,4 +463,8 @@ void Player::SetStartPoint(int panelX, int panelY) {
 
 void Player::SetIsReset(bool isReset) {
 	isReset_ = isReset;
+}
+
+void Player::SetIsReseal(bool isReseal) {
+	isReseal_ = isReseal;
 }

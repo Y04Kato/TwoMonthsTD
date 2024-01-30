@@ -16,6 +16,7 @@ void Stage1::Initialize() {
 	spriteTextureE_[0] = textureManager_->Load("project/gamedata/resources/panel/startPoint.png");
 	spriteTextureE_[1] = textureManager_->Load("project/gamedata/resources/panel/goalPoint.png");
 	spriteTextureE_[2] = textureManager_->Load("project/gamedata/resources/panel/passedGoalPoint.png");
+	spriteTextureE_[3] = textureManager_->Load("project/gamedata/resources/panel/select.png");
 
 	for (int i = 0; i < kMapHeight * kMapWidth; i++) {
 		sprite_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[0], false, false));
@@ -50,6 +51,9 @@ void Stage1::Initialize() {
 
 		spriteCheckGoal_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTextureE_[2], false, false));
 		spriteCheckGoal_[i]->SetTextureInitialSize();
+
+		spriteReseal_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTextureE_[3], false, false));
+		spriteReseal_[i]->SetTextureInitialSize();
 	}
 
 	for (int i = 0; i < 7; i++) {
@@ -145,7 +149,9 @@ void Stage1::Draw() {
 			if (map[i][j].event == Event::CheckGoal) {
 				spriteCheckGoal_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
 			}
-
+			if (map[i][j].isReseal == true) {
+				spriteReseal_[test]->Draw(Transform{ map[i][j].transform.scale,map[i][j].transform.rotate,{map[i][j].transform.translate.num[0] + playerPos_.num[0],map[i][j].transform.translate.num[1] + playerPos_.num[1] ,map[i][j].transform.translate.num[2]} }, spriteUvTransform_, map[i][j].spriteMaterial);
+			}
 			test++;
 		}
 	}
@@ -228,6 +234,7 @@ void Stage1::LoadMap() {
 			map[i][j].transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{j * panelSize_.num[0],i * panelSize_.num[1],0.0f} };
 			map[i][j].isFold_ = false;
 			map[i][j].previousFoldChack = false;
+			map[i][j].isReseal = false;
 			map[i][j].previousMapstate = MapState::None;
 			map[i][j].previousMapstateUp = MapState::None;
 			map[i][j].previousMapstateDown = MapState::None;
@@ -273,6 +280,7 @@ void Stage1::LoadDirection() {
 				spriteStart_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
 				spriteGoal_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
 				spriteCheckGoal_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				spriteReseal_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
 			}
 
 			if (map[i][j].direction == Direction::Up) {
@@ -290,6 +298,7 @@ void Stage1::LoadDirection() {
 				spriteStart_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
 				spriteGoal_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
 				spriteCheckGoal_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				spriteReseal_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
 			}
 
 			if (map[i][j].direction == Direction::Down) {
@@ -310,6 +319,7 @@ void Stage1::LoadDirection() {
 				spriteStart_[test]->SetAnchor(Vector2{ 0.0f,1.0f });
 				spriteGoal_[test]->SetAnchor(Vector2{ 0.0f,1.0f });
 				spriteCheckGoal_[test]->SetAnchor(Vector2{ 0.0f,1.0f });
+				spriteReseal_[test]->SetAnchor(Vector2{ 0.0f,1.0f });
 			}
 
 			if (map[i][j].direction == Direction::Left) {
@@ -327,6 +337,7 @@ void Stage1::LoadDirection() {
 				spriteStart_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
 				spriteGoal_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
 				spriteCheckGoal_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
+				spriteReseal_[test]->SetAnchor(Vector2{ 0.0f,0.0f });
 			}
 
 			if (map[i][j].direction == Direction::Right) {
@@ -347,6 +358,7 @@ void Stage1::LoadDirection() {
 				spriteStart_[test]->SetAnchor(Vector2{ 1.0f,0.0f });
 				spriteGoal_[test]->SetAnchor(Vector2{ 1.0f,0.0f });
 				spriteCheckGoal_[test]->SetAnchor(Vector2{ 1.0f,0.0f });
+				spriteReseal_[test]->SetAnchor(Vector2{ 1.0f,0.0f });
 			}
 
 			test++;
@@ -383,6 +395,9 @@ void Stage1::LoadEvent() {
 			}
 			if (map[i][j].event == Event::Goal) {
 				goalCount_++;
+			}
+			if (map[i][j].event == Event::Reseal) {
+				map[i][j].isReseal = true;
 			}
 		}
 	}
@@ -707,6 +722,10 @@ void Stage1::FoldDirecting(int direction, bool isLapel) {
 				mapstate_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
 				mapstate2_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
 				setTest_ = true;
+				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isReseal == true) {
+					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isReseal = false;
+					map[(int)selectPoint_.num[1] - 1][(int)selectPoint_.num[0]].isReseal = true;
+				}
 			}
 			transformTest_.rotate.num[0] += 0.05f;
 
@@ -755,6 +774,10 @@ void Stage1::FoldDirecting(int direction, bool isLapel) {
 				mapstate_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
 				mapstate2_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
 				setTest_ = true;
+				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isReseal == true) {
+					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isReseal = false;
+					map[(int)selectPoint_.num[1] + 1][(int)selectPoint_.num[0]].isReseal = true;
+				}
 			}
 			transformTest_.rotate.num[0] += 0.05f;
 
@@ -803,6 +826,10 @@ void Stage1::FoldDirecting(int direction, bool isLapel) {
 				mapstate_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
 				mapstate2_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
 				setTest_ = true;
+				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isReseal == true) {
+					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isReseal = false;
+					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] - 1].isReseal = true;
+				}
 			}
 			transformTest_.rotate.num[1] += 0.05f;
 
@@ -850,6 +877,10 @@ void Stage1::FoldDirecting(int direction, bool isLapel) {
 				mapstate_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
 				mapstate2_ = map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].mapstate;
 				setTest_ = true;
+				if (map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isReseal == true) {
+					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0]].isReseal = false;
+					map[(int)selectPoint_.num[1]][(int)selectPoint_.num[0] + 1].isReseal = true;
+				}
 			}
 			transformTest_.rotate.num[1] += 0.05f;
 

@@ -39,6 +39,8 @@ public:
 
 	void SetIsReset(bool isReset);
 
+	void SetIsReseal(bool isReseal);
+
 private:
 	Input* input_ = nullptr;
 
@@ -68,4 +70,5 @@ private:
 	int panelDirection_ = 0;
 
 	bool isReset_ = false;
+	bool isReseal_ = false;
 };

@@ -286,6 +286,7 @@ void GamePlayScene::Update() {
 	player_->SetNowMapState(stage1_->GetNowMapState(player_->GetPos()));
 	player_->SetNowMapStatePos(stage1_->GetNowMapStatePosX(), stage1_->GetNowMapStatePosY());
 	player_->SetPanelSize(stage1_->GetPanelSize());
+	player_->SetIsReseal(stage1_->GetIsReseal());
 
 	if (isGameStart == true) {
 		//マップの設定、ステージ番号、折れる回数、マップサイズX、マップサイズYを設定 2x2ならXYは2にすること

@@ -44,6 +44,7 @@ public:
 		Start,//1
 		Goal,//2
 		CheckGoal,//3　通過済みのゴール
+		Reseal,//4 封印パネル
 	};
 
 	//MapData
@@ -60,6 +61,7 @@ public:
 		MapState previousMapstateRight;//折る前のmapstateデータ右
 		Vector4 spriteMaterial;//スプライトのmaterialcolor
 		bool previousFoldChack = false;//折る前のmapstateデータの取得フラグ
+		bool isReseal = false;//封印パネルかどうか
 	};
 
 	//パネル配置のロード
@@ -93,6 +95,8 @@ public:
 	bool GetClearFlag() { return isGameClear_; }
 
 	int GetFoldCount() { return foldCount_; }
+
+	bool GetIsReseal() { return map[playerStatePosY_][playerStatePosX_].isReseal; }
 
 	//マップの設定、ステージ番号、折れる回数、マップサイズX、マップサイズYを設定 2x2ならXYは2にすること
 	void SetAllSetting(const char* stageNum , int foldCountMax , float MapSelectWidth, float MapSelectHeight);
@@ -133,7 +137,8 @@ private:
 	std::unique_ptr<CreateSprite> spriteStart_[kMapHeight * kMapWidth];//
 	std::unique_ptr<CreateSprite> spriteGoal_[kMapHeight * kMapWidth];//
 	std::unique_ptr<CreateSprite> spriteCheckGoal_[kMapHeight * kMapWidth];//
-	uint32_t spriteTextureE_[3];
+	std::unique_ptr<CreateSprite> spriteReseal_[kMapHeight * kMapWidth];//
+	uint32_t spriteTextureE_[4];
 
 	int playerStatePosX_ = 0;//Playerの現在居るパネルの場所X
 	int playerStatePosY_ = 0;//Playerの現在居るパネルの場所Y
