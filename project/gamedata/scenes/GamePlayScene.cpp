@@ -104,6 +104,26 @@ void GamePlayScene::Initialize() {
 	stage1_->Initialize();
 	stage1_->SetAllSetting("1", 3, 2, 2);//いったん初期化
 
+	// Stage2
+	stage2_ = std::make_unique<Stage1>();
+	stage2_->Initialize();
+	stage2_->SetAllSetting("2", 5, 2, 2);//いったん初期化
+
+	// Stage3
+	stage3_ = std::make_unique<Stage1>();
+	stage3_->Initialize();
+	stage3_->SetAllSetting("3", 5, 2, 2);//いったん初期化
+
+	// Stage4
+	stage4_ = std::make_unique<Stage1>();
+	stage4_->Initialize();
+	stage4_->SetAllSetting("4", 8, 3, 2);//いったん初期化
+
+	// Stage5
+	stage5_ = std::make_unique<Stage1>();
+	stage5_->Initialize();
+	stage5_->SetAllSetting("5", 10, 4, 4);//いったん初期化
+
 	// Player
 	player_ = std::make_unique<Player>();
 	player_->Initialize();
@@ -296,16 +316,16 @@ void GamePlayScene::Update() {
 			stage1_->SetAllSetting("1", 3, 2, 2);
 		}
 		if (stageNo == 2) {
-			stage1_->SetAllSetting("2", 5, 2, 2);
+			stage2_->SetAllSetting("2", 5, 2, 2);
 		}
 		if (stageNo == 3) {
-			stage1_->SetAllSetting("3", 5, 2, 2);
+			stage3_->SetAllSetting("3", 5, 2, 2);
 		}
 		if (stageNo == 4) {
-			stage1_->SetAllSetting("4", 8, 3, 2);
+			stage4_->SetAllSetting("4", 8, 3, 2);
 		}
 		if (stageNo == 5) {
-			stage1_->SetAllSetting("5", 10, 3, 3);
+			stage5_->SetAllSetting("5", 10, 3, 3);
 		}
 		stage1_->Reset();
 		player_->ResetPlayer();

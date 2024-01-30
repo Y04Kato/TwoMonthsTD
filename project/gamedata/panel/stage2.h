@@ -8,7 +8,7 @@
 
 #include <memory>
 
-class Stage1 {
+class Stage2 {
 public:
 	void Initialize();
 	void Update();
@@ -75,7 +75,7 @@ public:
 	//選択中のパネルを折る
 	void Fold();
 	//折る演出、directionはDirection参照
-	void FoldDirecting(int direction,bool isLapel);
+	void FoldDirecting(int direction, bool isLapel);
 
 	//プレイヤー座標から現在居るMapStateを返す
 	int GetNowMapState(Vector2 pos);
@@ -95,7 +95,7 @@ public:
 	int GetFoldCount() { return foldCount_; }
 
 	//マップの設定、ステージ番号、折れる回数、マップサイズX、マップサイズYを設定 2x2ならXYは2にすること
-	void SetAllSetting(const char* stageNum , int foldCountMax , float MapSelectWidth, float MapSelectHeight);
+	void SetAllSetting(const char* stageNum, int foldCountMax, float MapSelectWidth, float MapSelectHeight);
 
 private:
 	Input* input_ = nullptr;
@@ -159,7 +159,7 @@ private:
 	bool isGameClear_ = false;
 
 	int foldCount_ = 0;//折る残り回数
-	int foldCountMax_ = 3;//折る回数上限
+	int foldCountMax_ = 5;//折る回数上限
 
 	const char* stageNum_;
 	float MapSelectSizeX_;
