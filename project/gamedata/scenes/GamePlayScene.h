@@ -19,6 +19,7 @@
 #include "panel/back.h"
 #include "panel/stage1.h"
 #include "numbers/numbers.h"
+#include "GameSelectScene.h"
 #pragma endregion
 
 class GamePlayScene :public Iscene {
@@ -89,4 +90,6 @@ private:
 	Transform transformNumbers_;
 
 	bool isGameStart = true;
+
+	std::unique_ptr<GameSelectScene> gameSelect_;
 };
