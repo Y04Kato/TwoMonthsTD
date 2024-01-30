@@ -119,9 +119,6 @@ void GamePlayScene::Initialize() {
 	transformNumbers_.scale = { 1.2f,0.12f,1.2f };
 	numbers_->SetTransform(transformNumbers_);
 
-	gameSelect_ = std::make_unique<GameSelectScene>();
-	gameSelect_->Initialize();
-
 	isGameStart = true;
 }
 
@@ -325,8 +322,6 @@ void GamePlayScene::Update() {
 		sceneNo = CLEAR_SCENE;
 	}
 
-	//gameSelect_->Update();
-
 	numbers_->SetNum(stage1_->GetFoldCount());
 }
 
@@ -339,8 +334,6 @@ void GamePlayScene::Draw() {
 			sprite_[i]->Draw(spriteTransform_[i], SpriteuvTransform_[i], spriteMaterial_[i]);
 		}
 	}
-
-	//gameSelect_->Draw();
 
 	back_->Draw();
 	stage1_->Draw();
