@@ -14,8 +14,8 @@ public:
 	void Update();
 	void Draw();
 
-	static const uint32_t kMapWidth = 4;
-	static const uint32_t kMapHeight = 4;
+	static const uint32_t kMapWidth = 5;
+	static const uint32_t kMapHeight = 5;
 
 	//パネルの種類
 	enum class MapState {
@@ -159,7 +159,7 @@ private:
 	bool isGameClear_ = false;
 
 	int foldCount_ = 0;//折る残り回数
-	int foldCountMax_ = 3;//折る回数上限
+	int foldCountMax_ = 5;//折る回数上限
 
 	const char* stageNum_;
 	float MapSelectSizeX_;

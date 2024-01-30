@@ -83,10 +83,6 @@ private:
 
 	std::unique_ptr<Back> back_;
 	std::unique_ptr<Stage1> stage1_;
-	std::unique_ptr<Stage1> stage2_;
-	std::unique_ptr<Stage1> stage3_;
-	std::unique_ptr<Stage1> stage4_;
-	std::unique_ptr<Stage1> stage5_;
 	std::unique_ptr<Player> player_;
 
 	//数字

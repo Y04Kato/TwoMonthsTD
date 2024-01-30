@@ -125,10 +125,6 @@
     <ClCompile Include="project\gamedata\numbers\numbers.cpp" />
     <ClCompile Include="project\gamedata\panel\back.cpp" />
     <ClCompile Include="project\gamedata\panel\stage1.cpp" />
-    <ClCompile Include="project\gamedata\panel\stage2.cpp" />
-    <ClCompile Include="project\gamedata\panel\stage3.cpp" />
-    <ClCompile Include="project\gamedata\panel\stage4.cpp" />
-    <ClCompile Include="project\gamedata\panel\stage5.cpp" />
     <ClCompile Include="project\gamedata\player\Player.cpp" />
     <ClCompile Include="project\gamedata\scenes\GameClearScene.cpp" />
     <ClCompile Include="project\gamedata\scenes\GamePlayScene.cpp" />
@@ -215,10 +211,6 @@
     <ClInclude Include="project\gamedata\numbers\numbers.h" />
     <ClInclude Include="project\gamedata\panel\back.h" />
     <ClInclude Include="project\gamedata\panel\stage1.h" />
-    <ClInclude Include="project\gamedata\panel\stage2.h" />
-    <ClInclude Include="project\gamedata\panel\stage3.h" />
-    <ClInclude Include="project\gamedata\panel\stage4.h" />
-    <ClInclude Include="project\gamedata\panel\stage5.h" />
     <ClInclude Include="project\gamedata\player\Player.h" />
     <ClInclude Include="project\gamedata\scenes\GameClearScene.h" />
     <ClInclude Include="project\gamedata\scenes\GamePlayScene.h" />
