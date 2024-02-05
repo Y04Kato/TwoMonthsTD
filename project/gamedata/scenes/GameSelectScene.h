@@ -48,5 +48,10 @@ private:
 	bool startGameScene3 = false;
 	bool startGameScene4 = false;
 	bool startGameScene5 = false;
+	bool startGameScene6 = false;
+	bool startGameScene7 = false;
+	bool startGameScene8 = false;
+	bool startGameScene9 = false;
+	bool startGameScene10 = false;
 };
 

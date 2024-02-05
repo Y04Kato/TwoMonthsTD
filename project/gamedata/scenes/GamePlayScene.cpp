@@ -291,13 +291,13 @@ void GamePlayScene::Update() {
 	if (isGameStart == true) {
 		//マップの設定、ステージ番号、折れる回数、マップサイズX、マップサイズYを設定 2x2ならXYは2にすること
 		if (stageNo == 1) {
-			stage1_->SetAllSetting("1", 5, 3, 2);
+			stage1_->SetAllSetting("1", 3, 2, 2);
 		}
 		if (stageNo == 2) {
 			stage1_->SetAllSetting("2", 5, 2, 2);
 		}
 		if (stageNo == 3) {
-			stage1_->SetAllSetting("3", 3, 2, 2);
+			stage1_->SetAllSetting("3", 5, 2, 2);
 		}
 		if (stageNo == 4) {
 			stage1_->SetAllSetting("4", 8, 3, 2);
@@ -305,6 +305,22 @@ void GamePlayScene::Update() {
 		if (stageNo == 5) {
 			stage1_->SetAllSetting("5", 10, 3, 3);
 		}
+		if (stageNo == 6) {
+			stage1_->SetAllSetting("6", 3, 2, 2);
+		}
+		if (stageNo == 7) {
+			stage1_->SetAllSetting("7", 4, 3, 2);
+		}
+		if (stageNo == 8) {
+			stage1_->SetAllSetting("8", 5, 3, 2);
+		}
+		if (stageNo == 9) {
+			stage1_->SetAllSetting("9", 6, 1, 1);
+		}
+		if (stageNo == 10) {
+			stage1_->SetAllSetting("10", 7, 1, 1);
+		}
+
 		stage1_->Reset();
 		player_->ResetPlayer();
 		player_->SetIsReset(false);
