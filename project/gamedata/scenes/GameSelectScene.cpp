@@ -54,7 +54,7 @@ void GameSelectScene::Update() {
 	if (input_->TriggerKey(DIK_RIGHT)) {
 		if (pageChangeR_ == false) {
 			count++;
-			if (count > 4) {
+			if (count > 9) {
 				count = 0;
 				pageChangeL_ = true;
 				spriteTransform2_.rotate.num[1] = 3.15f;
@@ -79,7 +79,7 @@ void GameSelectScene::Update() {
 		if (pageChangeL_ == false) {
 			count--;
 			if (count < 0) {
-				count = 4;
+				count = 9;
 				pageChangeR_ = true;
 				spriteTransform2_.rotate.num[1] = 0.0f;
 				audio_->SoundPlayWave(soundData1_, 0.5f, false);
@@ -188,6 +188,84 @@ void GameSelectScene::Update() {
 			}
 		}
 	}
+	if (count == 4) {
+		if (input_->TriggerKey(DIK_SPACE)) {
+			if (pageChangeR_ == false) {
+				pageChangeR_ = true;
+				spriteTransform2_.rotate.num[1] = 0.0f;
+				audio_->SoundPlayWave(soundData1_, 0.5f, false);
+				startGameScene5 = true;
+			}
+			else {
+
+			}
+		}
+	}
+	if (count == 5) {
+		if (input_->TriggerKey(DIK_SPACE)) {
+			if (pageChangeR_ == false) {
+				pageChangeR_ = true;
+				spriteTransform2_.rotate.num[1] = 0.0f;
+				audio_->SoundPlayWave(soundData1_, 0.5f, false);
+				startGameScene6 = true;
+			}
+			else {
+
+			}
+		}
+	}
+	if (count == 6) {
+		if (input_->TriggerKey(DIK_SPACE)) {
+			if (pageChangeR_ == false) {
+				pageChangeR_ = true;
+				spriteTransform2_.rotate.num[1] = 0.0f;
+				audio_->SoundPlayWave(soundData1_, 0.5f, false);
+				startGameScene7 = true;
+			}
+			else {
+
+			}
+		}
+	}
+	if (count == 7) {
+		if (input_->TriggerKey(DIK_SPACE)) {
+			if (pageChangeR_ == false) {
+				pageChangeR_ = true;
+				spriteTransform2_.rotate.num[1] = 0.0f;
+				audio_->SoundPlayWave(soundData1_, 0.5f, false);
+				startGameScene8 = true;
+			}
+			else {
+
+			}
+		}
+	}
+	if (count == 8) {
+		if (input_->TriggerKey(DIK_SPACE)) {
+			if (pageChangeR_ == false) {
+				pageChangeR_ = true;
+				spriteTransform2_.rotate.num[1] = 0.0f;
+				audio_->SoundPlayWave(soundData1_, 0.5f, false);
+				startGameScene9 = true;
+			}
+			else {
+
+			}
+		}
+	}
+	if (count == 9) {
+		if (input_->TriggerKey(DIK_SPACE)) {
+			if (pageChangeR_ == false) {
+				pageChangeR_ = true;
+				spriteTransform2_.rotate.num[1] = 0.0f;
+				audio_->SoundPlayWave(soundData1_, 0.5f, false);
+				startGameScene10 = true;
+			}
+			else {
+
+			}
+		}
+	}
 
 	if (startGameScene1 == true && pageChangeR_ == false) {
 		startGameScene1 = false;
@@ -212,6 +290,31 @@ void GameSelectScene::Update() {
 	if (startGameScene5 == true && pageChangeR_ == false) {
 		startGameScene5 = false;
 		stageNo = 5;
+		sceneNo = GAME_SCENE;
+	}
+	if (startGameScene6 == true && pageChangeR_ == false) {
+		startGameScene6 = false;
+		stageNo = 6;
+		sceneNo = GAME_SCENE;
+	}
+	if (startGameScene7 == true && pageChangeR_ == false) {
+		startGameScene7 = false;
+		stageNo = 7;
+		sceneNo = GAME_SCENE;
+	}
+	if (startGameScene8 == true && pageChangeR_ == false) {
+		startGameScene8 = false;
+		stageNo = 8;
+		sceneNo = GAME_SCENE;
+	}
+	if (startGameScene9 == true && pageChangeR_ == false) {
+		startGameScene9 = false;
+		stageNo = 9;
+		sceneNo = GAME_SCENE;
+	}
+	if (startGameScene10 == true && pageChangeR_ == false) {
+		startGameScene10 = false;
+		stageNo = 10;
 		sceneNo = GAME_SCENE;
 	}
 
