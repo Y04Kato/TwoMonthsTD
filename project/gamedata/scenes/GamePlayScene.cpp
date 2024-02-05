@@ -305,6 +305,22 @@ void GamePlayScene::Update() {
 		if (stageNo == 5) {
 			stage1_->SetAllSetting("5", 10, 3, 3);
 		}
+		if (stageNo == 6) {
+			stage1_->SetAllSetting("1", 1, 1, 1);
+		}
+		if (stageNo == 7) {
+			stage1_->SetAllSetting("1", 1, 1, 1);
+		}
+		if (stageNo == 8) {
+			stage1_->SetAllSetting("1", 1, 1, 1);
+		}
+		if (stageNo == 9) {
+			stage1_->SetAllSetting("1", 1, 1, 1);
+		}
+		if (stageNo == 10) {
+			stage1_->SetAllSetting("1", 1, 1, 1);
+		}
+
 		stage1_->Reset();
 		player_->ResetPlayer();
 		player_->SetIsReset(false);
