@@ -5,6 +5,7 @@
 #include "ViewProjection.h"
 #include "TextureManager.h"
 #include "components/2d/CreateSprite.h"
+#include "components/audio/Audio.h"
 
 #include <memory>
 
@@ -169,4 +170,7 @@ private:
 	const char* stageNum_;
 	float MapSelectSizeX_;
 	float MapSelectSizeY_;
+
+	Audio* audio_;
+	SoundData soundData1_;
 };

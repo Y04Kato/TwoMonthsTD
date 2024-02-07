@@ -16,7 +16,7 @@ void Stage1::Initialize() {
 	spriteTextureE_[0] = textureManager_->Load("project/gamedata/resources/panel/startPoint.png");
 	spriteTextureE_[1] = textureManager_->Load("project/gamedata/resources/panel/goalPoint.png");
 	spriteTextureE_[2] = textureManager_->Load("project/gamedata/resources/panel/passedGoalPoint.png");
-	spriteTextureE_[3] = textureManager_->Load("project/gamedata/resources/panel/select.png");
+	spriteTextureE_[3] = textureManager_->Load("project/gamedata/resources/panel/reseal.png");
 
 	for (int i = 0; i < kMapHeight * kMapWidth; i++) {
 		sprite_[i].reset(CreateSprite::CreateSpriteFromPng(Vector2{ 100.0f,100.0f }, spriteTexture_[0], false, false));
@@ -78,6 +78,10 @@ void Stage1::Initialize() {
 			map[i][j].spriteMaterial = { 1.0f,1.0f,1.0f,1.0f };
 		}
 	}
+
+
+	audio_ = Audio::GetInstance();
+	soundData1_ = audio_->SoundLoadWave("project/gamedata/resources/page.wav");
 }
 
 void Stage1::Update() {
@@ -442,6 +446,12 @@ void Stage1::Select() {
 				isFoldMove_ = true;
 				setPlayerStatePosX_ = playerStatePosX_;
 				setPlayerStatePosY_ = playerStatePosY_;
+				if (setPlayerStatePosX_ == (int)selectPoint_.num[0] && setPlayerStatePosY_ == (int)selectPoint_.num[1] - 1) {
+
+				}
+				else {//自機が折るパネルの先に居なければ
+					audio_->SoundPlayWave(soundData1_, 0.5f, false);
+				}
 			}
 		}
 	}

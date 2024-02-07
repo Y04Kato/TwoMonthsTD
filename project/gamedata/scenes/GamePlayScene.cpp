@@ -315,13 +315,14 @@ void GamePlayScene::Update() {
 			stage1_->SetAllSetting("8", 5, 3, 2);
 		}
 		if (stageNo == 9) {
-			stage1_->SetAllSetting("9", 6, 1, 1);
+			stage1_->SetAllSetting("9", 6, 3, 3);
 		}
 		if (stageNo == 10) {
 			stage1_->SetAllSetting("10", 7, 1, 1);
 		}
 
 		stage1_->Reset();
+		player_->SetStartPoint(stage1_->GetStartPosX(), stage1_->GetStartPosY());
 		player_->ResetPlayer();
 		player_->SetIsReset(false);
 		isGameStart = false;

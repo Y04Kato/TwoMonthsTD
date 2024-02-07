@@ -14,6 +14,17 @@ void GameSelectScene::Initialize() {
 	pageAll_ = textureManager_->Load("project/gamedata/resources/page.png");
 	start_ = textureManager_->Load("project/gamedata/resources/pressSpace.png");
 
+	select_[0] = textureManager_->Load("project/gamedata/resources/stage/stage1.png");
+	select_[1] = textureManager_->Load("project/gamedata/resources/stage/stage2.png");
+	select_[2] = textureManager_->Load("project/gamedata/resources/stage/stage3.png");
+	select_[3] = textureManager_->Load("project/gamedata/resources/stage/stage4.png");
+	select_[4] = textureManager_->Load("project/gamedata/resources/stage/stage5.png");
+	select_[5] = textureManager_->Load("project/gamedata/resources/stage/stage6.png");
+	select_[6] = textureManager_->Load("project/gamedata/resources/stage/stage7.png");
+	select_[7] = textureManager_->Load("project/gamedata/resources/stage/stage8.png");
+	select_[8] = textureManager_->Load("project/gamedata/resources/stage/stage9.png");
+	select_[9] = textureManager_->Load("project/gamedata/resources/stage/stage10.png");
+
 	//Audio
 	audio_ = Audio::GetInstance();
 	soundData1_ = audio_->SoundLoadWave("project/gamedata/resources/page.wav");
@@ -47,6 +58,30 @@ void GameSelectScene::Initialize() {
 	sprite_[3]->SetTextureInitialSize();
 	sprite_[3]->SetAnchor(Vector2{ 0.5f,0.5f });
 
+	for (int i = 0; i < 10; i++) {
+		spriteSelect_[i] = std::make_unique <CreateSprite>();
+		spriteSelect_[i]->Initialize(Vector2{ 100.0f,100.0f }, select_[i], false, false);
+		spriteSelect_[i]->SetTextureInitialSize();
+		spriteSelect_[i]->SetAnchor(Vector2{ 0.5f,0.5f });
+	}
+
+	model_[0].reset(Model::CreateModelFromObj("project/gamedata/resources/stagemodel/model1", "stage.obj"));
+	model_[1].reset(Model::CreateModelFromObj("project/gamedata/resources/stagemodel/model2", "stage.obj"));
+	model_[2].reset(Model::CreateModelFromObj("project/gamedata/resources/stagemodel/model3", "stage.obj"));
+	model_[3].reset(Model::CreateModelFromObj("project/gamedata/resources/stagemodel/model4", "stage.obj"));
+	model_[4].reset(Model::CreateModelFromObj("project/gamedata/resources/stagemodel/model5", "stage.obj"));
+	model_[5].reset(Model::CreateModelFromObj("project/gamedata/resources/stagemodel/model6", "stage.obj"));
+	model_[6].reset(Model::CreateModelFromObj("project/gamedata/resources/stagemodel/model7", "stage.obj"));
+	model_[7].reset(Model::CreateModelFromObj("project/gamedata/resources/stagemodel/model8", "stage.obj"));
+	model_[8].reset(Model::CreateModelFromObj("project/gamedata/resources/stagemodel/model9", "stage.obj"));
+	model_[9].reset(Model::CreateModelFromObj("project/gamedata/resources/stagemodel/model10", "stage.obj"));
+	worldTransformModel_.Initialize();
+	worldTransformModel_.translation_ = { 18.25f,0.0f,0.0f };
+	worldTransformModel_.scale_ = { 12.0f,12.0f,5.0f };
+	modelMaterial_ = { 1.0f,1.0f,1.0f,1.0f };
+
+	viewProjection_.Initialize();
+
 	count = 0;
 }
 
@@ -71,8 +106,13 @@ void GameSelectScene::Update() {
 		}
 	}
 
+	worldTransformModel_.rotation_.num[1] += 0.02f;
+
+	worldTransformModel_.UpdateMatrix();
+	viewProjection_.UpdateMatrix();
+
 	ImGui::Begin("SelectScene");
-	ImGui::Text("SelectStage : %d",count);
+	ImGui::Text("SelectStage : %d", count);
 	ImGui::End();
 
 	if (input_->TriggerKey(DIK_LEFT)) {
@@ -315,8 +355,25 @@ void GameSelectScene::Draw() {
 	sprite_[2]->Draw(spriteTransform2_, SpriteuvTransform_, spriteMaterial_);
 	if (pageChangeR_ == false && pageChangeL_ == false) {
 		sprite_[3]->Draw(spriteTransform_, SpriteuvTransform_, Vector4{ 1.0f,1.0f,1.0f,spriteAlpha_ / 256.0f });
+		for (int i = 0; i < 10; i++) {
+			if (count == i) {
+				spriteSelect_[i]->Draw(spriteTransform_, SpriteuvTransform_, spriteMaterial_);
+			}
+		}
 	}
 
+#pragma endregion
+
+
+#pragma region 3Dオブジェクト描画
+	CJEngine_->PreDraw3D();
+	if (pageChangeR_ == false && pageChangeL_ == false) {
+		for (int i = 0; i < 10; i++) {
+			if (count == i) {
+				model_[i]->Draw(worldTransformModel_, viewProjection_, modelMaterial_);
+			}
+		}
+	}
 #pragma endregion
 }
 

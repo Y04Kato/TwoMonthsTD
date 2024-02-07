@@ -6,6 +6,10 @@
 #include "components/2d/CreateSprite.h"
 #include "components/audio/Audio.h"
 
+#include "components/3d/Model.h"
+#include "components/3d/WorldTransform.h"
+#include "components/3d/ViewProjection.h"
+
 class GameSelectScene :public Iscene {
 public:
 	void Initialize() override;
@@ -53,5 +57,13 @@ private:
 	bool startGameScene8 = false;
 	bool startGameScene9 = false;
 	bool startGameScene10 = false;
+
+	std::unique_ptr <CreateSprite> spriteSelect_[10];
+	uint32_t select_[10];
+
+	std::unique_ptr<Model> model_[10];
+	WorldTransform worldTransformModel_;
+	Vector4 modelMaterial_;
+	ViewProjection viewProjection_;
 };
 
