@@ -318,7 +318,7 @@ void GamePlayScene::Update() {
 			stage1_->SetAllSetting("9", 6, 3, 3);
 		}
 		if (stageNo == 10) {
-			stage1_->SetAllSetting("10", 7, 1, 1);
+			stage1_->SetAllSetting("10", 7, 3, 3);
 		}
 
 		stage1_->Reset();

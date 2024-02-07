@@ -41,6 +41,9 @@ public:
 
 	void SetIsReseal(bool isReseal);
 
+	void FadeReset();
+	void FadeResetStart();
+
 private:
 	Input* input_ = nullptr;
 
@@ -71,4 +74,15 @@ private:
 
 	bool isReset_ = false;
 	bool isReseal_ = false;
+
+	bool isRotate_ = false;
+	bool fadeGameReset_ = false;
+
+	std::unique_ptr<CreateSprite> rSprite_;
+	Transform rTransform_;
+	Transform rUvTransform_;
+	Vector4 rMaterial_;
+	uint32_t rTexture_;
+
+	bool posReset_ = false;
 };

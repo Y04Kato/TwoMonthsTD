@@ -4,6 +4,19 @@ void Player::Initialize() {
 	input_ = Input::GetInstance();
 	textureManager_ = TextureManager::GetInstance();
 
+	rTexture_ = textureManager_->Load("project/gamedata/resources/black.png");
+
+	rMaterial_ = { 1.0f,1.0f,1.0f,0.0f };
+	rTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{1280.0f,720.0f,0.0f} };
+	rUvTransform_ = {
+		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f},
+	};
+
+	rSprite_ = std::make_unique<CreateSprite>();
+	rSprite_->Initialize(Vector2{ 1280.0f,720.0f }, rTexture_, true, true);
+
 	spriteTexture_[0] = textureManager_->Load("project/gamedata/resources/player/PlayerRun1.png");
 	spriteTexture_[1] = textureManager_->Load("project/gamedata/resources/player/PlayerRun2.png");
 	spriteTexture_[2] = textureManager_->Load("project/gamedata/resources/player/PlayerRun3.png");
@@ -41,6 +54,8 @@ void Player::Update() {
 }
 
 void Player::Draw() {
+	rSprite_->Draw(rTransform_, rUvTransform_, rMaterial_);
+
 	Vector3 test{ 1280 / 2, 720 /2,1.0f };
 	if (spriteTimer_ >= 0 && spriteTimer_ < 10) {
 		sprite_[0]->Draw(Transform{ spriteTransform_.scale ,spriteTransform_.rotate ,test }, spriteUvTransform_, spriteMaterial_);
@@ -63,6 +78,13 @@ void Player::Draw() {
 }
 
 void Player::Moves() {
+	if (isRotate_ == true) {
+		FadeReset();
+	}
+	if (fadeGameReset_ == true) {
+		FadeResetStart();
+	}
+
 	if (nowMapState_ == 0) {//None
 		MoveNone();
 	}
@@ -146,7 +168,7 @@ void Player::Moves() {
 	}
 
 	if (input_->TriggerKey(DIK_R)) {
-		ResetPlayer();
+		isRotate_ = true;
 	}
 }
 
@@ -454,6 +476,44 @@ void Player::SetPanelSize(Vector2 panelSize) {
 void Player::ResetPlayer() {
 	spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{panelSize_.num[0] * startPointX + panelSize_.num[0] / 2,panelSize_.num[1] * startPointY + panelSize_.num[1] / 2,0.1f} };
 	isReset_ = true;
+}
+
+void Player::FadeReset() {
+		spriteTransform_.rotate.num[2] += 0.06f;
+		spriteTransform_.scale.num[0] -= 0.01f;
+		spriteTransform_.scale.num[1] -= 0.01f;
+		rMaterial_.num[3] += 0.01f;
+	
+
+	if (rMaterial_.num[3] > 1.0f) {
+		fadeGameReset_ = true;
+
+		spriteTransform_.translate = { panelSize_.num[0] * startPointX + panelSize_.num[0] / 2,panelSize_.num[1] * startPointY + panelSize_.num[1] / 2,0.1f };
+	}
+
+	if (spriteTransform_.scale.num[0] < 0.0f) {
+		isRotate_ = false;
+	}
+}
+
+void Player::FadeResetStart() {
+		rMaterial_.num[3] -= 0.01f;
+		spriteTransform_.rotate.num[2] -= 0.06f;
+		spriteTransform_.scale.num[0] += 0.01f;
+		spriteTransform_.scale.num[1] += 0.01f;
+	
+
+	if (rMaterial_.num[3] < -0.1) {
+		fadeGameReset_ = false;
+		posReset_ = true;
+	}
+
+	if (posReset_ == true) {
+		rMaterial_.num[3] = 0.0f;
+		spriteTransform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{panelSize_.num[0] * startPointX + panelSize_.num[0] / 2,panelSize_.num[1] * startPointY + panelSize_.num[1] / 2,0.1f} };
+		isReset_ = true;
+		posReset_ = false;
+	}
 }
 
 void Player::SetStartPoint(int panelX, int panelY) {
